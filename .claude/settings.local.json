@@ -7,7 +7,10 @@
       "Bash(npm run *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'Initial portfolio: Next.js 16 + Tailwind v4 + Framer Motion cyberpunk design *)"
+      "Bash(git commit -m 'Initial portfolio: Next.js 16 + Tailwind v4 + Framer Motion cyberpunk design *)",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(Stop-Process -Id 20924 -Force -ErrorAction SilentlyContinue)",
+      "Bash(git commit -m 'Redesign: Gradient Mesh theme \\(Linear/Vercel aesthetic\\) *)"
     ]
   }
 }

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pro Design Concepts — Yugal Agarwal</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#181818;font-family:'Inter',sans-serif;padding:48px 28px;}
+.page-header{text-align:center;margin-bottom:56px;}
+.page-header h1{font-size:clamp(22px,3vw,30px);font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px;}
+.page-header p{font-size:13px;color:#666;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:36px;max-width:1800px;margin:0 auto;}
+.design-wrap{display:flex;flex-direction:column;gap:14px;}
+.label-row{display:flex;align-items:center;gap:10px;}
+.num{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+.design-name{font-size:12px;font-weight:700;color:#aaa;letter-spacing:.04em;}
+.design-style{font-size:11px;color:#555;font-family:'JetBrains Mono';}
+.frame{width:100%;height:460px;border-radius:20px;overflow:hidden;position:relative;flex-shrink:0;}
+.pick-btn{width:100%;padding:14px;border-radius:12px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s ease;letter-spacing:.01em;font-family:'Inter',sans-serif;}
+.pick-btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.25);}
+
+/* ═══════════════════════════════════════════
+   1. AGENCY DARK — Cinematic, bold, dramatic
+   Think: Awwwards, Pentagram, IDEO
+═══════════════════════════════════════════ */
+.f1{background:#0d0d0d;color:#fff;font-family:'Syne',sans-serif;height:100%;display:flex;flex-direction:column;}
+.f1-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #1a1a1a;flex-shrink:0;}
+.f1-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:.12em;text-transform:uppercase;}
+.f1-nav-r{display:flex;align-items:center;gap:20px;}
+.f1-nav-r a{font-size:11px;color:#444;letter-spacing:.08em;text-transform:uppercase;}
+.f1-nav-btn{font-size:10px;border:1px solid #333;color:#aaa;padding:6px 14px;letter-spacing:.08em;text-transform:uppercase;}
+.f1-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.f1-left{padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid #1a1a1a;}
+.f1-tag{font-size:10px;color:#444;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono';margin-bottom:16px;}
+.f1-name{font-size:clamp(32px,4vw,52px);font-weight:800;line-height:.92;letter-spacing:-3px;color:#fff;}
+.f1-name em{font-style:italic;color:#888;font-family:'Instrument Serif';font-weight:400;font-size:.85em;}
+.f1-line{width:32px;height:1px;background:#333;margin:16px 0;}
+.f1-role{font-size:11px;color:#444;letter-spacing:.1em;text-transform:uppercase;}
+.f1-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
+.f1-cta{font-size:11px;color:#fff;border-bottom:1px solid #333;padding-bottom:2px;letter-spacing:.06em;}
+.f1-year{font-size:10px;color:#333;font-family:'JetBrains Mono';}
+.f1-right{display:flex;flex-direction:column;}
+.f1-metric{border-bottom:1px solid #1a1a1a;padding:18px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.f1-metric:last-child{border-bottom:none;}
+.f1-mv{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px;}
+.f1-ml{font-size:9px;color:#333;letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono';}
+.f1-mco{font-size:9px;color:#222;letter-spacing:.06em;margin-top:4px;}
+.f1-footer{padding:12px 24px;border-top:1px solid #1a1a1a;display:flex;gap:16px;flex-shrink:0;}
+.f1-tag2{font-size:9px;color:#333;letter-spacing:.08em;text-transform:uppercase;font-family:'JetBrains Mono';}
+
+/* ═══════════════════════════════════════════
+   2. STRIPE CLEAN — World-class SaaS polish
+   Think: Stripe, Linear, Vercel
+═══════════════════════════════════════════ */
+.f2{background:#fff;color:#0f172a;font-family:'Inter',sans-serif;height:100%;display:flex;flex-direction:column;}
+.f2-nav{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid #f1f5f9;flex-shrink:0;}
+.f2-logo{font-size:15px;font-weight:800;color:#0f172a;letter-spacing:-.5px;}
+.f2-logo span{color:#635bff;}
+.f2-links{display:flex;gap:18px;}
+.f2-links a{font-size:12px;color:#94a3b8;font-weight:500;}
+.f2-cta-btn{background:#635bff;color:#fff;font-size:11px;padding:7px 16px;border-radius:8px;font-weight:600;}
+.f2-body{flex:1;padding:28px 22px 18px;display:flex;flex-direction:column;gap:18px;}
+.f2-top{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;}
+.f2-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;background:#f0f0ff;color:#635bff;border:1px solid #e0e0ff;padding:4px 12px;border-radius:99px;font-weight:600;margin-bottom:12px;}
+.f2-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+.f2-name{font-size:clamp(24px,3.5vw,36px);font-weight:800;color:#0f172a;line-height:1.05;letter-spacing:-1.5px;margin-bottom:4px;}
+.f2-name span{color:#635bff;}
+.f2-role{font-size:12px;color:#94a3b8;font-family:'JetBrains Mono';}
+.f2-avatar{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#635bff,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;}
+.f2-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.f2-stat{background:#f8fafc;border:1px solid #f1f5f9;border-radius:12px;padding:12px 10px;text-align:center;}
+.f2-sv{font-size:18px;font-weight:800;color:#0f172a;letter-spacing:-.5px;}
+.f2-sl{font-size:9px;color:#94a3b8;margin-top:3px;font-weight:500;}
+.f2-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.f2-card{border:1px solid #f1f5f9;border-radius:12px;padding:14px;position:relative;overflow:hidden;}
+.f2-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#635bff,#a78bfa);}
+.f2-ct{font-size:12px;font-weight:700;color:#0f172a;margin-bottom:4px;}
+.f2-cd{font-size:10px;color:#94a3b8;line-height:1.5;}
+.f2-cm{font-size:16px;font-weight:800;color:#635bff;margin-top:8px;}
+.f2-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.f2-tag{font-size:10px;padding:3px 10px;border-radius:6px;background:#f0f0ff;color:#635bff;font-weight:600;}
+
+/* ═══════════════════════════════════════════
+   3. SPLIT SCREEN — Two worlds, one story
+   Think: Dribbble shots, Studio portfolios
+═══════════════════════════════════════════ */
+.f3{height:100%;display:grid;grid-template-columns:45% 55%;font-family:'Space Grotesk',sans-serif;}
+.f3-left{background:#0f0a1e;padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;}
+.f3-right{background:#fafaf8;padding:22px 20px;display:flex;flex-direction:column;justify-content:space-between;}
+.f3-logo{font-size:13px;font-weight:700;color:#c084fc;font-family:'JetBrains Mono';letter-spacing:.04em;}
+.f3-tagline{font-size:9px;color:#4a3f6b;letter-spacing:.12em;text-transform:uppercase;font-family:'JetBrains Mono';margin-top:4px;}
+.f3-mid{flex:1;display:flex;flex-direction:column;justify-content:center;padding:16px 0;}
+.f3-pre{font-size:9px;color:#6d28d9;letter-spacing:.16em;text-transform:uppercase;font-family:'JetBrains Mono';margin-bottom:10px;}
+.f3-name{font-size:clamp(22px,3.5vw,36px);font-weight:700;color:#fff;line-height:1.05;letter-spacing:-1px;margin-bottom:6px;}
+.f3-name em{font-style:italic;color:#c084fc;font-family:'Instrument Serif';font-weight:400;}
+.f3-role{font-size:10px;color:#6d28d9;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+.f3-btns{display:flex;gap:8px;}
+.f3-b1{background:#7c3aed;color:#fff;font-size:10px;padding:8px 14px;border-radius:8px;font-weight:700;}
+.f3-b2{border:1px solid #2d1f4e;color:#c084fc;font-size:10px;padding:8px 14px;border-radius:8px;font-weight:600;}
+.f3-footer{display:flex;gap:10px;}
+.f3-social{width:28px;height:28px;border:1px solid #1e1535;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#4a3f6b;font-family:'JetBrains Mono';}
+/* right side */
+.f3-r-label{font-size:9px;color:#d1c4f5;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono';color:#bbb;margin-bottom:10px;}
+.f3-projects{display:flex;flex-direction:column;gap:8px;flex:1;}
+.f3-project{background:#fff;border:1px solid #f0f0f0;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;}
+.f3-pinfo{flex:1;}
+.f3-pt{font-size:12px;font-weight:700;color:#0f0a1e;}
+.f3-pc{font-size:10px;color:#aaa;margin-top:2px;font-family:'JetBrains Mono';}
+.f3-ptags{display:flex;gap:4px;margin-top:6px;}
+.f3-ptag{font-size:9px;padding:2px 7px;border-radius:4px;font-weight:600;}
+.f3-pm{text-align:right;flex-shrink:0;margin-left:12px;}
+.f3-pmv{font-size:18px;font-weight:800;color:#7c3aed;letter-spacing:-.5px;}
+.f3-pml{font-size:9px;color:#bbb;font-weight:500;}
+.f3-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.f3-sk{font-size:9px;padding:3px 9px;border-radius:99px;background:#f3f0ff;color:#7c3aed;font-weight:600;}
+
+/* ═══════════════════════════════════════════
+   4. EDITORIAL SERIF — Refined, intellectual
+   Think: Bloomberg, NYT, Pentagram editorial
+═══════════════════════════════════════════ */
+.f4{background:#faf9f6;color:#1a1a1a;font-family:'Playfair Display',serif;height:100%;display:flex;flex-direction:column;}
+.f4-nav{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:2px solid #1a1a1a;flex-shrink:0;}
+.f4-logo{font-size:14px;font-weight:900;color:#1a1a1a;letter-spacing:-.5px;}
+.f4-logo em{font-style:italic;color:#c0392b;}
+.f4-nav-r{display:flex;align-items:center;gap:18px;}
+.f4-nav-r a{font-size:10px;color:#888;font-family:'Inter';font-weight:500;letter-spacing:.06em;text-transform:uppercase;}
+.f4-cta4{background:#1a1a1a;color:#faf9f6;font-size:10px;font-family:'Inter';font-weight:700;padding:7px 14px;letter-spacing:.06em;text-transform:uppercase;}
+.f4-body{flex:1;display:grid;grid-template-columns:1fr 1.2fr;gap:0;}
+.f4-left{padding:22px;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;gap:16px;}
+.f4-issue{font-size:9px;font-family:'Inter';color:#c0392b;letter-spacing:.14em;text-transform:uppercase;font-weight:700;}
+.f4-name{font-size:clamp(28px,4vw,46px);font-weight:900;line-height:.95;letter-spacing:-1.5px;color:#1a1a1a;}
+.f4-name em{font-style:italic;color:#c0392b;}
+.f4-divider{display:flex;align-items:center;gap:10px;}
+.f4-rule{flex:1;height:1px;background:#1a1a1a;}
+.f4-rule-text{font-size:9px;font-family:'Inter';color:#888;letter-spacing:.1em;text-transform:uppercase;}
+.f4-bio{font-size:11px;color:#555;line-height:1.75;font-family:'DM Sans';font-style:italic;}
+.f4-btns{display:flex;gap:8px;}
+.f4-b1{background:#1a1a1a;color:#faf9f6;font-size:10px;font-family:'Inter';font-weight:700;padding:9px 16px;letter-spacing:.04em;}
+.f4-b2{border:1.5px solid #1a1a1a;color:#1a1a1a;font-size:10px;font-family:'Inter';font-weight:600;padding:9px 16px;}
+.f4-right{display:flex;flex-direction:column;}
+.f4-metric-block{border-bottom:1px solid #e5e5e5;padding:14px 18px;flex:1;}
+.f4-metric-block:last-child{border-bottom:none;}
+.f4-mnum{font-size:36px;font-weight:900;color:#c0392b;line-height:1;letter-spacing:-2px;}
+.f4-mname{font-size:10px;font-family:'Inter';color:#888;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;}
+.f4-mdesc{font-size:10px;font-family:'DM Sans';color:#aaa;margin-top:6px;line-height:1.5;font-style:italic;}
+.f4-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.f4-tag{font-size:9px;font-family:'Inter';color:#c0392b;border:1px solid #c0392b;padding:2px 8px;letter-spacing:.06em;text-transform:uppercase;}
+.f4-footer{padding:10px 22px;border-top:2px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.f4-ft{font-size:9px;font-family:'Inter';color:#888;letter-spacing:.1em;text-transform:uppercase;}
+
+/* ═══════════════════════════════════════════
+   5. DASHBOARD PM — Product-native feel
+   Think: Notion, Figma, Linear dashboard
+═══════════════════════════════════════════ */
+.f5{background:#f7f7f5;color:#1a1a1a;font-family:'Inter',sans-serif;height:100%;display:grid;grid-template-columns:68px 1fr;}
+/* sidebar */
+.f5-sidebar{background:#fff;border-right:1px solid #ebebeb;padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.f5-s-logo{width:32px;height:32px;border-radius:8px;background:#18181b;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;margin-bottom:8px;}
+.f5-s-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:background .15s;}
+.f5-s-icon:hover,.f5-s-icon.active{background:#f4f4f4;}
+.f5-s-icon.active{background:#18181b;color:#fff;}
+.f5-s-div{width:24px;height:1px;background:#ebebeb;margin:4px 0;}
+/* main */
+.f5-main{display:flex;flex-direction:column;overflow:hidden;}
+.f5-topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#fff;border-bottom:1px solid #ebebeb;flex-shrink:0;}
+.f5-breadcrumb{display:flex;align-items:center;gap:6px;font-size:11px;color:#888;}
+.f5-breadcrumb span{color:#1a1a1a;font-weight:600;}
+.f5-tb-r{display:flex;align-items:center;gap:8px;}
+.f5-tb-btn{font-size:11px;background:#18181b;color:#fff;padding:5px 12px;border-radius:7px;font-weight:600;}
+.f5-tb-tag{font-size:10px;background:#f4f4f4;color:#888;padding:5px 10px;border-radius:7px;}
+.f5-content{flex:1;padding:16px;overflow:hidden;display:flex;flex-direction:column;gap:12px;}
+/* hero info */
+.f5-hero-row{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #ebebeb;border-radius:12px;padding:14px;}
+.f5-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#18181b,#3f3f46);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;}
+.f5-info{flex:1;}
+.f5-iname{font-size:15px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.f5-irole{font-size:11px;color:#888;margin-top:2px;}
+.f5-ibadge{display:flex;gap:6px;margin-top:6px;}
+.f5-ib{font-size:9px;padding:2px 8px;border-radius:5px;font-weight:600;}
+.f5-ib.growth{background:#dcfce7;color:#15803d;}
+.f5-ib.platform{background:#ede9fe;color:#7c3aed;}
+.f5-ib.b2c{background:#dbeafe;color:#1d4ed8;}
+/* metrics row */
+.f5-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.f5-m{background:#fff;border:1px solid #ebebeb;border-radius:10px;padding:12px;text-align:center;}
+.f5-mv{font-size:18px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;}
+.f5-ml{font-size:9px;color:#aaa;margin-top:2px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;}
+/* projects table */
+.f5-table{background:#fff;border:1px solid #ebebeb;border-radius:12px;overflow:hidden;flex:1;}
+.f5-th{display:grid;grid-template-columns:1fr 80px 60px;gap:0;background:#fafafa;border-bottom:1px solid #ebebeb;}
+.f5-th div{font-size:9px;color:#888;font-weight:700;padding:8px 12px;letter-spacing:.06em;text-transform:uppercase;}
+.f5-tr{display:grid;grid-template-columns:1fr 80px 60px;border-bottom:1px solid #f5f5f5;align-items:center;}
+.f5-tr:last-child{border-bottom:none;}
+.f5-tr div{padding:9px 12px;font-size:11px;}
+.f5-tr-name{font-weight:600;color:#1a1a1a;}
+.f5-tr-co{color:#aaa;font-size:10px;font-family:'JetBrains Mono';margin-top:1px;}
+.f5-tr-status{font-size:9px;font-weight:700;padding:3px 8px !important;border-radius:5px;width:fit-content;}
+.f5-tr-status.shipped{background:#dcfce7;color:#15803d;}
+.f5-tr-status.live{background:#dbeafe;color:#1d4ed8;}
+.f5-metric-val{font-size:12px;font-weight:700;color:#18181b;font-family:'JetBrains Mono';}
+
+/* ═══════════════════════════════════════════
+   6. GRADIENT MESH — Modern, premium, vibrant
+   Think: Linear's homepage, Vercel's design
+═══════════════════════════════════════════ */
+.f6{background:#06030f;color:#fff;font-family:'Inter',sans-serif;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.f6-mesh{position:absolute;inset:0;pointer-events:none;}
+.f6-g1{position:absolute;width:350px;height:350px;background:conic-gradient(from 180deg at 50% 50%,#ff6b6b11,#ff6b6b00,#845ef700,#845ef722,#845ef700,#228be600,#228be611,#ff6b6b00);filter:blur(40px);top:-100px;left:-80px;animation:spin1 20s linear infinite;}
+.f6-g2{position:absolute;width:300px;height:300px;background:radial-gradient(ellipse,rgba(99,91,255,0.25) 0%,transparent 65%);top:-50px;right:-60px;animation:drift 10s ease-in-out infinite;}
+.f6-g3{position:absolute;width:280px;height:280px;background:radial-gradient(ellipse,rgba(34,139,230,0.2) 0%,transparent 65%);bottom:-40px;left:20%;animation:drift 14s ease-in-out infinite reverse;}
+@keyframes spin1{to{transform:rotate(360deg);}}
+@keyframes drift{0%,100%{transform:translate(0,0);}50%{transform:translate(15px,20px);}}
+.f6-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;z-index:1;flex-shrink:0;}
+.f6-logo{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.f6-logo span{background:linear-gradient(90deg,#635bff,#228be6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.f6-links{display:flex;gap:18px;}
+.f6-links a{font-size:11px;color:rgba(255,255,255,0.3);font-weight:500;}
+.f6-cta{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:11px;padding:7px 16px;border-radius:8px;font-weight:600;backdrop-filter:blur(8px);}
+.f6-body{flex:1;padding:24px 22px 18px;display:flex;flex-direction:column;gap:16px;position:relative;z-index:1;}
+.f6-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:5px 14px;border-radius:99px;font-weight:500;backdrop-filter:blur(8px);}
+.f6-badge-dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#635bff,#228be6);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(.85);}}
+.f6-name{font-size:clamp(28px,4.5vw,48px);font-weight:900;line-height:.95;letter-spacing:-2.5px;}
+.f6-name .w{color:rgba(255,255,255,0.92);}
+.f6-name .g{background:linear-gradient(135deg,#635bff 0%,#228be6 50%,#845ef7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.f6-sub{font-size:12px;color:rgba(255,255,255,0.3);font-family:'JetBrains Mono';letter-spacing:.04em;}
+.f6-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.f6-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;backdrop-filter:blur(12px);transition:border-color .2s;}
+.f6-card:hover{border-color:rgba(99,91,255,0.3);}
+.f6-cv{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.f6-cl{font-size:9px;color:rgba(255,255,255,0.25);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
+.f6-ct{font-size:9px;color:rgba(99,91,255,0.8);font-family:'JetBrains Mono';margin-top:6px;}
+.f6-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.f6-pill{font-size:9px;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.35);font-family:'JetBrains Mono';}
+.f6-btns{display:flex;gap:8px;}
+.f6-b1{background:linear-gradient(135deg,#635bff,#228be6);color:#fff;font-size:11px;padding:10px 18px;border-radius:10px;font-weight:700;box-shadow:0 0 24px rgba(99,91,255,0.35);}
+.f6-b2{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:11px;padding:10px 18px;border-radius:10px;font-weight:600;backdrop-filter:blur(8px);}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Professional Design Concepts</h1>
+  <p>Designed on an 8pt grid system · real type hierarchy · professional color palettes · tell Claude which you want built</p>
+</div>
+
+<div class="grid">
+
+  <!-- ── 1. AGENCY DARK ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:#1a1a1a;color:#fff;">01</div>
+      <div>
+        <div class="design-name">Agency Dark</div>
+        <div class="design-style">// Awwwards · Pentagram · Cinematic</div>
+      </div>
+    </div>
+    <div class="frame" style="border:1px solid #222;">
+      <div class="f1">
+        <div class="f1-nav">
+          <span class="f1-logo">YUGAL AGARWAL</span>
+          <div class="f1-nav-r">
+            <a href="#">Work</a><a href="#">About</a><a href="#">Contact</a>
+            <span class="f1-nav-btn">Resume</span>
+          </div>
+        </div>
+        <div class="f1-body">
+          <div class="f1-left">
+            <div>
+              <div class="f1-tag">// Senior Product Manager</div>
+              <div class="f1-name">YUGAL<br/><em>Agarwal</em></div>
+              <div class="f1-line"></div>
+              <div class="f1-role">Building products that scale</div>
+            </div>
+            <div class="f1-bottom">
+              <span class="f1-cta">View Selected Work →</span>
+              <span class="f1-year">2019—2025</span>
+            </div>
+          </div>
+          <div class="f1-right">
+            <div class="f1-metric">
+              <div class="f1-mv">↑35%</div>
+              <div class="f1-ml">D30 Retention</div>
+              <div class="f1-mco">Onboarding Redesign · Current Co.</div>
+            </div>
+            <div class="f1-metric">
+              <div class="f1-mv">200K</div>
+              <div class="f1-ml">MAU Year 1</div>
+              <div class="f1-mco">Consumer App · 0→1</div>
+            </div>
+            <div class="f1-metric">
+              <div class="f1-mv">↓22%</div>
+              <div class="f1-ml">Drop-off Rate</div>
+              <div class="f1-mco">Checkout · Fintech Co.</div>
+            </div>
+          </div>
+        </div>
+        <div class="f1-footer">
+          <span class="f1-tag2">Growth</span>
+          <span class="f1-tag2">Strategy</span>
+          <span class="f1-tag2">0→1</span>
+          <span class="f1-tag2">Platform</span>
+          <span class="f1-tag2">Fintech</span>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#fff;color:#0d0d0d;" onclick="pick(1,'Agency Dark — Cinematic & Bold')">Choose Design 1 — Agency Dark</button>
+  </div>
+
+  <!-- ── 2. STRIPE CLEAN ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:#635bff;color:#fff;">02</div>
+      <div>
+        <div class="design-name">Stripe Clean</div>
+        <div class="design-style">// Linear · Vercel · World-class SaaS</div>
+      </div>
+    </div>
+    <div class="frame" style="border:1px solid #e2e8f0;">
+      <div class="f2">
+        <div class="f2-nav">
+          <span class="f2-logo">YA<span>.</span></span>
+          <div class="f2-links"><a href="#">About</a><a href="#">Work</a><a href="#">Skills</a><a href="#">Blog</a></div>
+          <span class="f2-cta-btn">Resume</span>
+        </div>
+        <div class="f2-body">
+          <div class="f2-top">
+            <div>
+              <div class="f2-badge"><div class="f2-dot"></div>Available for opportunities</div>
+              <div class="f2-name">Yugal <span>Agarwal</span></div>
+              <div class="f2-role">// Senior Product Manager</div>
+            </div>
+            <div class="f2-avatar">YA</div>
+          </div>
+          <div class="f2-stats">
+            <div class="f2-stat"><div class="f2-sv">5+</div><div class="f2-sl">Yrs Exp</div></div>
+            <div class="f2-stat"><div class="f2-sv">10+</div><div class="f2-sl">Products</div></div>
+            <div class="f2-stat"><div class="f2-sv">50M+</div><div class="f2-sl">Users</div></div>
+            <div class="f2-stat"><div class="f2-sv">3</div><div class="f2-sl">Industries</div></div>
+          </div>
+          <div class="f2-cards">
+            <div class="f2-card">
+              <div class="f2-ct">Onboarding Redesign</div>
+              <div class="f2-cd">End-to-end funnel redesign, 20+ user interviews, progressive disclosure model.</div>
+              <div class="f2-cm">↑35% Retention</div>
+            </div>
+            <div class="f2-card">
+              <div class="f2-ct">Consumer App 0→1</div>
+              <div class="f2-cd">First PM hire at Series A. Built MVP from blank page to 200K MAU.</div>
+              <div class="f2-cm">200K MAU</div>
+            </div>
+          </div>
+          <div class="f2-tags">
+            <span class="f2-tag">Growth</span>
+            <span class="f2-tag">Strategy</span>
+            <span class="f2-tag">0→1</span>
+            <span class="f2-tag">Fintech</span>
+            <span class="f2-tag">SQL</span>
+            <span class="f2-tag">A/B Testing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#635bff;color:#fff;" onclick="pick(2,'Stripe Clean — SaaS Polish & Precision')">Choose Design 2 — Stripe Clean</button>
+  </div>
+
+  <!-- ── 3. SPLIT SCREEN ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:linear-gradient(135deg,#0f0a1e,#7c3aed);color:#fff;">03</div>
+      <div>
+        <div class="design-name">Split Screen</div>
+        <div class="design-style">// Studio portfolio · Dribbble-worthy</div>
+      </div>
+    </div>
+    <div class="frame">
+      <div class="f3">
+        <div class="f3-left">
+          <div>
+            <div class="f3-logo">YA.</div>
+            <div class="f3-tagline">Product Manager</div>
+          </div>
+          <div class="f3-mid">
+            <div class="f3-pre">// Senior PM</div>
+            <div class="f3-name">Yugal<br/><em>Agarwal</em></div>
+            <div class="f3-role">Building products people love</div>
+            <div class="f3-btns">
+              <span class="f3-b1">View Work</span>
+              <span class="f3-b2">Resume →</span>
+            </div>
+          </div>
+          <div class="f3-footer">
+            <div class="f3-social">in</div>
+            <div class="f3-social">gh</div>
+            <div class="f3-social">tw</div>
+          </div>
+        </div>
+        <div class="f3-right">
+          <div class="f3-r-label">Selected Work</div>
+          <div class="f3-projects">
+            <div class="f3-project">
+              <div class="f3-pinfo">
+                <div class="f3-pt">Onboarding Redesign</div>
+                <div class="f3-pc">Current Co. · 2024</div>
+                <div class="f3-ptags">
+                  <span class="f3-ptag" style="background:#ede9fe;color:#7c3aed;">Growth</span>
+                  <span class="f3-ptag" style="background:#dcfce7;color:#15803d;">UX</span>
+                </div>
+              </div>
+              <div class="f3-pm"><div class="f3-pmv">↑35%</div><div class="f3-pml">Retention</div></div>
+            </div>
+            <div class="f3-project">
+              <div class="f3-pinfo">
+                <div class="f3-pt">Consumer App 0→1</div>
+                <div class="f3-pc">Series A · 2021</div>
+                <div class="f3-ptags">
+                  <span class="f3-ptag" style="background:#fef9c3;color:#92400e;">0→1</span>
+                  <span class="f3-ptag" style="background:#dbeafe;color:#1d4ed8;">Mobile</span>
+                </div>
+              </div>
+              <div class="f3-pm"><div class="f3-pmv">200K</div><div class="f3-pml">MAU Yr 1</div></div>
+            </div>
+            <div class="f3-project">
+              <div class="f3-pinfo">
+                <div class="f3-pt">Payments Platform 2.0</div>
+                <div class="f3-pc">Fintech · 2022</div>
+                <div class="f3-ptags">
+                  <span class="f3-ptag" style="background:#fce7f3;color:#be185d;">Fintech</span>
+                  <span class="f3-ptag" style="background:#ede9fe;color:#7c3aed;">API</span>
+                </div>
+              </div>
+              <div class="f3-pm"><div class="f3-pmv">↓22%</div><div class="f3-pml">Drop-off</div></div>
+            </div>
+          </div>
+          <div class="f3-skills">
+            <span class="f3-sk">Growth</span><span class="f3-sk">SQL</span><span class="f3-sk">Roadmapping</span><span class="f3-sk">A/B</span><span class="f3-sk">0→1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#0f0a1e,#7c3aed);color:#fff;" onclick="pick(3,'Split Screen — Dark + Light Two-panel')">Choose Design 3 — Split Screen</button>
+  </div>
+
+  <!-- ── 4. EDITORIAL SERIF ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:#c0392b;color:#fff;">04</div>
+      <div>
+        <div class="design-name">Editorial Serif</div>
+        <div class="design-style">// Bloomberg · NYT · Pentagram</div>
+      </div>
+    </div>
+    <div class="frame" style="border:1px solid #e5e5e5;">
+      <div class="f4">
+        <div class="f4-nav">
+          <span class="f4-logo">Yugal <em>Agarwal</em></span>
+          <div class="f4-nav-r">
+            <a href="#">Work</a><a href="#">About</a><a href="#">Writing</a>
+            <span class="f4-cta4">Resume</span>
+          </div>
+        </div>
+        <div class="f4-body">
+          <div class="f4-left">
+            <div class="f4-issue">Portfolio · 2025 Edition</div>
+            <div class="f4-name"><em>Yugal</em><br/>Agarwal</div>
+            <div class="f4-divider"><div class="f4-rule"></div><div class="f4-rule-text">Senior PM</div><div class="f4-rule"></div></div>
+            <div class="f4-bio">Building products that scale and delight at the intersection of user empathy, data, and cross-functional craft.</div>
+            <div class="f4-btns">
+              <span class="f4-b1">View Work</span>
+              <span class="f4-b2">Download CV</span>
+            </div>
+            <div class="f4-tags">
+              <span class="f4-tag">Growth</span>
+              <span class="f4-tag">Strategy</span>
+              <span class="f4-tag">0→1</span>
+            </div>
+          </div>
+          <div class="f4-right">
+            <div class="f4-metric-block">
+              <div class="f4-mnum">↑35%</div>
+              <div class="f4-mname">D30 Retention</div>
+              <div class="f4-mdesc">Onboarding redesign — 20+ interviews, progressive disclosure model</div>
+            </div>
+            <div class="f4-metric-block">
+              <div class="f4-mnum">200K</div>
+              <div class="f4-mname">MAU Year One</div>
+              <div class="f4-mdesc">0→1 consumer app at Series A — blank page to product-market fit</div>
+            </div>
+            <div class="f4-metric-block">
+              <div class="f4-mnum">↓22%</div>
+              <div class="f4-mname">Drop-off Rate</div>
+              <div class="f4-mdesc">Payments platform — multi-gateway checkout, 5 new markets</div>
+            </div>
+          </div>
+        </div>
+        <div class="f4-footer">
+          <span class="f4-ft">5+ Years Experience</span>
+          <span class="f4-ft">10+ Products Shipped</span>
+          <span class="f4-ft">50M+ Users Reached</span>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#1a1a1a;color:#faf9f6;" onclick="pick(4,'Editorial Serif — Bloomberg/NYT Intellectual')">Choose Design 4 — Editorial Serif</button>
+  </div>
+
+  <!-- ── 5. DASHBOARD PM ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:#18181b;color:#fff;">05</div>
+      <div>
+        <div class="design-name">Dashboard PM</div>
+        <div class="design-style">// Notion · Linear · Product-native</div>
+      </div>
+    </div>
+    <div class="frame" style="border:1px solid #e5e5e5;">
+      <div class="f5">
+        <div class="f5-sidebar">
+          <div class="f5-s-logo">YA</div>
+          <div class="f5-s-icon active">🏠</div>
+          <div class="f5-s-icon">📋</div>
+          <div class="f5-s-icon">🚀</div>
+          <div class="f5-s-icon">📊</div>
+          <div class="f5-s-div"></div>
+          <div class="f5-s-icon">✍️</div>
+          <div class="f5-s-icon">📬</div>
+        </div>
+        <div class="f5-main">
+          <div class="f5-topbar">
+            <div class="f5-breadcrumb">Portfolio / <span>Overview</span></div>
+            <div class="f5-tb-r">
+              <span class="f5-tb-tag">Last updated: today</span>
+              <span class="f5-tb-btn">View Resume</span>
+            </div>
+          </div>
+          <div class="f5-content">
+            <div class="f5-hero-row">
+              <div class="f5-avatar">YA</div>
+              <div class="f5-info">
+                <div class="f5-iname">Yugal Agarwal</div>
+                <div class="f5-irole">Senior Product Manager · India</div>
+                <div class="f5-ibadge">
+                  <span class="f5-ib growth">Growth</span>
+                  <span class="f5-ib platform">Platform</span>
+                  <span class="f5-ib b2c">B2C</span>
+                </div>
+              </div>
+            </div>
+            <div class="f5-metrics">
+              <div class="f5-m"><div class="f5-mv">5+</div><div class="f5-ml">Years</div></div>
+              <div class="f5-m"><div class="f5-mv">10+</div><div class="f5-ml">Products</div></div>
+              <div class="f5-m"><div class="f5-mv">50M+</div><div class="f5-ml">Users</div></div>
+              <div class="f5-m"><div class="f5-mv">3</div><div class="f5-ml">Industries</div></div>
+            </div>
+            <div class="f5-table">
+              <div class="f5-th"><div>Project</div><div>Outcome</div><div>Status</div></div>
+              <div class="f5-tr">
+                <div><div class="f5-tr-name">Onboarding Redesign</div><div class="f5-tr-co">Current Co.</div></div>
+                <div class="metric-val" style="font-size:12px;font-weight:700;color:#18181b;padding:9px 12px;">↑35% Retention</div>
+                <div style="padding:9px 12px;"><span class="f5-tr-status live">Live</span></div>
+              </div>
+              <div class="f5-tr">
+                <div><div class="f5-tr-name">Consumer App 0→1</div><div class="f5-tr-co">Series A</div></div>
+                <div style="font-size:12px;font-weight:700;color:#18181b;padding:9px 12px;">200K MAU</div>
+                <div style="padding:9px 12px;"><span class="f5-tr-status shipped">Shipped</span></div>
+              </div>
+              <div class="f5-tr">
+                <div><div class="f5-tr-name">Payments Platform</div><div class="f5-tr-co">Fintech Co.</div></div>
+                <div style="font-size:12px;font-weight:700;color:#18181b;padding:9px 12px;">↓22% Drop-off</div>
+                <div style="padding:9px 12px;"><span class="f5-tr-status shipped">Shipped</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#18181b;color:#fff;" onclick="pick(5,'Dashboard PM — Notion/Linear Product-native')">Choose Design 5 — Dashboard PM</button>
+  </div>
+
+  <!-- ── 6. GRADIENT MESH ── -->
+  <div class="design-wrap">
+    <div class="label-row">
+      <div class="num" style="background:linear-gradient(135deg,#635bff,#228be6);color:#fff;">06</div>
+      <div>
+        <div class="design-name">Gradient Mesh</div>
+        <div class="design-style">// Linear homepage · Vercel · Premium dark</div>
+      </div>
+    </div>
+    <div class="frame">
+      <div class="f6">
+        <div class="f6-mesh">
+          <div class="f6-g1"></div>
+          <div class="f6-g2"></div>
+          <div class="f6-g3"></div>
+        </div>
+        <div class="f6-nav">
+          <span class="f6-logo">YA<span>.</span></span>
+          <div class="f6-links"><a href="#">About</a><a href="#">Work</a><a href="#">Blog</a></div>
+          <span class="f6-cta">Resume</span>
+        </div>
+        <div class="f6-body">
+          <div class="f6-badge"><div class="f6-badge-dot"></div>Open to opportunities · India</div>
+          <div class="f6-name">
+            <span class="w">Yugal </span><span class="g">Agarwal</span>
+          </div>
+          <div class="f6-sub">// Senior Product Manager · 5+ Years · 50M+ Users</div>
+          <div class="f6-cards">
+            <div class="f6-card"><div class="f6-cv">↑35%</div><div class="f6-cl">D30 Retention</div><div class="f6-ct">// Growth</div></div>
+            <div class="f6-card"><div class="f6-cv">200K</div><div class="f6-cl">MAU Year 1</div><div class="f6-ct">// 0→1</div></div>
+            <div class="f6-card"><div class="f6-cv">↓22%</div><div class="f6-cl">Drop-off</div><div class="f6-ct">// Fintech</div></div>
+          </div>
+          <div class="f6-pills">
+            <span class="f6-pill">Growth</span><span class="f6-pill">Strategy</span><span class="f6-pill">SQL</span><span class="f6-pill">A/B Testing</span><span class="f6-pill">Roadmapping</span><span class="f6-pill">0→1</span>
+          </div>
+          <div class="f6-btns">
+            <span class="f6-b1">View My Work</span>
+            <span class="f6-b2">Download Resume →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#635bff,#228be6);color:#fff;" onclick="pick(6,'Gradient Mesh — Linear/Vercel Premium Dark')">Choose Design 6 — Gradient Mesh</button>
+  </div>
+
+</div>
+
+<script>
+function pick(n,name){
+  alert("Tell Claude:\n\n\"I choose Design "+n+" — "+name+"\"\n\nClaude will rebuild your full portfolio in this style.\n\nYou can also mix: e.g. \"Design 3 layout with Design 2's color scheme\"");
+}
+</script>
+</body>
+</html>

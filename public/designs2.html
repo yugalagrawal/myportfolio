@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Light Design Concepts — Yugal Agarwal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#f0f0f0;font-family:'Plus Jakarta Sans',sans-serif;padding:40px 24px;}
+.page-title{text-align:center;font-size:clamp(18px,2.5vw,26px);font-weight:800;margin-bottom:6px;color:#111;}
+.page-sub{text-align:center;font-size:13px;color:#888;margin-bottom:44px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:32px;max-width:1700px;margin:0 auto;}
+.design-wrap{display:flex;flex-direction:column;gap:12px;}
+.label{font-size:12px;font-weight:700;color:#666;letter-spacing:.06em;text-transform:uppercase;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;margin-left:8px;}
+.frame{width:100%;height:440px;border-radius:18px;overflow:hidden;position:relative;flex-shrink:0;box-shadow:0 8px 40px rgba(0,0,0,0.1);}
+.pick-btn{width:100%;padding:13px;border-radius:12px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;}
+.pick-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+
+/* ══════════════════════════════════════
+   DESIGN A — Bento Grid (Pastel Cute)
+══════════════════════════════════════ */
+.da{background:#fdf6ff;font-family:'Plus Jakarta Sans',sans-serif;height:100%;overflow:hidden;}
+.da .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;}
+.da .logo{font-weight:800;font-size:16px;color:#7c3aed;}
+.da .nav-links{display:flex;gap:14px;}
+.da .nav-links a{font-size:11px;color:#aaa;font-weight:500;}
+.da .cta-n{background:#7c3aed;color:#fff;font-size:11px;padding:6px 14px;border-radius:99px;font-weight:700;}
+.da .bento{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto auto;gap:8px;padding:8px 14px 14px;}
+/* hero card */
+.da .b-hero{grid-column:1/3;background:linear-gradient(135deg,#ede9fe,#fce7f3);border-radius:16px;padding:18px;position:relative;overflow:hidden;}
+.da .b-hero::before{content:'✦';position:absolute;font-size:60px;color:rgba(124,58,237,0.08);top:-10px;right:10px;}
+.da .b-pre{font-size:10px;font-family:'JetBrains Mono';color:#7c3aed;margin-bottom:8px;letter-spacing:.06em;}
+.da .b-name{font-size:22px;font-weight:800;color:#1e1b4b;line-height:1.1;letter-spacing:-.5px;}
+.da .b-name span{color:#7c3aed;}
+.da .b-role{font-size:10px;color:#9ca3c0;margin-top:4px;font-family:'JetBrains Mono';}
+.da .b-btns{display:flex;gap:6px;margin-top:12px;}
+.da .b-btn1{background:#7c3aed;color:#fff;font-size:10px;padding:6px 12px;border-radius:8px;font-weight:700;}
+.da .b-btn2{background:rgba(124,58,237,0.1);color:#7c3aed;font-size:10px;padding:6px 12px;border-radius:8px;font-weight:700;}
+/* avatar card */
+.da .b-avatar{background:linear-gradient(135deg,#fce7f3,#ede9fe);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.da .b-av-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;}
+.da .b-av-name{font-size:10px;font-weight:700;color:#1e1b4b;text-align:center;}
+.da .b-av-badge{font-size:9px;background:rgba(236,72,153,0.1);color:#ec4899;padding:2px 8px;border-radius:99px;font-weight:600;}
+/* stat cards */
+.da .b-stat{border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;}
+.da .b-stat.pink{background:linear-gradient(135deg,#fce7f3,#ffe4e6);}
+.da .b-stat.mint{background:linear-gradient(135deg,#d1fae5,#e0f2fe);}
+.da .b-stat.yellow{background:linear-gradient(135deg,#fef9c3,#fde68a);}
+.da .b-stat.blue{background:linear-gradient(135deg,#dbeafe,#ede9fe);}
+.da .b-sv{font-size:26px;font-weight:800;color:#1e1b4b;}
+.da .b-sl{font-size:9px;color:#888;margin-top:2px;font-weight:600;}
+.da .b-si{font-size:16px;}
+/* skills card */
+.da .b-skills{grid-column:1/3;background:#fff;border-radius:16px;padding:14px;border:1.5px solid #f3e8ff;}
+.da .b-sk-title{font-size:10px;font-weight:700;color:#888;margin-bottom:8px;letter-spacing:.05em;text-transform:uppercase;}
+.da .b-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.da .b-pill{font-size:9px;padding:3px 10px;border-radius:99px;background:#f3e8ff;color:#7c3aed;font-weight:600;font-family:'JetBrains Mono';}
+.da .b-pill.pink{background:#fce7f3;color:#ec4899;}
+.da .b-pill.green{background:#d1fae5;color:#059669;}
+/* quote card */
+.da .b-quote{background:#1e1b4b;border-radius:16px;padding:14px;display:flex;flex-direction:column;justify-content:center;}
+.da .b-qt{font-size:10px;color:rgba(255,255,255,0.6);line-height:1.5;font-style:italic;}
+.da .b-qt-mark{font-size:20px;color:#7c3aed;margin-bottom:4px;line-height:1;}
+
+/* ══════════════════════════════════════
+   DESIGN B — Neo Brutalism
+══════════════════════════════════════ */
+.db{background:#fffbf0;font-family:'Syne',sans-serif;height:100%;}
+.db .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:2.5px solid #111;}
+.db .logo{font-weight:800;font-size:18px;color:#111;letter-spacing:-1px;}
+.db .logo span{background:#fbbf24;padding:0 4px;}
+.db .nav-links{display:flex;gap:0;}
+.db .nav-links a{font-size:11px;color:#111;font-weight:700;padding:6px 12px;border:2px solid #111;border-left:none;text-decoration:none;}
+.db .nav-links a:first-child{border-left:2px solid #111;}
+.db .hero{padding:22px 20px 16px;}
+.db .nb-tag{display:inline-block;background:#fbbf24;color:#111;font-size:10px;font-weight:800;padding:4px 12px;border:2px solid #111;border-radius:0;margin-bottom:12px;font-family:'JetBrains Mono';letter-spacing:.06em;text-transform:uppercase;}
+.db .nb-name{font-size:clamp(28px,5vw,46px);font-weight:800;color:#111;line-height:.95;letter-spacing:-2.5px;margin-bottom:10px;}
+.db .nb-name .underline{text-decoration:underline;text-decoration-color:#fbbf24;text-decoration-thickness:4px;}
+.db .nb-name .box{background:#111;color:#fffbf0;padding:0 6px;}
+.db .nb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;}
+.db .nb-card{border:2.5px solid #111;padding:12px;background:#fff;}
+.db .nb-card.yellow{background:#fef9c3;}
+.db .nb-card.pink{background:#fce7f3;}
+.db .nb-card.green{background:#d1fae5;}
+.db .nb-cv{font-size:22px;font-weight:800;color:#111;font-family:'Syne';}
+.db .nb-cl{font-size:9px;color:#555;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:3px;}
+.db .nb-btns{display:flex;gap:8px;margin-top:14px;}
+.db .nb-b1{background:#111;color:#fffbf0;font-size:12px;font-weight:800;padding:10px 18px;border:2.5px solid #111;}
+.db .nb-b2{background:#fbbf24;color:#111;font-size:12px;font-weight:800;padding:10px 18px;border:2.5px solid #111;}
+.db .nb-exp{margin-top:14px;border-top:2.5px solid #111;padding-top:10px;}
+.db .nb-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1.5px solid #eee;}
+.db .nb-role{font-size:11px;font-weight:800;color:#111;}
+.db .nb-co{font-size:10px;color:#888;font-family:'JetBrains Mono';}
+.db .nb-yr{font-size:10px;font-weight:700;background:#fbbf24;padding:1px 7px;}
+
+/* ══════════════════════════════════════
+   DESIGN C — Soft Sakura / Japanese
+══════════════════════════════════════ */
+.dc{background:#fdf8f8;font-family:'DM Sans',sans-serif;height:100%;position:relative;}
+.dc .sakura-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.dc .petal{position:absolute;width:8px;height:8px;background:rgba(251,207,232,0.5);border-radius:50% 0 50% 0;animation:fall linear infinite;}
+.dc .petal:nth-child(1){left:10%;animation-duration:6s;animation-delay:0s;top:-10px;}
+.dc .petal:nth-child(2){left:25%;animation-duration:8s;animation-delay:1s;top:-10px;width:6px;height:6px;}
+.dc .petal:nth-child(3){left:50%;animation-duration:7s;animation-delay:2s;top:-10px;width:10px;height:10px;}
+.dc .petal:nth-child(4){left:70%;animation-duration:9s;animation-delay:.5s;top:-10px;}
+.dc .petal:nth-child(5){left:85%;animation-duration:6.5s;animation-delay:1.5s;top:-10px;width:5px;height:5px;}
+@keyframes fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(460px) rotate(360deg);opacity:0;}}
+.dc .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;position:relative;z-index:1;}
+.dc .logo{font-weight:700;font-size:16px;color:#be185d;letter-spacing:-.5px;}
+.dc .logo span{color:#f9a8d4;}
+.dc .nav-links{display:flex;gap:16px;}
+.dc .nav-links a{font-size:11px;color:#c4a0a0;font-weight:500;}
+.dc .cta-dc{background:#be185d;color:#fff;font-size:11px;padding:6px 14px;border-radius:99px;font-weight:600;}
+.dc .hero{padding:16px 20px 14px;position:relative;z-index:1;}
+.dc .dc-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;background:#fff0f5;border:1px solid #fbcfe8;color:#be185d;padding:4px 12px;border-radius:99px;font-weight:600;margin-bottom:12px;}
+.dc .dc-dot{width:5px;height:5px;border-radius:50%;background:#be185d;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.dc .dc-name{font-size:clamp(26px,4.5vw,40px);font-weight:700;color:#1c1417;line-height:1.1;letter-spacing:-.5px;margin-bottom:5px;}
+.dc .dc-name span{color:#be185d;}
+.dc .dc-role{font-size:11px;font-family:'JetBrains Mono';color:#c4a0a0;margin-bottom:14px;}
+.dc .dc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.dc .dc-card{background:#fff;border:1px solid #fce7f3;border-radius:14px;padding:12px;text-align:center;}
+.dc .dc-cv{font-size:20px;font-weight:700;color:#be185d;}
+.dc .dc-cl{font-size:9px;color:#c4a0a0;margin-top:3px;}
+.dc .dc-bio{background:#fff;border:1px solid #fce7f3;border-radius:14px;padding:14px;margin-bottom:12px;}
+.dc .dc-bio p{font-size:11px;color:#7a6070;line-height:1.7;}
+.dc .dc-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.dc .dc-pill{font-size:9px;padding:3px 10px;border-radius:99px;background:#fff0f5;border:1px solid #fbcfe8;color:#be185d;font-weight:600;}
+.dc .dc-btns{display:flex;gap:8px;}
+.dc .dc-b1{background:#be185d;color:#fff;font-size:11px;padding:8px 16px;border-radius:10px;font-weight:700;}
+.dc .dc-b2{background:#fff0f5;color:#be185d;border:1px solid #fbcfe8;font-size:11px;padding:8px 16px;border-radius:10px;font-weight:600;}
+
+/* ══════════════════════════════════════
+   DESIGN D — Candy Glassmorphism
+══════════════════════════════════════ */
+.dd{background:#f0f4ff;font-family:'Plus Jakarta Sans',sans-serif;height:100%;position:relative;overflow:hidden;}
+.dd .blob1{position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(251,146,60,0.35),transparent 65%);top:-60px;left:-40px;border-radius:50%;}
+.dd .blob2{position:absolute;width:220px;height:220px;background:radial-gradient(circle,rgba(167,139,250,0.4),transparent 65%);top:-30px;right:-50px;border-radius:50%;}
+.dd .blob3{position:absolute;width:180px;height:180px;background:radial-gradient(circle,rgba(34,211,238,0.3),transparent 65%);bottom:-40px;left:30%;border-radius:50%;}
+.dd .blob4{position:absolute;width:160px;height:160px;background:radial-gradient(circle,rgba(251,207,232,0.5),transparent 65%);bottom:-30px;right:10%;border-radius:50%;}
+.dd .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(255,255,255,0.5);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.7);position:relative;z-index:2;}
+.dd .logo{font-weight:800;font-size:16px;background:linear-gradient(135deg,#f97316,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.dd .nav-links{display:flex;gap:14px;}
+.dd .nav-links a{font-size:11px;color:#888;font-weight:500;}
+.dd .cta-dd{background:linear-gradient(135deg,#f97316,#a855f7);color:#fff;font-size:11px;padding:6px 14px;border-radius:99px;font-weight:700;}
+.dd .hero{padding:18px 20px 14px;position:relative;z-index:2;}
+.dd .dd-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;background:rgba(255,255,255,0.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);color:#7c3aed;padding:4px 12px;border-radius:99px;font-weight:700;margin-bottom:12px;}
+.dd .dd-name{font-size:clamp(26px,4.5vw,40px);font-weight:800;color:#1a1a2e;line-height:1.05;letter-spacing:-1px;margin-bottom:5px;}
+.dd .dd-name .g{background:linear-gradient(135deg,#f97316,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.dd .dd-role{font-size:11px;font-family:'JetBrains Mono';color:#aaa;margin-bottom:14px;}
+.dd .dd-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
+.dd .dd-card{background:rgba(255,255,255,0.6);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.85);border-radius:16px;padding:14px;box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+.dd .dd-cv{font-size:22px;font-weight:800;}
+.dd .dd-cv.orange{color:#f97316;}
+.dd .dd-cv.purple{color:#a855f7;}
+.dd .dd-cv.cyan{color:#06b6d4;}
+.dd .dd-cv.pink{color:#ec4899;}
+.dd .dd-cl{font-size:9px;color:#aaa;margin-top:2px;font-weight:600;}
+.dd .dd-tag2{font-size:9px;font-weight:700;margin-top:6px;font-family:'JetBrains Mono';}
+.dd .dd-tag2.orange{color:#f97316;}
+.dd .dd-tag2.purple{color:#a855f7;}
+.dd .dd-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.dd .dd-pill{font-size:9px;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.9);color:#555;font-weight:600;font-family:'JetBrains Mono';}
+.dd .dd-btns{display:flex;gap:8px;}
+.dd .dd-b1{background:linear-gradient(135deg,#f97316,#a855f7);color:#fff;font-size:11px;padding:9px 16px;border-radius:12px;font-weight:700;box-shadow:0 4px 16px rgba(168,85,247,0.3);}
+.dd .dd-b2{background:rgba(255,255,255,0.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.9);color:#7c3aed;font-size:11px;padding:9px 16px;border-radius:12px;font-weight:600;}
+
+/* ══════════════════════════════════════
+   DESIGN E — Soft Neumorphism / Cream
+══════════════════════════════════════ */
+.de{background:#e8e4dc;font-family:'DM Sans',sans-serif;height:100%;}
+.de .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;}
+.de .logo{font-weight:700;font-size:16px;color:#3d3a35;letter-spacing:-.5px;}
+.de .logo span{color:#c97d4e;}
+.de .nav-links{display:flex;gap:14px;}
+.de .nav-links a{font-size:11px;color:#aaa;font-weight:500;}
+.de .cta-de{background:#c97d4e;color:#fff;font-size:11px;padding:6px 14px;border-radius:99px;font-weight:600;}
+.de .hero{padding:16px 20px 12px;}
+.de .de-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#c97d4e;background:#e8e4dc;border-radius:99px;padding:5px 12px;font-weight:600;margin-bottom:12px;box-shadow:3px 3px 8px rgba(0,0,0,0.12),-2px -2px 6px rgba(255,255,255,0.6);}
+.de .de-dot{width:6px;height:6px;border-radius:50%;background:#c97d4e;}
+.de .de-name{font-size:clamp(26px,4.5vw,40px);font-weight:700;color:#3d3a35;line-height:1.1;letter-spacing:-.5px;margin-bottom:5px;}
+.de .de-name span{color:#c97d4e;}
+.de .de-role{font-size:11px;font-family:'JetBrains Mono';color:#b0a898;margin-bottom:16px;}
+.de .de-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.de .de-card{background:#e8e4dc;border-radius:16px;padding:14px;box-shadow:5px 5px 14px rgba(0,0,0,0.12),-4px -4px 10px rgba(255,255,255,0.7);}
+.de .de-cv{font-size:22px;font-weight:700;color:#3d3a35;}
+.de .de-cl{font-size:9px;color:#b0a898;margin-top:3px;font-weight:600;}
+.de .de-accent{font-size:10px;color:#c97d4e;font-family:'JetBrains Mono';margin-top:6px;font-weight:600;}
+.de .de-bio{background:#e8e4dc;border-radius:14px;padding:13px;margin-bottom:13px;box-shadow:inset 3px 3px 8px rgba(0,0,0,0.1),inset -3px -3px 8px rgba(255,255,255,0.6);}
+.de .de-bio p{font-size:10px;color:#7a7068;line-height:1.7;}
+.de .de-btns{display:flex;gap:10px;}
+.de .de-b1{background:#c97d4e;color:#fff;font-size:11px;padding:9px 18px;border-radius:12px;font-weight:700;box-shadow:3px 3px 8px rgba(0,0,0,0.15);}
+.de .de-b2{background:#e8e4dc;color:#3d3a35;font-size:11px;padding:9px 18px;border-radius:12px;font-weight:600;box-shadow:4px 4px 10px rgba(0,0,0,0.12),-3px -3px 8px rgba(255,255,255,0.7);}
+</style>
+</head>
+<body>
+<div class="page-title">🌸 Light Mode Design Concepts — Cute + Tech-Savvy</div>
+<p class="page-sub">5 fresh directions · soft colours · modern & charming</p>
+
+<div class="grid">
+
+  <!-- ── DESIGN A — Bento Grid ── -->
+  <div class="design-wrap">
+    <div class="label">Design A <span class="badge" style="background:#f3e8ff;color:#7c3aed;">Pastel Bento Grid</span></div>
+    <div class="frame">
+      <div class="da">
+        <div class="da nav">
+          <span class="logo">YA.</span>
+          <div class="nav-links"><a href="#">Work</a><a href="#">Skills</a><a href="#">Blog</a></div>
+          <span class="cta-n">Resume</span>
+        </div>
+        <div class="da bento">
+          <!-- hero -->
+          <div class="da b-hero">
+            <div class="da b-pre">// Senior Product Manager</div>
+            <div class="da b-name">Yugal <span>Agarwal</span></div>
+            <div class="da b-role">Building products people love ✦</div>
+            <div class="da b-btns">
+              <span class="da b-btn1">View Work</span>
+              <span class="da b-btn2">Resume →</span>
+            </div>
+          </div>
+          <!-- avatar -->
+          <div class="da b-avatar">
+            <div class="da b-av-circle">YA</div>
+            <div class="da b-av-name">Yugal<br/>Agarwal</div>
+            <div class="da b-av-badge">PM ✦</div>
+          </div>
+          <!-- stats -->
+          <div class="da b-stat pink">
+            <div class="da b-si">🚀</div>
+            <div><div class="da b-sv">10+</div><div class="da b-sl">Products</div></div>
+          </div>
+          <div class="da b-stat mint">
+            <div class="da b-si">📈</div>
+            <div><div class="da b-sv">↑35%</div><div class="da b-sl">Retention</div></div>
+          </div>
+          <div class="da b-stat yellow">
+            <div class="da b-si">⚡</div>
+            <div><div class="da b-sv">5+</div><div class="da b-sl">Yrs Exp</div></div>
+          </div>
+          <div class="da b-stat blue">
+            <div class="da b-si">👥</div>
+            <div><div class="da b-sv">50M+</div><div class="da b-sl">Users</div></div>
+          </div>
+          <!-- skills -->
+          <div class="da b-skills">
+            <div class="da b-sk-title">Skills</div>
+            <div class="da b-pills">
+              <span class="da b-pill">Growth</span>
+              <span class="da b-pill">Strategy</span>
+              <span class="da b-pill pink">A/B Testing</span>
+              <span class="da b-pill green">SQL</span>
+              <span class="da b-pill">Roadmapping</span>
+              <span class="da b-pill pink">0→1</span>
+              <span class="da b-pill green">Figma</span>
+            </div>
+          </div>
+          <!-- quote -->
+          <div class="da b-quote">
+            <div class="da b-qt-mark">"</div>
+            <div class="da b-qt">Great products are built on trust — in your users, your data, your team.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;" onclick="pick('A','Pastel Bento Grid')">Choose Design A — Bento Grid</button>
+  </div>
+
+  <!-- ── DESIGN B — Neo Brutalism ── -->
+  <div class="design-wrap">
+    <div class="label">Design B <span class="badge" style="background:#fef9c3;color:#92400e;">Neo Brutalism</span></div>
+    <div class="frame">
+      <div class="db">
+        <div class="db nav">
+          <span class="logo">YA<span>.</span></span>
+          <div class="nav-links"><a href="#">About</a><a href="#">Work</a><a href="#">Contact</a></div>
+        </div>
+        <div class="db hero">
+          <div class="db nb-tag">// Senior Product Manager</div>
+          <div class="db nb-name">
+            Yugal<br/><span class="box">Agarwal</span>
+          </div>
+          <div class="db nb-grid">
+            <div class="db nb-card yellow"><div class="db nb-cv">↑35%</div><div class="db nb-cl">Retention</div></div>
+            <div class="db nb-card pink"><div class="db nb-cv">200K</div><div class="db nb-cl">MAU Yr 1</div></div>
+            <div class="db nb-card green"><div class="db nb-cv">5+</div><div class="db nb-cl">Years</div></div>
+          </div>
+          <div class="db nb-btns">
+            <span class="db nb-b1">View Work</span>
+            <span class="db nb-b2">Resume →</span>
+          </div>
+          <div class="db nb-exp">
+            <div class="db nb-row">
+              <div><div class="db nb-role">Senior PM</div><div class="db nb-co">Current Co.</div></div>
+              <span class="db nb-yr">2023→</span>
+            </div>
+            <div class="db nb-row">
+              <div><div class="db nb-role">Product Manager</div><div class="db nb-co">Fintech Co.</div></div>
+              <span class="db nb-yr">2021–22</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#111;color:#fbbf24;border:2.5px solid #111;" onclick="pick('B','Neo Brutalism')">Choose Design B — Neo Brutalism</button>
+  </div>
+
+  <!-- ── DESIGN C — Sakura ── -->
+  <div class="design-wrap">
+    <div class="label">Design C <span class="badge" style="background:#fff0f5;color:#be185d;">Soft Sakura</span></div>
+    <div class="frame">
+      <div class="dc">
+        <div class="sakura-bg">
+          <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+          <div class="petal"></div><div class="petal"></div>
+        </div>
+        <div class="dc nav">
+          <span class="logo">YA<span>.</span></span>
+          <div class="nav-links"><a href="#">About</a><a href="#">Work</a><a href="#">Blog</a></div>
+          <span class="cta-dc">Resume</span>
+        </div>
+        <div class="dc hero">
+          <div class="dc-badge"><div class="dc-dot"></div>Open to opportunities</div>
+          <div class="dc-name">Yugal <span>Agarwal</span></div>
+          <div class="dc-role">// Senior Product Manager</div>
+          <div class="dc-cards">
+            <div class="dc-card"><div class="dc-cv">↑35%</div><div class="dc-cl">Retention</div></div>
+            <div class="dc-card"><div class="dc-cv">200K</div><div class="dc-cl">MAU Yr 1</div></div>
+            <div class="dc-card"><div class="dc-cv">5+</div><div class="dc-cl">Yrs Exp</div></div>
+          </div>
+          <div class="dc-bio"><p>Senior PM building products that scale and delight. I bridge user empathy with data-driven decisions to ship things people love. 🌸</p></div>
+          <div class="dc-pills">
+            <span class="dc-pill">Growth</span><span class="dc-pill">Strategy</span><span class="dc-pill">0→1</span><span class="dc-pill">A/B Testing</span><span class="dc-pill">SQL</span>
+          </div>
+          <div class="dc-btns">
+            <span class="dc-b1">View My Work</span>
+            <span class="dc-b2">Download Resume</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#be185d,#f9a8d4);color:#fff;" onclick="pick('C','Soft Sakura / Japanese Minimal')">Choose Design C — Sakura</button>
+  </div>
+
+  <!-- ── DESIGN D — Candy Glass ── -->
+  <div class="design-wrap">
+    <div class="label">Design D <span class="badge" style="background:rgba(249,115,22,0.1);color:#f97316;">Candy Glassmorphism</span></div>
+    <div class="frame">
+      <div class="dd">
+        <div class="blob1"></div><div class="blob2"></div>
+        <div class="blob3"></div><div class="blob4"></div>
+        <div class="dd nav">
+          <span class="logo">YA.</span>
+          <div class="nav-links"><a href="#">Work</a><a href="#">Skills</a><a href="#">Blog</a></div>
+          <span class="cta-dd">Resume</span>
+        </div>
+        <div class="dd hero">
+          <div class="dd-tag">✦ Senior Product Manager</div>
+          <div class="dd-name">Yugal <span class="g">Agarwal</span></div>
+          <div class="dd-role">// Building products people love</div>
+          <div class="dd-cards">
+            <div class="dd-card"><div class="dd-cv orange">↑35%</div><div class="dd-cl">D30 Retention</div><div class="dd-tag2 orange">// Growth</div></div>
+            <div class="dd-card"><div class="dd-cv purple">200K</div><div class="dd-cl">MAU Year 1</div><div class="dd-tag2 purple">// 0→1</div></div>
+          </div>
+          <div class="dd-pills">
+            <span class="dd-pill">Growth</span><span class="dd-pill">Strategy</span><span class="dd-pill">SQL</span><span class="dd-pill">A/B Testing</span><span class="dd-pill">Figma</span>
+          </div>
+          <div class="dd-btns">
+            <span class="dd-b1">View My Work</span>
+            <span class="dd-b2">Resume →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#f97316,#a855f7);color:#fff;" onclick="pick('D','Candy Glassmorphism')">Choose Design D — Candy Glass</button>
+  </div>
+
+  <!-- ── DESIGN E — Soft Neumorphism ── -->
+  <div class="design-wrap">
+    <div class="label">Design E <span class="badge" style="background:rgba(201,125,78,0.12);color:#c97d4e;">Soft Neumorphism / Cream</span></div>
+    <div class="frame">
+      <div class="de">
+        <div class="de nav">
+          <span class="logo">YA<span>.</span></span>
+          <div class="nav-links"><a href="#">About</a><a href="#">Work</a><a href="#">Blog</a></div>
+          <span class="cta-de">Resume</span>
+        </div>
+        <div class="de hero">
+          <div class="de-badge"><div class="de-dot"></div>Open to opportunities</div>
+          <div class="de-name">Yugal <span>Agarwal</span></div>
+          <div class="de-role">// Senior Product Manager</div>
+          <div class="de-cards">
+            <div class="de-card"><div class="de-cv">↑35%</div><div class="de-cl">D30 Retention</div><div class="de-accent">// Growth</div></div>
+            <div class="de-card"><div class="de-cv">200K</div><div class="de-cl">MAU Year 1</div><div class="de-accent">// 0→1</div></div>
+          </div>
+          <div class="de-bio"><p>Senior PM building impactful digital products at the intersection of empathy, data and strategy. I ship things that scale. ☕</p></div>
+          <div class="de-btns">
+            <span class="de-b1">View My Work</span>
+            <span class="de-b2">Resume →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#c97d4e;color:#fff;" onclick="pick('E','Soft Neumorphism / Cream')">Choose Design E — Cream & Clay</button>
+  </div>
+
+</div>
+
+<script>
+function pick(n,name){
+  alert("Great choice! Tell Claude:\n\n\"I choose Design "+n+" — "+name+"\"\n\nClaude will rebuild your full portfolio in this style!");
+}
+</script>
+</body>
+</html>

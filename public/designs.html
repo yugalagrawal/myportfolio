@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio Design Concepts — Yugal Agarwal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#111;font-family:'Inter',sans-serif;color:#fff;padding:40px 24px;}
+.page-title{text-align:center;font-size:clamp(20px,3vw,28px);font-weight:700;margin-bottom:8px;color:#fff;}
+.page-sub{text-align:center;font-size:14px;color:#666;margin-bottom:48px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:32px;max-width:1600px;margin:0 auto;}
+.design-wrap{display:flex;flex-direction:column;gap:12px;}
+.label{font-size:13px;font-weight:600;color:#888;letter-spacing:.05em;text-transform:uppercase;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:500;margin-left:8px;}
+
+/* ── PREVIEW FRAME ── */
+.frame{width:100%;height:420px;border-radius:16px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+
+/* ══════════════════════════════════════
+   DESIGN 1 — Clean Minimal Editorial
+══════════════════════════════════════ */
+.d1{background:#fafafa;color:#0f0f0f;font-family:'Inter',sans-serif;}
+.d1 .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-bottom:1px solid #e5e7eb;}
+.d1 .nav .logo{font-weight:900;font-size:18px;color:#0f0f0f;letter-spacing:-.5px;}
+.d1 .nav .links{display:flex;gap:20px;}
+.d1 .nav .links a{font-size:12px;color:#6b7280;text-decoration:none;font-weight:500;}
+.d1 .nav .cta-btn{font-size:12px;background:#2563eb;color:#fff;padding:6px 14px;border-radius:6px;font-weight:600;}
+.d1 .hero{padding:40px 28px 28px;}
+.d1 .pre{font-size:11px;font-family:'JetBrains Mono';color:#2563eb;letter-spacing:.08em;margin-bottom:12px;text-transform:uppercase;}
+.d1 .name{font-size:clamp(32px,5vw,48px);font-weight:900;color:#0f0f0f;line-height:1.05;letter-spacing:-2px;margin-bottom:6px;}
+.d1 .name span{color:#2563eb;}
+.d1 .role{font-size:14px;color:#6b7280;margin-bottom:20px;font-weight:400;}
+.d1 .btns{display:flex;gap:10px;margin-bottom:28px;}
+.d1 .btn-p{background:#0f0f0f;color:#fff;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:700;}
+.d1 .btn-o{border:1.5px solid #d1d5db;color:#374151;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:600;}
+.d1 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.d1 .stat{background:#f3f4f6;border-radius:10px;padding:12px 10px;text-align:center;}
+.d1 .stat .v{font-size:22px;font-weight:900;color:#0f0f0f;}
+.d1 .stat .l{font-size:10px;color:#9ca3af;margin-top:2px;}
+.d1 .tag{display:inline-block;font-size:10px;padding:3px 9px;border-radius:4px;font-weight:600;background:#eff6ff;color:#2563eb;margin-right:5px;margin-top:8px;}
+
+/* ══════════════════════════════════════
+   DESIGN 2 — Warm Earthy Tech
+══════════════════════════════════════ */
+.d2{background:linear-gradient(135deg,#16110a 0%,#1e1508 100%);color:#f5ead6;font-family:'Space Grotesk',sans-serif;}
+.d2 .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-bottom:1px solid rgba(232,168,48,0.12);}
+.d2 .logo{font-weight:700;font-size:17px;color:#e8a830;font-family:'JetBrains Mono';}
+.d2 .links2{display:flex;gap:18px;}
+.d2 .links2 a{font-size:12px;color:#a08060;text-decoration:none;}
+.d2 .hero{padding:32px 28px 20px;position:relative;}
+.d2 .glow{position:absolute;top:-20px;right:-20px;width:200px;height:200px;background:radial-gradient(circle,rgba(232,168,48,0.18) 0%,transparent 70%);pointer-events:none;}
+.d2 .badge2{font-size:11px;font-family:'JetBrains Mono';color:#e05a1a;background:rgba(224,90,26,0.12);border:1px solid rgba(224,90,26,0.25);padding:4px 12px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;}
+.d2 .dot{width:6px;height:6px;border-radius:50%;background:#e05a1a;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.d2 .name2{font-size:clamp(26px,4.5vw,42px);font-weight:700;color:#f5ead6;line-height:1.1;letter-spacing:-1px;margin-bottom:6px;}
+.d2 .name2 span{color:#e8a830;}
+.d2 .role2{font-size:13px;color:#8a7060;margin-bottom:18px;font-family:'JetBrains Mono';}
+.d2 .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px;}
+.d2 .card{background:rgba(232,168,48,0.06);border:1px solid rgba(232,168,48,0.15);border-radius:12px;padding:14px;}
+.d2 .card .metric{font-size:22px;font-weight:700;color:#e8a830;}
+.d2 .card .desc{font-size:10px;color:#7a6550;margin-top:3px;}
+.d2 .card .tag2{font-size:10px;color:#e05a1a;font-family:'JetBrains Mono';margin-top:6px;}
+.d2 .btns2{display:flex;gap:10px;margin-top:16px;}
+.d2 .bp{background:linear-gradient(135deg,#e8a830,#e05a1a);color:#16110a;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;}
+.d2 .bo{border:1px solid rgba(232,168,48,0.35);color:#e8a830;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;}
+
+/* ══════════════════════════════════════
+   DESIGN 3 — Monochrome + Pop
+══════════════════════════════════════ */
+.d3{background:#0c0c0c;color:#fff;font-family:'Space Grotesk',sans-serif;}
+.d3 .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-bottom:1px solid #1a1a1a;}
+.d3 .logo3{font-weight:900;font-size:18px;color:#fff;letter-spacing:-1px;}
+.d3 .logo3 span{color:#ff4d4d;}
+.d3 .links3{display:flex;gap:18px;}
+.d3 .links3 a{font-size:12px;color:#444;text-decoration:none;}
+.d3 .hero{padding:32px 28px 20px;}
+.d3 .num{font-size:80px;font-weight:900;color:#1a1a1a;line-height:1;position:absolute;top:52px;right:20px;font-family:'Space Grotesk';}
+.d3 .tag3{display:inline-block;font-size:11px;font-family:'JetBrains Mono';color:#ff4d4d;background:rgba(255,77,77,0.08);border:1px solid rgba(255,77,77,0.25);padding:3px 10px;border-radius:4px;margin-bottom:14px;}
+.d3 .name3{font-size:clamp(28px,5vw,44px);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-2px;margin-bottom:4px;}
+.d3 .name3 .hi{color:#ff4d4d;}
+.d3 .line{width:48px;height:3px;background:#ff4d4d;margin:12px 0;}
+.d3 .role3{font-size:12px;color:#444;font-family:'JetBrains Mono';letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px;}
+.d3 .skills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.d3 .sk{font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid #222;color:#555;font-family:'JetBrains Mono';}
+.d3 .sk.active{border-color:#ff4d4d;color:#ff4d4d;background:rgba(255,77,77,0.06);}
+.d3 .btns3{display:flex;gap:10px;}
+.d3 .bp3{background:#ff4d4d;color:#fff;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:700;}
+.d3 .bo3{border:1px solid #222;color:#555;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:600;}
+.d3 .exp{margin-top:16px;border-top:1px solid #1a1a1a;padding-top:14px;}
+.d3 .exp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #111;}
+.d3 .exp-title{font-size:12px;font-weight:600;color:#fff;}
+.d3 .exp-co{font-size:10px;color:#333;font-family:'JetBrains Mono';}
+.d3 .exp-yr{font-size:10px;color:#ff4d4d;font-family:'JetBrains Mono';}
+
+/* ══════════════════════════════════════
+   DESIGN 4 — Aurora / Northern Lights
+══════════════════════════════════════ */
+.d4{background:#050810;color:#e8f4f8;font-family:'Space Grotesk',sans-serif;position:relative;overflow:hidden;}
+.d4 .aurora{position:absolute;inset:0;pointer-events:none;}
+.d4 .a1{position:absolute;width:300px;height:300px;background:radial-gradient(ellipse,rgba(56,189,248,0.18) 0%,transparent 65%);top:-80px;left:-60px;animation:drift1 8s ease-in-out infinite;}
+.d4 .a2{position:absolute;width:280px;height:280px;background:radial-gradient(ellipse,rgba(139,92,246,0.2) 0%,transparent 65%);top:-40px;right:-40px;animation:drift2 10s ease-in-out infinite;}
+.d4 .a3{position:absolute;width:260px;height:260px;background:radial-gradient(ellipse,rgba(16,185,129,0.12) 0%,transparent 65%);bottom:-60px;left:30%;animation:drift3 12s ease-in-out infinite;}
+@keyframes drift1{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,15px);}}
+@keyframes drift2{0%,100%{transform:translate(0,0);}50%{transform:translate(-15px,20px);}}
+@keyframes drift3{0%,100%{transform:translate(0,0);}50%{transform:translate(10px,-20px);}}
+.d4 .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;position:relative;z-index:1;}
+.d4 .logo4{font-weight:700;font-size:17px;color:#38bdf8;font-family:'JetBrains Mono';}
+.d4 .links4{display:flex;gap:18px;}
+.d4 .links4 a{font-size:12px;color:rgba(232,244,248,0.35);text-decoration:none;}
+.d4 .hero{padding:24px 28px 20px;position:relative;z-index:1;}
+.d4 .badge4{font-size:11px;font-family:'JetBrains Mono';color:#38bdf8;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);padding:4px 12px;border-radius:99px;display:inline-block;margin-bottom:14px;}
+.d4 .name4{font-size:clamp(26px,4.5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:6px;}
+.d4 .name4 .g{background:linear-gradient(135deg,#38bdf8,#8b5cf6,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.d4 .role4{font-size:12px;color:rgba(232,244,248,0.4);font-family:'JetBrains Mono';margin-bottom:16px;}
+.d4 .cards4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.d4 .c4{background:rgba(255,255,255,0.04);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px;}
+.d4 .c4 .m{font-size:20px;font-weight:700;background:linear-gradient(135deg,#38bdf8,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.d4 .c4 .d{font-size:10px;color:rgba(232,244,248,0.35);margin-top:2px;}
+.d4 .btns4{display:flex;gap:10px;margin-top:14px;}
+.d4 .bp4{background:linear-gradient(135deg,#38bdf8,#8b5cf6);color:#050810;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;}
+.d4 .bo4{border:1px solid rgba(56,189,248,0.25);color:#38bdf8;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;}
+.d4 .pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
+.d4 .pill{font-size:10px;padding:3px 10px;border-radius:99px;border:1px solid rgba(139,92,246,0.2);color:rgba(232,244,248,0.45);font-family:'JetBrains Mono';}
+
+/* ══════════════════════════════════════
+   DESIGN 5 — Light Glassmorphism
+══════════════════════════════════════ */
+.d5{background:linear-gradient(135deg,#dde8ff 0%,#ede5ff 50%,#e5f0ff 100%);color:#1e1b4b;font-family:'Inter',sans-serif;position:relative;}
+.d5 .mesh{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(139,92,246,0.18) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 20% 80%,rgba(79,70,229,0.14) 0%,transparent 60%);pointer-events:none;}
+.d5 .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:rgba(255,255,255,0.45);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.5);position:relative;z-index:1;}
+.d5 .logo5{font-weight:800;font-size:17px;color:#4f46e5;}
+.d5 .links5{display:flex;gap:16px;}
+.d5 .links5 a{font-size:12px;color:#6d7ab8;text-decoration:none;font-weight:500;}
+.d5 .cta5{background:#4f46e5;color:#fff;font-size:12px;padding:6px 14px;border-radius:8px;font-weight:600;}
+.d5 .hero{padding:28px 24px 16px;position:relative;z-index:1;}
+.d5 .badge5{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,0.65);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.8);color:#4f46e5;font-weight:600;margin-bottom:14px;}
+.d5 .dot5{width:6px;height:6px;border-radius:50%;background:#22c55e;}
+.d5 .name5{font-size:clamp(26px,4.5vw,40px);font-weight:900;line-height:1.08;letter-spacing:-1.5px;margin-bottom:4px;color:#1e1b4b;}
+.d5 .name5 .g5{background:linear-gradient(135deg,#4f46e5,#7c3aed,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.d5 .role5{font-size:12px;color:#7c85c8;margin-bottom:14px;font-family:'JetBrains Mono';}
+.d5 .glass-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
+.d5 .gc{background:rgba(255,255,255,0.55);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.75);border-radius:14px;padding:12px;box-shadow:0 4px 16px rgba(79,70,229,0.08);}
+.d5 .gc .mv{font-size:22px;font-weight:900;color:#4f46e5;}
+.d5 .gc .ml{font-size:10px;color:#9ca3c8;margin-top:2px;}
+.d5 .gc .mt{font-size:10px;color:#6d7ab8;font-weight:600;margin-top:6px;}
+.d5 .btns5{display:flex;gap:8px;}
+.d5 .bp5{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:8px 16px;border-radius:10px;font-size:12px;font-weight:700;box-shadow:0 4px 14px rgba(79,70,229,0.35);}
+.d5 .bo5{background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.8);color:#4f46e5;padding:8px 16px;border-radius:10px;font-size:12px;font-weight:600;}
+
+/* Choice buttons */
+.pick-btn{width:100%;padding:12px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;letter-spacing:.01em;}
+.pick-btn:hover{transform:translateY(-2px);}
+</style>
+</head>
+<body>
+<div class="page-title">🎨 Design Concepts — Choose Your Portfolio Style</div>
+<p class="page-sub">5 completely different directions for your PM portfolio · Click one to tell Claude which you prefer</p>
+
+<div class="grid">
+
+  <!-- ── DESIGN 1 ── -->
+  <div class="design-wrap">
+    <div class="label">Design 1 <span class="badge" style="background:#eff6ff;color:#2563eb;">Clean Minimal Editorial</span></div>
+    <div class="frame">
+      <div class="d1" style="height:100%;">
+        <div class="d1 nav">
+          <span class="logo">YA.</span>
+          <div class="links"><a href="#">About</a><a href="#">Work</a><a href="#">Skills</a><a href="#">Contact</a></div>
+          <span class="cta-btn">Resume</span>
+        </div>
+        <div class="d1 hero">
+          <div class="pre">// Senior Product Manager</div>
+          <div class="name">Yugal <span>Agarwal</span></div>
+          <div class="role">Turning complex problems into products people love.</div>
+          <div class="btns">
+            <span class="btn-p">View My Work</span>
+            <span class="btn-o">Download Resume</span>
+          </div>
+          <div class="stats">
+            <div class="stat"><div class="v">5+</div><div class="l">Yrs Experience</div></div>
+            <div class="stat"><div class="v">10+</div><div class="l">Products Shipped</div></div>
+            <div class="stat"><div class="v">3</div><div class="l">Industries</div></div>
+            <div class="stat"><div class="v">50M+</div><div class="l">Users Impacted</div></div>
+          </div>
+          <div><span class="tag">Growth</span><span class="tag">Strategy</span><span class="tag">0→1</span><span class="tag">Data</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#0f0f0f;color:#fff;" onclick="pick(1)">Choose Design 1 — Editorial</button>
+  </div>
+
+  <!-- ── DESIGN 2 ── -->
+  <div class="design-wrap">
+    <div class="label">Design 2 <span class="badge" style="background:rgba(232,168,48,0.12);color:#e8a830;">Warm Earthy Tech</span></div>
+    <div class="frame">
+      <div class="d2" style="height:100%;">
+        <div class="d2 nav">
+          <span class="logo">YA.</span>
+          <div class="links2"><a href="#">About</a><a href="#">Work</a><a href="#">Skills</a></div>
+        </div>
+        <div class="d2 hero">
+          <div class="glow"></div>
+          <div class="badge2"><div class="dot"></div>Open to Opportunities</div>
+          <div class="name2">Yugal <span>Agarwal</span></div>
+          <div class="role2">// Senior Product Manager</div>
+          <div class="btns2">
+            <span class="bp">View My Work</span>
+            <span class="bo">Resume →</span>
+          </div>
+          <div class="cards">
+            <div class="card"><div class="metric">↑35%</div><div class="desc">D30 Retention lift via onboarding redesign</div><div class="tag2">// Growth</div></div>
+            <div class="card"><div class="metric">200K</div><div class="desc">MAU achieved in first year post-launch</div><div class="tag2">// 0→1</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#e8a830,#e05a1a);color:#16110a;" onclick="pick(2)">Choose Design 2 — Warm Earthy</button>
+  </div>
+
+  <!-- ── DESIGN 3 ── -->
+  <div class="design-wrap">
+    <div class="label">Design 3 <span class="badge" style="background:rgba(255,77,77,0.1);color:#ff4d4d;">Monochrome + Red Pop</span></div>
+    <div class="frame">
+      <div class="d3" style="height:100%;position:relative;">
+        <div class="d3 nav">
+          <span class="logo3">YA<span>.</span></span>
+          <div class="links3"><a href="#">About</a><a href="#">Work</a><a href="#">Skills</a></div>
+        </div>
+        <div class="d3 hero" style="position:relative;">
+          <div class="num">PM</div>
+          <div class="tag3">// 05 Years Experience</div>
+          <div class="name3">Yugal<br/><span class="hi">Agarwal</span></div>
+          <div class="line"></div>
+          <div class="role3">Senior Product Manager</div>
+          <div class="skills">
+            <span class="sk active">Growth</span><span class="sk active">Strategy</span><span class="sk">SQL</span><span class="sk">0→1</span><span class="sk active">A/B Testing</span><span class="sk">Roadmap</span>
+          </div>
+          <div class="btns3">
+            <span class="bp3">View Work</span>
+            <span class="bo3">Resume</span>
+          </div>
+          <div class="exp">
+            <div class="exp-row"><div><div class="exp-title">Senior PM</div><div class="exp-co">Current Company</div></div><div class="exp-yr">2023→</div></div>
+            <div class="exp-row"><div><div class="exp-title">Product Manager</div><div class="exp-co">Fintech Co.</div></div><div class="exp-yr">2021–22</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:#ff4d4d;color:#fff;" onclick="pick(3)">Choose Design 3 — Monochrome Bold</button>
+  </div>
+
+  <!-- ── DESIGN 4 ── -->
+  <div class="design-wrap">
+    <div class="label">Design 4 <span class="badge" style="background:rgba(56,189,248,0.1);color:#38bdf8;">Aurora / Northern Lights</span></div>
+    <div class="frame">
+      <div class="d4" style="height:100%;">
+        <div class="aurora">
+          <div class="a1"></div>
+          <div class="a2"></div>
+          <div class="a3"></div>
+        </div>
+        <div class="d4 nav">
+          <span class="logo4">YA.</span>
+          <div class="links4"><a href="#">About</a><a href="#">Work</a><a href="#">Contact</a></div>
+        </div>
+        <div class="d4 hero">
+          <div class="badge4">✦ Open to opportunities</div>
+          <div class="name4">Yugal<br/><span class="g">Agarwal</span></div>
+          <div class="role4">// Senior Product Manager</div>
+          <div class="btns4">
+            <span class="bp4">View My Work</span>
+            <span class="bo4">Resume →</span>
+          </div>
+          <div class="cards4">
+            <div class="c4"><div class="m">↑35%</div><div class="d">Retention via onboarding</div></div>
+            <div class="c4"><div class="m">200K</div><div class="d">MAU Year 1</div></div>
+          </div>
+          <div class="pills">
+            <span class="pill">Growth</span><span class="pill">Strategy</span><span class="pill">0→1</span><span class="pill">Data</span><span class="pill">Roadmap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#38bdf8,#8b5cf6);color:#050810;" onclick="pick(4)">Choose Design 4 — Aurora</button>
+  </div>
+
+  <!-- ── DESIGN 5 ── -->
+  <div class="design-wrap">
+    <div class="label">Design 5 <span class="badge" style="background:rgba(79,70,229,0.1);color:#4f46e5;">Light Glassmorphism</span></div>
+    <div class="frame">
+      <div class="d5" style="height:100%;">
+        <div class="mesh"></div>
+        <div class="d5 nav">
+          <span class="logo5">YA.</span>
+          <div class="links5"><a href="#">About</a><a href="#">Work</a><a href="#">Skills</a></div>
+          <span class="cta5">Resume</span>
+        </div>
+        <div class="d5 hero">
+          <div class="badge5"><span class="dot5"></span>Available for opportunities</div>
+          <div class="name5">Yugal <span class="g5">Agarwal</span></div>
+          <div class="role5">// Senior Product Manager</div>
+          <div class="glass-cards">
+            <div class="gc"><div class="mv">↑35%</div><div class="ml">D30 Retention</div><div class="mt">Onboarding Redesign</div></div>
+            <div class="gc"><div class="mv">200K</div><div class="ml">MAU Year 1</div><div class="mt">0→1 Consumer App</div></div>
+          </div>
+          <div class="btns5">
+            <span class="bp5">View My Work</span>
+            <span class="bo5">Download Resume</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="pick-btn" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;" onclick="pick(5)">Choose Design 5 — Light Glass</button>
+  </div>
+
+</div>
+
+<script>
+function pick(n){
+  const names={1:"Clean Minimal Editorial (white, blue accent)",2:"Warm Earthy Tech (dark brown, amber/orange)",3:"Monochrome + Red Pop (black, white, red accent)",4:"Aurora Northern Lights (dark, teal/violet/green glows)",5:"Light Glassmorphism (lavender gradient, frosted glass)"};
+  alert("Great choice! Tell Claude: \"I pick Design "+n+" — "+names[n]+"\"\n\nClaude will rebuild the full portfolio in that style.");
+}
+</script>
+</body>
+</html>
