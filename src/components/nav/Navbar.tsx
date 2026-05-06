@@ -78,8 +78,26 @@ export default function Navbar() {
                 <li key={link.href}>
                   <button
                     onClick={() => handleNavClick(link.href)}
-                    className="text-sm font-medium transition-all duration-200 relative group"
-                    style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.35)" }}
+                    className="text-sm font-medium transition-all duration-200 relative group px-3 py-1.5 rounded-lg"
+                    style={{
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.35)",
+                    }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLElement;
+                      if (!isActive) {
+                        el.style.color = "rgba(255,255,255,0.85)";
+                        el.style.background = "rgba(99,91,255,0.1)";
+                        el.style.boxShadow = "0 0 12px rgba(99,91,255,0.2)";
+                      }
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLElement;
+                      if (!isActive) {
+                        el.style.color = "rgba(255,255,255,0.35)";
+                        el.style.background = "transparent";
+                        el.style.boxShadow = "none";
+                      }
+                    }}
                   >
                     {link.label}
                     <span

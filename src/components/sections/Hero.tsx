@@ -161,13 +161,13 @@ export default function Hero() {
           <>
             <FloatingBubble
               emoji={g.emoji} text={g.text} hoverText={g.hover}
-              style={{ bottom: "38%", left: "2%" }} delay={0.9} duration={4}
-              className="hidden sm:flex"
+              style={{ bottom: "12%", left: "2%" }} delay={0.9} duration={4}
+              className="hidden lg:flex"
             />
             <FloatingBubble
               emoji={m.emoji} text={m.text} hoverText={m.hover}
-              style={{ bottom: "32%", right: "2%" }} delay={1.2} duration={3.5}
-              className="hidden sm:flex"
+              style={{ bottom: "12%", right: "2%" }} delay={1.2} duration={3.5}
+              className="hidden lg:flex"
             />
           </>
         );
