@@ -68,10 +68,10 @@ function FloatingBubble({ emoji, text, hoverText, style, delay, duration, classN
         backdropFilter: "blur(16px)",
         boxShadow:      "0 8px 32px rgba(99,91,255,0.12)",
         color:          "rgba(255,255,255,0.75)",
-        whiteSpace:     "nowrap",
+        whiteSpace:     "normal",
         fontFamily:     "var(--font-mono)",
         fontSize:       "clamp(0.62rem, 1.8vw, 0.78rem)",
-        minWidth:       "max-content",
+        maxWidth:       "160px",
         transition:     "border-color 0.2s, box-shadow 0.2s",
         ...(hovered ? {
         borderColor: "rgba(99,91,255,0.6)",
@@ -161,12 +161,12 @@ export default function Hero() {
           <>
             <FloatingBubble
               emoji={g.emoji} text={g.text} hoverText={g.hover}
-              style={{ bottom: "12%", left: "2%" }} delay={0.9} duration={4}
+              style={{ bottom: "72px", left: "2%" }} delay={0.9} duration={4}
               className="hidden lg:flex"
             />
             <FloatingBubble
               emoji={m.emoji} text={m.text} hoverText={m.hover}
-              style={{ bottom: "12%", right: "2%" }} delay={1.2} duration={3.5}
+              style={{ bottom: "72px", right: "2%" }} delay={1.2} duration={3.5}
               className="hidden lg:flex"
             />
           </>
