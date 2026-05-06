@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────
-//  EDIT THIS FILE to update your work experience timeline
+//  EDIT THIS FILE to update your work experience
 // ─────────────────────────────────────────────────────────
 
 export interface ExperienceItem {
@@ -7,58 +7,59 @@ export interface ExperienceItem {
   role:        string;
   period:      string;
   location:    string;
-  type:        "Full-time" | "Contract" | "Intern";
+  type:        "Full-time" | "Contract" | "Intern" | "Founder";
   description: string;
   bullets:     string[];
   tags:        string[];
   current?:    boolean;
+  url?:        string;
 }
 
 export const experience: ExperienceItem[] = [
   {
-    company:     "Your Current Company",
-    role:        "Senior Product Manager",
-    period:      "Jan 2023 – Present",
-    location:    "Remote / India",
-    type:        "Full-time",
-    current:     true,
-    description: "Leading product strategy for a core consumer product.",
-    bullets: [
-      "Drove a 35% increase in D30 retention by redesigning the onboarding funnel",
-      "Launched 3 major features in 6 months, each with a defined OKR and metric playbook",
-      "Partnered with engineering, design, and marketing across 4 time zones",
-      "Built and maintained the product roadmap, prioritized using RICE scoring",
-    ],
-    tags: ["Growth", "B2C", "Retention"],
-  },
-  {
-    company:     "Previous Company",
+    company:     "LetsTransport",
     role:        "Product Manager",
-    period:      "Jun 2021 – Dec 2022",
+    period:      "May 2026 – Present",
     location:    "Bangalore, India",
     type:        "Full-time",
-    description: "Owned the payments and checkout experience for a fintech platform.",
+    current:     true,
+    description: "Freshly onboarded. Impact: loading...",
     bullets: [
-      "Reduced checkout drop-off by 22% through UX iteration and A/B testing",
-      "Integrated 2 new payment gateways, expanding to 5 new markets",
-      "Led discovery sessions with 40+ enterprise clients to inform the B2B roadmap",
-      "Shipped a real-time analytics dashboard used by 500+ merchants",
+      "Still finding the coffee machine! Impact loading soon... ☕",
     ],
-    tags: ["Fintech", "B2B", "Payments"],
+    tags: ["Logistics", "Growth"],
+    url: "https://www.letstransport.com",
   },
   {
-    company:     "Startup / Earlier Role",
-    role:        "Associate Product Manager",
-    period:      "Aug 2019 – May 2021",
-    location:    "Delhi, India",
+    company:     "Media.net",
+    role:        "Sr. Product Analyst",
+    period:      "May 2023 – May 2026",
+    location:    "Bangalore, India",
     type:        "Full-time",
-    description: "First PM hire at a Series A startup — built 0→1 products.",
+    description: "Owned AdTech analytics — RTB pipelines, keyword intelligence, and the tool nobody knew they needed.",
     bullets: [
-      "Built the MVP from scratch and achieved product-market fit within 8 months",
-      "Grew MAU from 0 to 200K in the first year post-launch",
-      "Established the product development process, sprint cadence, and OKR framework",
-      "Ran 50+ user interviews and usability studies to shape the core product vision",
+      "Ran RCAs on programmatic bidders & keyword performance to diagnose revenue leakage — roadmap fixes recovered **25% of potential losses** over 2 years by shifting focus to high-yield opportunities.",
+      "Shipped PoCs (Diversity/Relevance Scores, App Bidding) end-to-end — delivered **$40K/week in cost savings**, a **10% reduction** in total bidding costs.",
+      "Automated a pre-bid workflow to surface high-revenue ad slots — unlocked **+$7K/week** in incremental revenue and eliminated **15 hrs/week** of manual analysis.",
+      "Owned the internal Data Dashboard product (real-time viz, spam detection, RCA workflows, custom alerts) — saved **10 hrs/week** in manual validation for publisher-managing teams.",
     ],
-    tags: ["0→1", "Startup", "Consumer"],
+    tags: ["AdTech", "RTB", "Analytics", "Workflows", "Product"],
+    url: "https://www.media.net",
+  },
+  {
+    company:     "Nogozo",
+    role:        "Founder",
+    period:      "Jun 2020 – Mar 2023",
+    location:    "Agra, India",
+    type:        "Founder",
+    description: "eComm+SaaS, built by a broke college kid — backed by UP Govt, pitched to the Sharks, regrets: 0, Users: 10k+",
+    bullets: [
+      "Built a Buy/Rent/Sell book app from scratch targeting Tier-2/3 city students — scaled to **10K+ users** and secured sponsorships from publishers & coaching institutes for in-app ads.",
+      "Developed a **Merchant & Delivery App Suite** as a SaaS layer for sellers — expanded into corporate book gifting and secured B2B clients including Decimal Technologies.",
+      "Led a team of **12+ people** across product, marketing & ops — won **₹5L govt grant** (StartinUp), incubated under StartupIndia, and qualified for **Shark Tank India S1** auditions.",
+      "Before pivoting to eComm+SaaS, Nogozo started as a social initiative during COVID-19 — a hyperlocal app that onboarded **30+ merchants**, hit **1K+ downloads in 3 months**, and got featured in **Dainik Jagran**.",
+    ],
+    tags: ["0→1", "eCommerce", "SaaS", "Startup", "Shark Tank"],
+    url: "https://www.nogozo.com",
   },
 ];

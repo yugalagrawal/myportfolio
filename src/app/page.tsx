@@ -1,12 +1,12 @@
-import Navbar         from "@/components/nav/Navbar";
-import ScrollProgress  from "@/components/ui/ScrollProgress";
-import Hero            from "@/components/sections/Hero";
-import About           from "@/components/sections/About";
-import Experience      from "@/components/sections/Experience";
-import Projects        from "@/components/sections/Projects";
-import Skills          from "@/components/sections/Skills";
-import PersonalSpace   from "@/components/sections/PersonalSpace";
-import Contact         from "@/components/sections/Contact";
+import Navbar        from "@/components/nav/Navbar";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import Hero           from "@/components/sections/Hero";
+import About          from "@/components/sections/About";
+import Experience     from "@/components/sections/Experience";
+import Projects       from "@/components/sections/Projects";
+import StartupStory   from "@/components/sections/StartupStory";
+import Library        from "@/components/sections/Library";
+import Contact        from "@/components/sections/Contact";
 
 export default function Home() {
   return (
@@ -17,8 +17,8 @@ export default function Home() {
       <About />
       <Experience />
       <Projects />
-      <Skills />
-      <PersonalSpace />
+      <StartupStory />
+      <Library />
       <Contact />
     </main>
   );

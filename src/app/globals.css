@@ -101,10 +101,10 @@ body {
 .section-container {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 80px 24px;
+  padding: 56px 24px;
 }
-@media (min-width: 768px)  { .section-container { padding: 100px 48px; } }
-@media (min-width: 1024px) { .section-container { padding: 120px 64px; } }
+@media (min-width: 768px)  { .section-container { padding: 72px 48px; } }
+@media (min-width: 1024px) { .section-container { padding: 80px 64px; } }
 
 /* ─── Pill tags ─── */
 .pill {

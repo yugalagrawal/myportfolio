@@ -6,12 +6,12 @@ import { Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const navLinks = [
-  { label: "About",          href: "#about" },
-  { label: "Experience",     href: "#experience" },
-  { label: "Projects",       href: "#projects" },
-  { label: "Skills",         href: "#skills" },
-  { label: "Personal Space", href: "#personal-space" },
-  { label: "Contact",        href: "#contact" },
+  { label: "About",      href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects",   href: "#projects" },
+  { label: "My Startup", href: "#startup" },
+  { label: "Library",    href: "#library" },
+  { label: "Contact",    href: "#contact" },
 ];
 
 export default function Navbar() {

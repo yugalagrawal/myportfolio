@@ -10,7 +10,17 @@
       "Bash(git commit -m 'Initial portfolio: Next.js 16 + Tailwind v4 + Framer Motion cyberpunk design *)",
       "mcp__Claude_Preview__preview_start",
       "PowerShell(Stop-Process -Id 20924 -Force -ErrorAction SilentlyContinue)",
-      "Bash(git commit -m 'Redesign: Gradient Mesh theme \\(Linear/Vercel aesthetic\\) *)"
+      "Bash(git commit -m 'Redesign: Gradient Mesh theme \\(Linear/Vercel aesthetic\\) *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(dir \"C:\\\\Users\\\\yugal.a\\\\Desktop\\\\Claude Works\\\\Portfolio\\\\public\\\\images\\\\projects\")",
+      "WebFetch(domain:drive.google.com)",
+      "WebFetch(domain:www.notion.so)",
+      "Bash(dir /s /-c)",
+      "Bash(findstr \"bytes\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\yugal.a\\\\Desktop\\\\Claude Works\\\\Portfolio\\\\public\\\\images\" -Recurse | Measure-Object -Property Length -Sum | Select-Object @{N='Total MB';E={[math]::Round\\($_.Sum/1MB,1\\)}},Count)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git config *)"
     ]
   }
 }
