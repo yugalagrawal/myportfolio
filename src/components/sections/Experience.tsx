@@ -210,7 +210,7 @@ export default function Experience() {
                 <div className="h-0.5 w-full"
                   style={{ background: `linear-gradient(90deg, ${theme.color}, ${theme.color}44, transparent)` }} />
 
-                <div className="px-5 py-4 sm:px-6 sm:py-5 flex items-center gap-4">
+                <div className="px-4 py-4 sm:px-6 sm:py-5 flex items-center gap-4 overflow-hidden">
                   {/* Left — role / company / meta */}
                   <div className="flex items-center gap-4 flex-1 min-w-0">
                     <div className="flex-shrink-0">
@@ -289,9 +289,10 @@ export default function Experience() {
               <motion.div
                 initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
                 transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                className="fixed top-0 right-0 h-full z-50 overflow-y-auto"
+                className="fixed top-0 right-0 h-full z-50 overflow-y-auto overflow-x-hidden"
                 style={{
                   width: "min(480px, 100vw)",
+                  maxWidth: "100vw",
                   background: "rgba(8,5,20,0.98)",
                   borderLeft: `1px solid ${theme.border}`,
                   boxShadow: `-20px 0 60px rgba(0,0,0,0.6)`,
@@ -361,7 +362,7 @@ export default function Experience() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 + i * 0.08 }}
                           className="flex items-start gap-3 text-sm leading-relaxed"
-                          style={{ color: "rgba(255,255,255,0.65)" }}>
+                          style={{ color: "rgba(255,255,255,0.65)", wordBreak: "break-word", overflowWrap: "anywhere" }}>
                           <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: theme.color }} />
                           <span>{b.split(/(\*\*[^*]+\*\*)/).map((part, j) =>
                             part.startsWith("**") && part.endsWith("**")

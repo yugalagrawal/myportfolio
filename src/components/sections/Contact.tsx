@@ -60,7 +60,7 @@ export default function Contact() {
             Find me on
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl">
             {socials.map(({ icon: Icon, href, label, color, sub }) => (
               <motion.a
                 key={label}

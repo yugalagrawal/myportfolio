@@ -19,7 +19,7 @@
 
 /* ─── Base ─── */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; height: 100%; }
+html { scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
 
 body {
   background-color: #06030f;
