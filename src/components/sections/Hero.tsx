@@ -39,13 +39,14 @@ const mealMap = {
   night:     { emoji: "🍽️", text: "Dinner done?",    hover: "Don't tell me you skipped it" },
 };
 
-function FloatingBubble({ emoji, text, hoverText, style, delay, duration }: {
+function FloatingBubble({ emoji, text, hoverText, style, delay, duration, className = "" }: {
   emoji: string;
   text: string;
   hoverText: string;
   style: React.CSSProperties;
   delay: number;
   duration: number;
+  className?: string;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -60,7 +61,7 @@ function FloatingBubble({ emoji, text, hoverText, style, delay, duration }: {
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="absolute flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl cursor-default overflow-hidden"
+      className={`absolute flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl cursor-default overflow-hidden ${className}`}
       style={{
         background:     "rgba(255,255,255,0.05)",
         border:         "1px solid rgba(99,91,255,0.25)",
@@ -161,17 +162,19 @@ export default function Hero() {
             <FloatingBubble
               emoji={g.emoji} text={g.text} hoverText={g.hover}
               style={{ bottom: "38%", left: "2%" }} delay={0.9} duration={4}
+              className="hidden sm:flex"
             />
             <FloatingBubble
               emoji={m.emoji} text={m.text} hoverText={m.hover}
               style={{ bottom: "32%", right: "2%" }} delay={1.2} duration={3.5}
+              className="hidden sm:flex"
             />
           </>
         );
       })()}
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto w-full">
+      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto w-full pt-20 sm:pt-0">
         {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -180,7 +183,7 @@ export default function Hero() {
           className="font-black leading-none tracking-tight mb-5"
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(52px, 10vw, 110px)",
+            fontSize: "clamp(42px, 10vw, 110px)",
             letterSpacing: "-4px",
           }}
         >
@@ -233,7 +236,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="text-base sm:text-lg max-w-lg mx-auto mb-10 leading-relaxed"
+          className="text-base sm:text-lg max-w-lg mx-auto mb-6 sm:mb-10 leading-relaxed"
           style={{ color: "rgba(255,255,255,0.3)" }}
         >
           {profile.tagline}
@@ -244,7 +247,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5 sm:mb-6"
         >
           <button
             onClick={() => scrollTo("projects")}
@@ -255,7 +258,7 @@ export default function Hero() {
           </button>
           <button
             onClick={() => scrollTo("experience")}
-            className="btn-outline w-full sm:w-auto min-h-[48px] justify-center"
+            className="btn-outline hidden sm:flex w-full sm:w-auto min-h-[48px] justify-center"
           >
             <Building2 size={15} />
             Work Experience
@@ -279,7 +282,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.52 }}
-          className="inline-flex items-center gap-2 mb-10 px-4 py-2 rounded-full glass cursor-pointer"
+          className="inline-flex items-center gap-2 mb-6 sm:mb-10 px-4 py-2 rounded-full glass cursor-pointer"
           style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-mono)", fontSize: "0.75rem" }}
         >
           <motion.span
