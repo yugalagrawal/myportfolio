@@ -6,7 +6,8 @@ import Link from "next/link";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Circle, BookOpen,
   Clock, Award, Menu, X, ChevronRight, Zap, Target,
-  TrendingUp, Code, Brain, Sparkles, RotateCcw,
+  TrendingUp, Code, Brain, Sparkles, RotateCcw, Mail,
+  Layers, Star,
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════
@@ -1150,13 +1151,179 @@ function BottomNav({
 }
 
 /* ═══════════════════════════════════════════════════
+   PM & STARTUPS LANDING PAGE  (tile hub)
+═══════════════════════════════════════════════════ */
+function PMLanding({ onOpenCourse, completed }: {
+  onOpenCourse: () => void;
+  completed: Set<string>;
+}) {
+  const pct = Math.round((completed.size / TOTAL) * 100);
+  const hasProgress = completed.size > 0;
+
+  const tiles = [
+    {
+      icon: BookOpen,
+      label: "PM Master Guide",
+      tag: hasProgress ? `${pct}% complete` : "Beginner → Intermediate",
+      tagColor: hasProgress ? EMR : PRI,
+      desc: "23 chapters covering frameworks, metrics, strategy, design thinking, and technical fundamentals — all in one place.",
+      color: PRI,
+      bg: `${PRI}0e`,
+      border: `${PRI}25`,
+      ready: true,
+      cta: hasProgress ? `Continue (Ch ${completed.size + 1}/${TOTAL})` : "Start Course →",
+      onClick: onOpenCourse,
+    },
+    {
+      icon: Zap,
+      label: "Interview Playbook",
+      tag: "Coming Soon",
+      tagColor: TEAL,
+      desc: "Real PM interview questions, mock frameworks, and answers that actually got people hired. No fluff.",
+      color: TEAL,
+      bg: `${TEAL}08`,
+      border: `${TEAL}18`,
+      ready: false,
+      cta: "Coming Soon",
+      onClick: undefined,
+    },
+    {
+      icon: Star,
+      label: "Case Study Bank",
+      tag: "Coming Soon",
+      tagColor: AMB,
+      desc: "Teardowns of real products — what worked, what didn't, and the product lessons buried inside.",
+      color: AMB,
+      bg: `${AMB}08`,
+      border: `${AMB}18`,
+      ready: false,
+      cta: "Coming Soon",
+      onClick: undefined,
+    },
+  ];
+
+  return (
+    <div className="min-h-screen px-5 py-16 sm:py-24 relative overflow-hidden" style={{ background: BG }}>
+      {/* ambient glows */}
+      <div className="absolute pointer-events-none" style={{ top: "-10%", left: "-5%", width: 600, height: 600,
+        background: `radial-gradient(ellipse, ${PRI}14 0%, transparent 65%)` }} />
+      <div className="absolute pointer-events-none" style={{ bottom: "-5%", right: "-5%", width: 450, height: 450,
+        background: `radial-gradient(ellipse, ${VIO}0e 0%, transparent 65%)` }} />
+
+      <div className="relative z-10 max-w-3xl mx-auto">
+
+        {/* back link */}
+        <Link href="/#library"
+          className="inline-flex items-center gap-1.5 text-xs mb-10 transition-colors"
+          style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
+          onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
+          onMouseLeave={e => (e.currentTarget.style.color = MUTED)}>
+          <ArrowLeft size={12} /> back to library
+        </Link>
+
+        {/* header */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} className="mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+            style={{ background: `${PRI}12`, border: `1px solid ${PRI}28` }}>
+            <Layers size={11} style={{ color: PRI }} />
+            <span className="text-[11px] font-mono" style={{ color: PRI }}>PM &amp; Startups</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black leading-tight mb-3"
+            style={{ color: WHITE, letterSpacing: "-1.5px" }}>
+            Build. Think. Ship.<br />
+            <span style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`,
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              Repeat.
+            </span>
+          </h1>
+          <p className="text-base leading-relaxed max-w-xl" style={{ color: TEXT }}>
+            Career guides, startup notes, and frameworks — everything I wish someone had handed me when I was starting out.
+          </p>
+        </motion.div>
+
+        {/* tile grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {tiles.map((tile, i) => {
+            const Icon = tile.icon;
+            return (
+              <motion.div key={tile.label}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}>
+                <div
+                  className="flex flex-col h-full rounded-2xl p-6 relative overflow-hidden"
+                  style={{
+                    background: tile.bg,
+                    border: `1px solid ${tile.border}`,
+                    opacity: tile.ready ? 1 : 0.72,
+                  }}>
+                  {/* subtle glow */}
+                  <div className="absolute pointer-events-none" style={{
+                    top: -30, right: -30, width: 120, height: 120,
+                    background: `radial-gradient(ellipse, ${tile.color}18 0%, transparent 70%)`,
+                  }} />
+
+                  {/* icon + tag */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: `${tile.color}18`, border: `1px solid ${tile.color}28` }}>
+                      <Icon size={16} style={{ color: tile.color }} />
+                    </div>
+                    <span className="text-[10px] font-semibold px-2 py-1 rounded-full"
+                      style={{ background: `${tile.tagColor}14`, color: tile.tagColor, border: `1px solid ${tile.tagColor}22` }}>
+                      {tile.tag}
+                    </span>
+                  </div>
+
+                  <p className="text-sm font-bold mb-2" style={{ color: WHITE }}>{tile.label}</p>
+                  <p className="text-xs leading-relaxed mb-5 flex-1" style={{ color: MUTED }}>{tile.desc}</p>
+
+                  {/* progress bar (course only) */}
+                  {tile.ready && hasProgress && (
+                    <div className="mb-4">
+                      <div className="h-1 rounded-full w-full" style={{ background: `${PRI}20` }}>
+                        <div className="h-1 rounded-full transition-all duration-700"
+                          style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${PRI}, ${VIO})` }} />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  {tile.ready ? (
+                    <button onClick={tile.onClick}
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold transition-all duration-200"
+                      style={{ background: `linear-gradient(135deg, ${tile.color}, ${VIO})`, color: WHITE, boxShadow: `0 4px 16px ${tile.color}30` }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = `0 8px 24px ${tile.color}45`; }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 4px 16px ${tile.color}30`; }}>
+                      {tile.cta}
+                    </button>
+                  ) : (
+                    <div className="flex items-center justify-center w-full py-2.5 rounded-xl text-xs font-semibold"
+                      style={{ background: "rgba(255,255,255,0.03)", color: DIM, border: `1px solid ${BORDER}` }}>
+                      {tile.cta}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════
    COVER / LANDING PAGE
 ═══════════════════════════════════════════════════ */
-function CoverPage({ onStart, hasProgress, completed, onContinue }: {
+function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
   onStart: () => void;
   hasProgress: boolean;
   completed: Set<string>;
   onContinue: () => void;
+  onBack: () => void;
 }) {
   const pct = Math.round((completed.size / TOTAL) * 100);
 
@@ -1185,12 +1352,12 @@ function CoverPage({ onStart, hasProgress, completed, onContinue }: {
 
         {/* badge */}
         <div className="flex items-center gap-2 mb-6">
-          <Link href="/#library" className="flex items-center gap-1.5 text-xs transition-colors"
-            style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
+          <button onClick={onBack} className="flex items-center gap-1.5 text-xs transition-colors"
+            style={{ color: MUTED, fontFamily: "var(--font-mono)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
             onMouseLeave={e => (e.currentTarget.style.color = MUTED)}>
-            <ArrowLeft size={12} /> back to library
-          </Link>
+            <ArrowLeft size={12} /> back to PM &amp; Startups
+          </button>
         </div>
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
@@ -1279,15 +1446,24 @@ function CoverPage({ onStart, hasProgress, completed, onContinue }: {
    COMPLETION SCREEN
 ═══════════════════════════════════════════════════ */
 function CompletionScreen({ onRestart }: { onRestart: () => void }) {
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const feedbackHref =
+    "mailto:yugalagrawal11@gmail.com" +
+    "?subject=PM%20Course%20Feedback" +
+    "&body=Hey%20Yugal%2C%0A%0AI%20just%20finished%20your%20PM%20Master%20Guide%20and%20wanted%20to%20share%20some%20thoughts%3A%0A%0A";
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 text-center relative overflow-hidden"
       style={{ background: BG }}>
       <div className="absolute pointer-events-none inset-0"
         style={{ background: `radial-gradient(ellipse at 50% 40%, ${PRI}20 0%, transparent 60%)` }} />
+
       <motion.div className="relative z-10 max-w-lg"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+
         <div className="text-6xl mb-6">🎉</div>
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
           style={{ background: `${PRI}18`, border: `1px solid ${PRI}30` }}>
@@ -1295,7 +1471,7 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
           <span className="text-xs font-semibold" style={{ color: PRI }}>Course Complete!</span>
         </div>
         <h1 className="text-4xl font-black mb-4 leading-tight" style={{ color: WHITE, letterSpacing: "-1px" }}>
-          You've completed the
+          You&apos;ve completed the
           <span style={{ display: "block", background: `linear-gradient(135deg, ${PRI}, ${VIO})`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             PM Master Guide.
@@ -1304,19 +1480,94 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
         <p className="text-base leading-relaxed mb-8" style={{ color: TEXT }}>
           You now have a solid foundation in product thinking — from discovery to metrics, strategy, design, and tech. Go build something.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/#library"
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold"
-            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE }}>
-            Back to Library
-          </Link>
+
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
+            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 8px 28px ${PRI}40` }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
+            Finish! 🎉
+          </button>
           <button onClick={onRestart}
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-medium"
+            className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium"
             style={{ background: CARD, color: TEXT, border: `1px solid ${BORDER}` }}>
             <RotateCcw size={14} /> Restart Course
           </button>
         </div>
+
+        <Link href="/#library" className="text-xs" style={{ color: DIM }}
+          onMouseEnter={e => (e.currentTarget.style.color = MUTED)}
+          onMouseLeave={e => (e.currentTarget.style.color = DIM)}>
+          ← back to library
+        </Link>
       </motion.div>
+
+      {/* ── Feedback Modal ── */}
+      <AnimatePresence>
+        {showFeedback && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center px-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ background: "rgba(7,9,26,0.85)", backdropFilter: "blur(12px)" }}
+            onClick={() => setShowFeedback(false)}>
+            <motion.div
+              className="relative w-full max-w-md rounded-3xl px-8 py-10 text-center"
+              initial={{ scale: 0.88, y: 24 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 16 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              style={{ background: SURFACE, border: `1px solid ${BORDER2}`, boxShadow: `0 32px 80px rgba(0,0,0,0.6)` }}
+              onClick={e => e.stopPropagation()}>
+
+              {/* close */}
+              <button onClick={() => setShowFeedback(false)}
+                className="absolute top-4 right-4 w-7 h-7 rounded-full flex items-center justify-center transition-all"
+                style={{ background: "rgba(255,255,255,0.06)", color: MUTED }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}>
+                <X size={13} />
+              </button>
+
+              <div className="text-4xl mb-4">🙏</div>
+
+              <h2 className="text-2xl font-black mb-2" style={{ color: WHITE, letterSpacing: "-0.5px" }}>
+                Hope you learned something!
+              </h2>
+              <p className="text-sm leading-relaxed mb-6" style={{ color: TEXT }}>
+                I&apos;d genuinely love to hear what you thought — what was useful, what was confusing, or just a quick hi. Drop me a note, it takes 30 seconds.
+              </p>
+
+              {/* stars decoration */}
+              <div className="flex items-center justify-center gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} fill={PRI} style={{ color: PRI, opacity: 0.9 - i * 0.12 }} />
+                ))}
+              </div>
+
+              <a href={feedbackHref}
+                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl text-sm font-bold mb-3 transition-all duration-200"
+                style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 6px 24px ${PRI}40`, textDecoration: "none" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+                <Mail size={14} /> Send Feedback →
+              </a>
+
+              <button onClick={() => setShowFeedback(false)}
+                className="text-xs transition-colors"
+                style={{ color: DIM, background: "none", border: "none", cursor: "pointer" }}
+                onMouseEnter={e => (e.currentTarget.style.color = MUTED)}
+                onMouseLeave={e => (e.currentTarget.style.color = DIM)}>
+                Maybe later
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -1325,7 +1576,7 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
    MAIN PAGE
 ═══════════════════════════════════════════════════ */
 export default function PMCoursePage() {
-  const [phase, setPhase] = useState<"cover" | "reading" | "done">("cover");
+  const [phase, setPhase] = useState<"landing" | "cover" | "reading" | "done">("landing");
   const [current, setCurrent] = useState(0);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1340,14 +1591,17 @@ export default function PMCoursePage() {
         const { completedIds, currentIdx, phaseVal } = JSON.parse(raw);
         if (completedIds) setCompleted(new Set(completedIds));
         if (typeof currentIdx === "number") setCurrent(currentIdx);
-        if (phaseVal) setPhase(phaseVal);
+        // Restore phase but always land on "landing" if they were mid-course
+        // so they go through the tile hub first
+        if (phaseVal === "done") setPhase("done");
+        else if (phaseVal === "reading" || phaseVal === "cover") setPhase("landing");
       }
     } catch { /* ignore */ }
     setHydrated(true);
   }, []);
 
   /* save to localStorage */
-  const save = useCallback((c: Set<string>, idx: number, ph: "cover" | "reading" | "done") => {
+  const save = useCallback((c: Set<string>, idx: number, ph: "landing" | "cover" | "reading" | "done") => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ completedIds: [...c], currentIdx: idx, phaseVal: ph }));
     } catch { /* ignore */ }
@@ -1391,6 +1645,11 @@ export default function PMCoursePage() {
     save(completed, idx, "reading");
   }, [completed, save]);
 
+  const openCourse = () => {
+    setPhase("cover");
+    save(completed, current, "cover");
+  };
+
   const startCourse = () => {
     setCurrent(0);
     setPhase("reading");
@@ -1402,12 +1661,17 @@ export default function PMCoursePage() {
     save(completed, current, "reading");
   };
 
+  const backToLanding = () => {
+    setPhase("landing");
+    save(completed, current, "landing");
+  };
+
   const restart = () => {
     const empty = new Set<string>();
     setCompleted(empty);
     setCurrent(0);
-    setPhase("cover");
-    save(empty, 0, "cover");
+    setPhase("landing");
+    save(empty, 0, "landing");
   };
 
   const pct = Math.round((completed.size / TOTAL) * 100);
@@ -1418,9 +1682,13 @@ export default function PMCoursePage() {
     </div>
   );
 
+  if (phase === "landing") {
+    return <PMLanding onOpenCourse={openCourse} completed={completed} />;
+  }
+
   if (phase === "cover") {
     return <CoverPage onStart={startCourse} hasProgress={completed.size > 0}
-      completed={completed} onContinue={continueCourse} />;
+      completed={completed} onContinue={continueCourse} onBack={backToLanding} />;
   }
 
   if (phase === "done") {
