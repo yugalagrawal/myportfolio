@@ -13,21 +13,41 @@ import {
 /* ═══════════════════════════════════════════════════
    DESIGN TOKENS
 ═══════════════════════════════════════════════════ */
-const BG      = "#07091a";
-const SURFACE = "#0d1025";
-const CARD    = "#111630";
-const BORDER  = "rgba(255,255,255,0.07)";
-const BORDER2 = "rgba(255,255,255,0.12)";
-const PRI     = "#635bff";
-const VIO     = "#8b5cf6";
-const TEAL    = "#0d9488";
-const AMB     = "#d97706";
-const ROSE    = "#db2777";
-const EMR     = "#059669";
-const WHITE   = "rgba(255,255,255,0.93)";
-const TEXT    = "rgba(255,255,255,0.72)";
-const MUTED   = "rgba(255,255,255,0.35)";
-const DIM     = "rgba(255,255,255,0.18)";
+
+/* ── accent palette (shared everywhere) ── */
+const PRI  = "#635bff";
+const VIO  = "#8b5cf6";
+const TEAL = "#0d9488";
+const AMB  = "#d97706";
+const ROSE = "#db2777";
+const EMR  = "#059669";
+
+/* ── light reading area ── */
+const BG      = "#f5f4ff";
+const SURFACE = "#ffffff";
+const CARD    = "#eeeef8";
+const BORDER  = "rgba(99,91,255,0.12)";
+const BORDER2 = "rgba(99,91,255,0.2)";
+const WHITE   = "#111827";          // headings (dark)
+const TEXT    = "#374151";          // body text
+const MUTED   = "#6b7280";          // secondary text
+const DIM     = "#9ca3af";          // tertiary text
+const BTN     = "#fff";             // text on coloured buttons
+
+/* ── dark splash screens (landing · cover · completion) ── */
+const D_BG      = "#07091a";
+const D_SURFACE = "#0d1025";
+const D_CARD    = "#111630";
+const D_BORDER  = "rgba(255,255,255,0.07)";
+const D_BORDER2 = "rgba(255,255,255,0.12)";
+const D_WHITE   = "rgba(255,255,255,0.93)";
+const D_TEXT    = "rgba(255,255,255,0.72)";
+const D_MUTED   = "rgba(255,255,255,0.35)";
+const D_DIM     = "rgba(255,255,255,0.18)";
+
+/* ── sidebar specific ── */
+const SB_BG     = "#10112a";
+const SB_BORDER = "rgba(255,255,255,0.07)";
 
 /* ═══════════════════════════════════════════════════
    TYPES
@@ -45,8 +65,18 @@ type BlockType =
   | { t: "table"; heads: string[]; rows: string[][] }
   | { t: "tip";   txt: string }
   | { t: "warn";  txt: string }
-  | { t: "img";   label: string; desc: string }
-  | { t: "divider" };
+  | { t: "img";   label: string; desc: string; src?: string; caption?: string }
+  | { t: "video"; youtubeId: string; caption?: string }
+  | { t: "practice" }
+  | { t: "divider" }
+  | { t: "furtherread"; title: string; url: string; source?: string; desc?: string };
+
+type PracticeQ = {
+  num: number;
+  title: string;
+  prompt: string;
+  blocks: BlockType[];
+};
 
 type Category = "foundation" | "metrics" | "strategy" | "design" | "technical";
 
@@ -106,7 +136,7 @@ function renderBlocks(blocks: BlockType[], accent: string) {
   return blocks.map((b, i) => {
     switch (b.t) {
       case "p":
-        return <p key={i} className="mb-4 leading-[1.85] text-[15px]" style={{ color: TEXT }}>{ri(b.txt)}</p>;
+        return <p key={i} className="mb-5 leading-[1.9] text-[16px]" style={{ color: TEXT }}>{ri(b.txt)}</p>;
 
       case "h2":
         return (
@@ -138,9 +168,10 @@ function renderBlocks(blocks: BlockType[], accent: string) {
 
       case "quote":
         return (
-          <blockquote key={i} className="my-6 pl-5 py-1" style={{ borderLeft: `2px solid ${accent}` }}>
-            <p className="text-base italic leading-relaxed" style={{ color: TEXT }}>{b.txt}</p>
-            {b.author && <p className="text-xs mt-2" style={{ color: MUTED }}>— {b.author}</p>}
+          <blockquote key={i} className="my-6 px-5 py-4 rounded-xl italic"
+            style={{ background: `${accent}08`, borderLeft: `3px solid ${accent}80` }}>
+            <p className="text-[15px] leading-[1.8]" style={{ color: TEXT }}>{b.txt}</p>
+            {b.author && <p className="text-xs mt-2 font-semibold not-italic" style={{ color: accent }}>— {b.author}</p>}
           </blockquote>
         );
 
@@ -228,7 +259,22 @@ function renderBlocks(blocks: BlockType[], accent: string) {
         );
 
       case "img":
-        return (
+        return b.src ? (
+          <figure key={i} className="my-8">
+            <div className="rounded-2xl overflow-hidden"
+              style={{ border: `1px solid ${BORDER2}`, background: CARD }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={b.src} alt={b.label}
+                style={{ width: "100%", height: "auto", display: "block" }} />
+            </div>
+            {(b.caption || b.label) && (
+              <figcaption className="mt-2.5 text-center text-xs leading-relaxed"
+                style={{ color: MUTED, fontFamily: "var(--font-mono)" }}>
+                {b.caption ?? b.label}
+              </figcaption>
+            )}
+          </figure>
+        ) : (
           <div key={i} className="my-6 rounded-xl flex flex-col items-center justify-center py-10 px-6 text-center"
             style={{ background: CARD, border: `2px dashed ${BORDER2}` }}>
             <span className="text-3xl mb-3">🖼️</span>
@@ -237,8 +283,59 @@ function renderBlocks(blocks: BlockType[], accent: string) {
           </div>
         );
 
+      case "video":
+        return (
+          <figure key={i} className="my-8">
+            <div className="rounded-2xl overflow-hidden relative"
+              style={{ border: `1px solid ${BORDER2}`, background: "#000", paddingTop: "56.25%" }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${b.youtubeId}?rel=0&modestbranding=1`}
+                title={b.caption ?? "Video"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+              />
+            </div>
+            {b.caption && (
+              <figcaption className="mt-2.5 text-center text-xs leading-relaxed"
+                style={{ color: MUTED, fontFamily: "var(--font-mono)" }}>
+                {b.caption}
+              </figcaption>
+            )}
+          </figure>
+        );
+
+      case "practice":
+        return <PracticeSection key={i} accent={accent} />;
+
       case "divider":
         return <hr key={i} className="my-8" style={{ borderColor: BORDER }} />;
+
+      case "furtherread":
+        return (
+          <a key={i} href={b.url} target="_blank" rel="noopener noreferrer"
+            className="flex items-start gap-4 my-6 rounded-2xl p-4 group transition-all duration-200 no-underline"
+            style={{ background: `${accent}08`, border: `1px solid ${accent}22`, textDecoration: "none" }}>
+            <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center mt-0.5"
+              style={{ background: `${accent}18`, border: `1px solid ${accent}30` }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-mono tracking-widest uppercase mb-1" style={{ color: accent, fontFamily: "var(--font-mono)" }}>
+                📖 Recommended Read{b.source ? ` · ${b.source}` : ""}
+              </p>
+              <p className="text-sm font-semibold leading-snug group-hover:underline" style={{ color: WHITE, textDecoration: "none" }}>
+                {b.title}
+              </p>
+              {b.desc && <p className="text-xs mt-1 leading-relaxed" style={{ color: MUTED }}>{b.desc}</p>}
+            </div>
+            <svg className="flex-shrink-0 mt-1 opacity-40 group-hover:opacity-80 transition-opacity" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M7 7h10v10"/>
+            </svg>
+          </a>
+        );
 
       default:
         return null;
@@ -354,8 +451,8 @@ const CHAPTERS: Chapter[] = [
       {t:"p",txt:"A **KPI** is a specific quantitative metric demonstrating how well your efforts are working towards your aimed objective."},
       {t:"p",txt:"A **KPI Tree** is a structured visualization that breaks down high-level business objectives into smaller, measurable KPIs at different levels of the organization. This helps identify root causes of problems and narrow down areas for improvement."},
       {t:"callout",title:"Example: Breaking Down Profit",txt:"**Profit** = Revenue − Costs\n\n**Revenue** = Volume × Price per Unit\n**Costs** = Fixed Costs + Variable Costs\n\n**Volume** = New Users + Returning Users\n**Price per Unit** = Average Order Value\n...and you keep breaking it down until you reach actionable, measurable leaf nodes."},
-      {t:"img",label:"KPI Tree Diagram",desc:"A tree visualization showing how 'Profit' decomposes into Revenue and Costs, which further break into sub-metrics at each level — helping you identify exactly where to focus."},
-      {t:"tip",txt:"Practice: Try building KPI trees for an e-commerce GMV goal, a SaaS MRR target, or a ride-sharing platform's daily rides. This is a classic PM interview exercise.\n\n10 practice questions are linked at the end of this chapter in the original guide."},
+      {t:"img",src:"/images/pm/KPI.png",label:"KPI Tree",desc:"",caption:"KPI Tree — breaking a top-level business goal down into measurable, actionable leaf nodes"},
+      {t:"practice"},
     ]
   },
 
@@ -380,6 +477,7 @@ const CHAPTERS: Chapter[] = [
         ["Twitter","Daily active users with meaningful conversations","Focuses on actual value delivered"],
         ["PayPal","Total Payment Volume (TPV)","Reflects customer trust and usage"],
       ]},
+      {t:"furtherread",title:"North Star Playbook — Why You Should Read This",url:"https://amplitude.com/books/north-star/intro-why-should-you-read-this-playbook",source:"Amplitude",desc:"A comprehensive playbook on defining and operationalising your North Star Metric. Essential reading if you want to go deeper on aligning teams around a single guiding metric."},
     ]
   },
 
@@ -447,6 +545,7 @@ const CHAPTERS: Chapter[] = [
         ["Low Value · Low Complexity","**Fill-ins**","Do when you have spare capacity"],
         ["Low Value · High Complexity","**Time Sink Features**","Avoid entirely"],
       ]},
+      {t:"img",src:"/images/pm/ValuevsComplexity.png",label:"Value vs Complexity Matrix",desc:"",caption:"Value vs. Complexity quadrant — prioritise Quick Wins, plan Major Projects, skip Time Sinks"},
       {t:"h2",txt:"B. Kano Model"},
       {t:"p",txt:"Customer satisfaction is directly influenced by how effectively a feature is implemented — from 'Didn't do it at all' to 'Did it Very Well'."},
       {t:"table",heads:["Category","Meaning","Smartphone Example"],rows:[
@@ -456,6 +555,7 @@ const CHAPTERS: Chapter[] = [
         ["**Indifferent**","Presence or absence doesn't affect satisfaction.","Color of the internal circuit board"],
       ]},
       {t:"callout",title:"How to Measure with Kano",txt:"Ask users two questions per feature:\n1. 'If you **HAD** this feature, how do you feel?'\n2. 'If you **DIDN'T** have this feature, how do you feel?'\n\nAnswers: I like it / I expect it / I'm neutral / I can tolerate it / I dislike it"},
+      {t:"img",src:"/images/pm/KANO.png",label:"Kano Model",desc:"",caption:"Kano Model — feature categories mapped to their effect on customer satisfaction"},
       {t:"h2",txt:"C. RICE Framework"},
       {t:"callout",title:"RICE Score Formula",txt:"**RICE Score = (Reach × Impact × Confidence) / Effort**\n\nHigher score = higher priority."},
       {t:"table",heads:["Factor","What It Measures","Example"],rows:[
@@ -464,6 +564,7 @@ const CHAPTERS: Chapter[] = [
         ["**Confidence**","How certain you are of your estimates (100%/80%/50%)","Good data on Reach & Effort, limited on Impact → 80%"],
         ["**Effort**","Total work in person-months (only negative factor)","1wk planning + 4wk design + 3wk FE + 4wk BE = 3 person-months"],
       ]},
+      {t:"img",src:"/images/pm/RICE.png",label:"RICE Framework",desc:"",caption:"RICE Score = (Reach × Impact × Confidence) / Effort — higher score = higher priority"},
       {t:"h2",txt:"D. ICE Scoring Model"},
       {t:"p",txt:"**Impact + Confidence + Ease**, each scored 1–10. Average = ICE score. Quick and simple, but subjective — different people may rate the same feature differently."},
       {t:"h2",txt:"E. MoSCoW Method"},
@@ -596,7 +697,7 @@ const CHAPTERS: Chapter[] = [
     title:"Customer Journey Map",
     blocks:[
       {t:"p",txt:"A journey map **visualises the process a person goes through to accomplish a goal**. It starts by compiling user actions into a timeline, then fleshes this out with emotions and thoughts to create a narrative."},
-      {t:"img",label:"Customer Journey Map — Spotify Example",desc:"A journey map from when a user first opens Spotify on mobile, through to whether they like a song a friend shared. Includes touchpoints, user thoughts, feelings, and pain points at each stage."},
+      {t:"img",src:"/images/pm/customerjourney.png",label:"Customer Journey Map — Spotify Example",desc:"",caption:"Customer Journey Map — visualising every touchpoint, emotion, and pain point a user experiences"},
       {t:"callout",title:"Real Impact: Spotify Case Study",txt:"Spotify used journey mapping to deeply understand what users were thinking, feeling, and doing across every touchpoint. By visualizing pain points in the music-sharing flow, the product team uncovered friction — confusing share options, lack of visibility after sharing.\n\nThese insights directly informed product improvements: simplified sharing UX, personalized recommendations for shared songs, smoother cross-platform integration."},
       {t:"tip",txt:"For a PM, journey mapping turns abstract feedback into clear product priorities. It transformed sharing from a functional task into a delightful, viral experience for Spotify."},
     ]
@@ -666,7 +767,7 @@ const CHAPTERS: Chapter[] = [
       {t:"p",txt:"A mind map is a visual diagram that helps product teams organize thoughts concretely."},
       {t:"callout",title:"How to Draw a Mind Map",txt:"**Step 1: Goal** — Articulate your overall objective\n**Step 2: Because** — Write the reason behind your goal\n**Step 3: While/Without** — Add secondary goals and things you don't want to do\n**Step 4: By** — Think of solutions for your goals"},
       {t:"callout",title:"Example: Increase ARR to $6M in Next Year",txt:"**Because:** We need capital to expand the engineering team and enter 3 new markets\n**Without:** Increasing headcount by more than 20% or compromising product quality\n**By:** Upselling current customers, launching annual plans, enterprise tier, partner integrations, reducing churn..."},
-      {t:"img",label:"Mind Map Example",desc:"A radial mind map showing 'Increase ARR to $6M' at the center, with branches for each 'By' solution, sub-branches for tactics, and annotations for the 'Because' and 'Without' constraints."},
+      {t:"video",youtubeId:"H8Xlrd2QGmU",caption:"Watch: Mind Mapping explained — a great visual walkthrough to get you started"},
     ]
   },
 
@@ -751,9 +852,11 @@ const CHAPTERS: Chapter[] = [
         ["Ecosystem","Market Share % in Key Regions, Originals vs Licensed content mix"],
         ["Outcome","Monthly Recurring Revenue (MRR) / Subscriber Count"],
       ]},
+      {t:"img",src:"/images/pm/Evaluation%20Metric.png",label:"Evaluation Metrics Framework",desc:"",caption:"Evaluation Metrics — a framework for measuring product success across all dimensions"},
       {t:"h2",txt:"A/B Testing"},
       {t:"p",txt:"A/B testing (split-testing) tests variations of digital products. You start with a goal and test two versions with similar audiences."},
       {t:"callout",title:"Simple A/B Testing Framework",txt:"1. **What is the question?** — What hypothesis are you testing?\n2. **What are the tests?** — Which variants will you run?\n3. **What is the impact?** — How will you measure success and what's the target metric?"},
+      {t:"furtherread",title:"The Tenets of A/B Testing from Duolingo's Master Growth Hacker",url:"https://review.firstround.com/the-tenets-of-a-b-testing-from-duolingos-master-growth-hacker/",source:"First Round Review",desc:"A deep dive into how Duolingo runs rigorous A/B tests at scale — covering the principles, pitfalls, and mindset behind experimentation-driven growth."},
     ]
   },
 
@@ -893,6 +996,490 @@ FROM customers;
   },
 ];
 
+
+/* ═══════════════════════════════════════════════════
+   PRACTICE Q&A DATA
+═══════════════════════════════════════════════════ */
+const PRACTICE_QS: PracticeQ[] = [
+  {
+    num:1, title:"Increasing WAU for a Fitness Tracking App",
+    prompt:"How would you break down the goal of boosting WAU into measurable KPIs across user engagement, retention, and acquisition?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a fitness tracking app tasked with **increasing Weekly Active Users (WAU)**. How would you break this goal into measurable KPIs?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"WAU is an **outcome metric** — to move it, we influence the **input metrics** that feed it. I'd structure a KPI Tree across three pillars: **Acquisition**, **Engagement**, and **Retention**."},
+      {t:"code",code:"                      WAU\n                       |\n  -----------------------------------------------\n  |                    |                    |\nAcquisition         Engagement          Retention\n    KPIs               KPIs                KPIs"},
+      {t:"h3",txt:"1. Acquisition KPIs — Get More New Users Weekly"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Weekly New Installs","New users entering the top of the funnel"],
+        ["Click-to-Install Rate","Quality of ad creatives or store page"],
+        ["Signup Conversion Rate","% of downloads that convert to accounts"],
+        ["% Users Completing Onboarding","Completion correlates with higher activation"],
+      ]},
+      {t:"h3",txt:"2. Engagement KPIs — Increase Activation & Frequency"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Weekly Active Sessions per User","High frequency improves retention and WAU"],
+        ["Avg. Session Duration","Proxy for value derived from the app"],
+        ["% of Users Logging a Workout","Tracks core feature engagement"],
+        ["Feature Adoption Rate","Are users discovering and using more than 1 feature?"],
+        ["Push Notification CTR","How engaging are reactivation nudges?"],
+      ]},
+      {t:"h3",txt:"3. Retention KPIs — Keep Existing Users Coming Back"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["D1, D7, D30 Retention Rate","Standard product health checks for stickiness"],
+        ["Weekly Returning Users","Users active in the past who came back"],
+        ["Churn Rate (Weekly)","Helps track drop-offs"],
+        ["Weekly Stickiness (WAU/MAU)","Higher ratio implies better habit formation"],
+        ["NPS / CSAT Scores","Proxy for long-term retention risk"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"How would you prioritize which set of KPIs to focus on first?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd run a quick **diagnostic** to identify the biggest bottleneck:\n\n- **Installs stagnant** \u2192 focus on acquisition\n- **Installs high but WAU low** \u2192 check onboarding & short-term retention\n- **Active initially, then drop off** \u2192 deep-dive engagement & retention\n\nI'd also benchmark **WAU/MAU ratio** \u2014 below ~0.25 suggests poor stickiness."},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Can you give an example of how a feature experiment ties back to these KPIs?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"If we launch a **weekly challenge feature**, we'd expect:\n\n\u2192 **Engagement:** \u2191 % Users Participating in Challenges\n\u2192 **Retention:** \u2191 Weekly Returning Users\n\u2192 **Lagging:** \u2191 WAU\n\nWe'd A/B test and track all of these to validate impact. Secondary: monitor Push Notification CTR and Churn Rate."},
+    ],
+  },
+  {
+    num:2, title:"Improving Trial-to-Paid Conversion for a SaaS Product",
+    prompt:"What sub-KPIs and leading indicators would you track to enhance the percentage of free trial users who convert to paid plans?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a B2B SaaS tool. Task: **increase trial-to-paid conversion rate**. What KPIs and leading indicators would you track?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Trial-to-Paid Conversion Rate is a **mid-funnel efficiency metric**. I'd structure the KPI Tree across four pillars: **Activation**, **Feature Usage**, **Experience**, and **Pricing Alignment**."},
+      {t:"code",code:"          Trial-to-Paid Conversion Rate\n                      |\n  ------------------------------------------\n  |           |             |             |\nActivation  Feature    Experience    Pricing\n  KPIs      Usage KPIs    KPIs      Alignment KPIs"},
+      {t:"h3",txt:"1. Activation KPIs — Did they get started right?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% Users Completing Onboarding","Users who understand the product convert better"],
+        ["Time to First Value (TTFV)","How fast users experience core utility"],
+        ["% Users Hitting Activation Milestone","E.g., sent first email, created first report"],
+        ["Day 1 / Day 3 / Day 7 Activity","Proxy for early intent and engagement"],
+      ]},
+      {t:"h3",txt:"2. Feature Usage KPIs — Are they deriving core value?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["# of Key Feature Actions per User","Correlates with the 'aha' moment"],
+        ["% of Users Using Core Features","E.g., analytics dashboard, integrations"],
+        ["Breadth of Feature Adoption","Are users using multiple modules?"],
+        ["Weekly Active Usage During Trial","Higher engagement = higher intent"],
+      ]},
+      {t:"h3",txt:"3. Experience KPIs — Is the trial frictionless?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Support Tickets per Trial User","Indicates usability issues"],
+        ["NPS/CSAT During Trial Phase","Early satisfaction leads to better conversions"],
+        ["Session Drop-off Points","Where are users exiting or getting stuck?"],
+        ["% Users Reaching Paywall","How many even see pricing?"],
+      ]},
+      {t:"h3",txt:"4. Pricing Alignment KPIs — Is pricing a blocker or trigger?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% of Users Viewing Pricing Page","Indicates intent to explore plans"],
+        ["Click-to-Purchase Rate from Pricing","Measures final purchase intent"],
+        ["Trial Length vs Conversion Rate","A/B test optimal trial duration"],
+        ["Discount/Promo Impact on Conversions","Pricing elasticity check"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"How would you use this to drive experiments?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"If **TTFV is long** and users drop before core actions:\n\n\u2192 Introduce revised **guided onboarding** and progress bars\n\u2192 Monitor: Activation Rate \u2191, Support Tickets \u2193, Conversion % change\n\nIf users visit pricing but **don't convert**:\n\n\u2192 A/B test pricing tiers or copy, add limited-time discounts\n\nPrioritise KPIs **highly correlated** with conversion AND **easy to influence** via product changes."},
+    ],
+  },
+  {
+    num:3, title:"Reducing User-Reported Bugs by 30% in a Mobile Game",
+    prompt:"How might you structure KPIs to address technical quality, user feedback loops, and update stability?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a mobile game. Objective: **reduce user-reported bugs by 30%**. How would you structure your KPIs?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd structure KPIs across **three pillars**: Technical Quality, User Feedback Loops, and Release Stability \u2014 each directly influencing the bug-reporting outcome."},
+      {t:"code",code:"             \u2193 User-Reported Bugs\n                     |\n  ------------------------------------\n  |              |                  |\nTechnical      User Feedback     Release\nQuality KPIs   Loop KPIs        Stability KPIs"},
+      {t:"h3",txt:"1. Technical Quality KPIs — Proactive Bug Prevention"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Crash-Free Sessions %","Core stability metric"],
+        ["ANR Rate (App Not Responding)","Indicates poor performance"],
+        ["Exception/Error Rate per 1,000 Sessions","Tracks issues before users report them"],
+        ["% of Known Bugs Resolved","Effectiveness of backlog grooming"],
+        ["Automated Test Coverage %","Higher coverage reduces regression bugs"],
+        ["Bug Reopen Rate","Quality of engineering fixes"],
+      ]},
+      {t:"h3",txt:"2. User Feedback Loop KPIs — Surface, Track & Resolve"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["# of User-Reported Bugs per Week","Primary target metric"],
+        ["Avg. Time to Acknowledge Bug Report","Responsiveness to users"],
+        ["Avg. Time to Resolve (TTR)","Faster resolution improves trust"],
+        ["% of Bugs Reported via In-App vs App Store","Encourages structured feedback"],
+        ["In-App Feedback Submission Rate","Ease and adoption of feedback system"],
+      ]},
+      {t:"h3",txt:"3. Release Stability KPIs — Avoid New Bugs"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Post-Release Crash Rate","Key signal of release quality"],
+        ["New Bugs Introduced per Release","Controls quality regression"],
+        ["Hotfix Frequency","Indicates deployment instability"],
+        ["Release Rollback Rate","Symptom of poor QA/testing"],
+        ["Beta-to-Prod Bug Leakage Rate","Identifies QA process gaps"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"How would you prioritize which area to address first?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Run a **Root Cause Analysis** and categorize existing bugs:\n\n- Majority from **crashes/ANRs** \u2192 prioritize Technical Quality\n- Bugs emerging **post-deployment** \u2192 fix release practices\n- Bugs discovered **late** \u2192 enhance the user feedback loop\n\nProcess improvements: bug severity triaging, post-mortems for hotfixes, and a **'Report a Bug' in-app CTA** tied to session replay tools like Instabug or Firebase."},
+    ],
+  },
+  {
+    num:4, title:"Enhancing Average Session Duration on a News Platform",
+    prompt:"What engagement and content-related metrics would feed into improving time spent per session?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a news aggregation product. Task: **increase average session duration**. What metrics would you track?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Average Session Duration is a **core engagement metric**. I'd break it into: **Content Relevance & Quality**, **User Engagement Behaviour**, and **UX & Friction Metrics**."},
+      {t:"code",code:"          \u2191 Average Session Duration\n                    |\n  -------------------------------------------\n  |                  |                      |\nContent         User Engagement         UX &\nRelevance KPIs    Metrics KPIs        Friction KPIs"},
+      {t:"h3",txt:"1. Content Relevance & Quality KPIs — Hook them"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Avg. Article Completion Rate","Are users reading fully? Higher = longer session"],
+        ["% of Personalized Articles Read","Measures relevance of recommendations"],
+        ["CTR on Recommended Articles","Quality of curation and headlines"],
+        ["Time per Article","How engaging the content is"],
+        ["Bounce Rate from Homepage","Poor content = early exits"],
+      ]},
+      {t:"h3",txt:"2. User Engagement Metrics — More actions per session"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Articles Read per Session","More reads = longer duration"],
+        ["Scroll Depth (per Article)","Measures true reading engagement"],
+        ["Session Stickiness Rate","% crossing 5+ min or 3+ articles"],
+        ["Engagement with Rich Media (Videos, Polls)","Non-text content increases time"],
+        ["Save/Bookmark Article Rate","Shows deeper interest"],
+      ]},
+      {t:"h3",txt:"3. UX & Interaction Metrics — Reduce friction"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Page Load Time","Delays kill session time"],
+        ["% of Infinite Scroll Sessions","Encourages binge consumption"],
+        ["App Navigation Drop-off Points","Where do users lose momentum?"],
+        ["In-App Recommendation CTR","Helps extend session loops"],
+        ["Ad Load Time & Interrupt Rate","Poor ad experience breaks flow"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Would you run any experiments to influence session time?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Experiments tied directly to KPIs:\n\n\u2022 **Auto-load Next Article** \u2192 \u2191 Articles per Session\n\u2022 **In-Article Recommendations (mid-scroll)** \u2192 \u2191 Scroll Depth + CTR\n\u2022 **AI Summary + Full Article toggle** \u2192 retains light and deep readers\n\u2022 **Gamify Streak Reading** \u2192 \u2191 habit loop\n\nDiagnose first: if users read only 1 article \u2192 focus on article chaining. If completion rate is low \u2192 check content quality or load times."},
+    ],
+  },
+  {
+    num:5, title:"Increasing Referrals per User for a P2P Payment App",
+    prompt:"How would you incentivize and measure referral behaviour, including viral loops and reward effectiveness?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a P2P payment app. Task: **increase referrals per user**. How do you approach incentivizing and measuring referral behavior?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Referrals in trust-based apps are powerful. I'd structure across three layers: **Incentivization Mechanics**, **Viral Loop Metrics**, and **Reward Effectiveness KPIs**."},
+      {t:"code",code:"              \u2191 Referrals per User\n                      |\n  ------------------------------------------\n  |                    |                   |\nIncentive         Viral Loop        Reward\nMechanics KPIs     KPIs           Effectiveness KPIs"},
+      {t:"h3",txt:"1. Incentive Mechanics KPIs — Are users motivated to refer?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% of Users Who Refer At Least Once","Baseline referral participation"],
+        ["Avg. Referral Invites per User","Top-of-funnel referral attempts"],
+        ["Referral CTA Click-Through Rate","Visibility and appeal of prompts"],
+        ["Conversion Rate (Invite \u2192 Signup)","Efficacy of incentive + UX"],
+        ["Incentive Redemption Rate","Are users completing the reward loop?"],
+        ["Time to First Referral","Speed indicates UX clarity"],
+      ]},
+      {t:"h3",txt:"2. Viral Loop KPIs — How well does it self-propagate?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Viral Coefficient (K-Factor)","Core metric: K > 1 = self-sustaining loop"],
+        ["% of Signups via Referral","Indicates channel strength"],
+        ["% of Referred Users Who Refer Again","Second-order virality"],
+        ["Time Between Referral and Sign-Up","Lag impacts loop velocity"],
+      ]},
+      {t:"h3",txt:"3. Reward Effectiveness KPIs — Is it sustainable?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["CAC via Referral vs Other Channels","Cost-effective growth comparison"],
+        ["% of Users Gaming the Referral","Fraud control to maintain ROI"],
+        ["LTV of Referred Users","Ensures acquired users are valuable"],
+        ["Referral Reward Cost per User","Monitors incentive burn rate"],
+        ["Reward Variant A/B Performance","Identifies best-performing incentives"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Referrals are happening, but conversion is low. How would you troubleshoot?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Diagnose both **incentive quality** and **UX flow**:\n\n**Reward not motivating?** \u2192 A/B test: cashback vs tiered incentives vs gamified streaks\n**UX friction?** \u2192 Audit referral flow, recipient experience, and redemption steps\n\n**To grow K-factor:** Make referral entry points visible (home banners, post-transaction nudges), add urgency, use deep links + QR codes.\n\n**Fraud prevention:** device fingerprinting, cap referrals per month, require first transaction before reward."},
+    ],
+  },
+  {
+    num:6, title:"Improving Search Success Rate in an E-Commerce App",
+    prompt:"What KPIs would track search accuracy, user behaviour, and downstream conversions (e.g., clicks, purchases)?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a large e-commerce platform. Objective: **improve search success rate**. How do you approach this?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd define **Search Success Rate** as % of search sessions resulting in a meaningful action (click, add-to-cart, or purchase). Breakdown: **Search Accuracy**, **User Behavior**, and **Conversion Funnel**."},
+      {t:"code",code:"             \u2191 Search Success Rate\n                     |\n  ------------------------------------\n  |              |                  |\nSearch         User             Conversion\nAccuracy KPIs  Behavior KPIs    Funnel KPIs"},
+      {t:"h3",txt:"1. Search Accuracy KPIs — Are results relevant?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Query-Product Match Precision","Relevance of top results"],
+        ["Zero Results Rate","Frustrating \u2014 needs immediate fixing"],
+        ["Query Reformulation Rate","Users re-search when results aren't good"],
+        ["Click-Through Rate on Results","Immediate user engagement indicator"],
+        ["First Click Position","Are top-ranked results actually clicked?"],
+      ]},
+      {t:"h3",txt:"2. User Behaviour KPIs — Engaged or frustrated?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Time to First Click on Result","Delay suggests difficulty finding a match"],
+        ["Scroll Depth in Results","Shows engagement or desperation"],
+        ["Filter Usage Rate","Results need refinement"],
+        ["Search Exit Rate","Measures abandonment from results page"],
+        ["Repeat Searches per Session","Signals frustration or unclear UX"],
+      ]},
+      {t:"h3",txt:"3. Conversion Funnel KPIs — Driving action?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Add to Cart Rate from Search","Signals actionable product interest"],
+        ["Purchase Rate from Search","Key revenue indicator"],
+        ["Revenue per Search Session","Ties search experience to business value"],
+        ["Average Clicks Before Purchase","Shorter = better UX"],
+        ["Search GMV Contribution %","Business weight of search channel"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Results seem relevant, but conversions are low. How do you troubleshoot?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"This is an **intent-to-action gap**. Possible causes:\n\n\u2022 **Pricing/inventory issues** \u2192 items out of stock or too expensive\n\u2022 **Poor metadata** \u2192 titles or images misleading\n\u2022 **No urgency** \u2192 add 'bestseller' tags, limited-time offers\n\n**For Zero Results:** use NLP + fuzzy matching, show fallback suggestions, mine query logs.\n\n**Search Health Score (composite):** CTR on Results (30%) + Add to Cart (25%) + Purchase Rate (25%) + inverse weight for Zero Results & Reformulations."},
+    ],
+  },
+  {
+    num:7, title:"Boosting Adoption of a New Premium Feature",
+    prompt:"How would you measure awareness, onboarding, and value realization for the feature across user segments?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You've launched a **new premium feature** in a productivity tool. Goal: boost adoption. How do you measure success across awareness, onboarding, and value realization?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd map the adoption journey as a funnel: **Awareness \u2192 Onboarding \u2192 Value Realization**, each with its own KPI layer."},
+      {t:"code",code:"          \u2191 Premium Feature Adoption Rate\n                        |\n  ----------------------------------------\n  |                   |                  |\nAwareness          Onboarding         Value\n  KPIs              KPIs           Realization KPIs"},
+      {t:"h3",txt:"1. Awareness KPIs — Do users know it exists?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% of Users Exposed to Feature Messaging","Reach of banners, tooltips, emails"],
+        ["Tooltip/View Impression Rate","How many saw the feature UI element"],
+        ["Feature Discovery Rate","% who navigated to the feature screen"],
+        ["CTA Click-Through Rate","Are users engaging with the prompt?"],
+        ["Awareness by Segment (Free vs Paid)","Detect underperforming user groups"],
+      ]},
+      {t:"h3",txt:"2. Onboarding KPIs — Are users exploring it?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% of Exposed Users Who Trial Feature","Key activation metric"],
+        ["Time to First Use After Exposure","Lower = better UX clarity"],
+        ["Completion of Onboarding Checklist","Guides users to success"],
+        ["Drop-off Rate During Setup","Identifies UX friction"],
+        ["Feature Activation Rate by Segment","Which cohorts need nudges?"],
+      ]},
+      {t:"h3",txt:"3. Value Realization KPIs — Getting repeated value?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Repeat Usage Rate (7-day or 30-day)","Core stickiness indicator"],
+        ["Depth of Use (actions per session)","More depth = more perceived value"],
+        ["Upgrade Conversion Rate (Free \u2192 Premium)","Indicates monetization potential"],
+        ["Churn Rate: Feature Users vs Non-users","Shows impact on retention"],
+        ["Support Ticket Volume (Feature-related)","Measures usability friction"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Feature usage is high, but upgrade conversion is low. What do you do?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Three hypotheses:\n\n1. **Value unclear** \u2192 Add value recap screens ('This saved you X hours this week'), reframe premium benefit\n2. **Free users use it too easily** \u2192 Introduce gating (limited free uses/month, watermarking)\n3. **Pricing misalignment** \u2192 A/B test tiers, bundles, freemium boundaries\n\n**Segment-specific:** Free users need more nudges; SMBs vs Enterprise have different onboarding needs; power users should get early access to future features as a conversion hook."},
+    ],
+  },
+  {
+    num:8, title:"Decreasing Cart Abandonment for an Online Grocery Service",
+    prompt:"What checkout flow metrics, friction points, and incentive strategies would you prioritize?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for an online grocery platform. Leadership wants to **reduce cart abandonment rate** during peak buying hours. What metrics would you track?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd use a **Cart Abandonment KPI Tree** across: **Checkout Flow Health**, **Friction Detection**, and **Incentive Strategy Effectiveness**."},
+      {t:"code",code:"           \u2193 Cart Abandonment Rate\n                     |\n  -------------------------------------\n  |               |                  |\nCheckout        Friction         Incentive\nFlow KPIs     Point KPIs       Strategy KPIs"},
+      {t:"h3",txt:"1. Checkout Flow KPIs — Where are users dropping off?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Funnel Drop-off Rate per Step","Pinpoints exits at address, payment, review screens"],
+        ["Time Spent per Checkout Step","Long time = confusion or friction"],
+        ["Average Cart Value at Drop-off","Higher values may signal price shock"],
+        ["Device/Platform Abandonment Rate","Mobile web often performs worse than app"],
+        ["Time from Cart Add to Checkout Start","Delay signals distraction or uncertainty"],
+      ]},
+      {t:"h3",txt:"2. Friction Point KPIs — What's causing drop-offs?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Payment Failure Rate","Tech or gateway issues"],
+        ["Address Input Error Rate","UX or validation friction"],
+        ["Promo Code Error Rate","Discount misuse/confusion"],
+        ["Out-of-Stock After Add-to-Cart","Real-time inventory sync problem"],
+        ["Number of Clicks to Complete Checkout","Simpler flows convert better"],
+      ]},
+      {t:"h3",txt:"3. Incentive Strategy KPIs — Are nudges converting?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Discount Redemption Rate","Are users acting on coupons/cashback?"],
+        ["Recovery Email/SMS Click-through Rate","Re-engagement from nudges"],
+        ["Post-abandonment Conversion Rate","Delayed conversions via retargeting"],
+        ["% of Abandoned Carts Recovered via Incentives","Impact of offers/reminders"],
+        ["Average Cost per Recovered Cart","Ensures economics remain viable"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Cart abandonment is high at the payment step. What next?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"**Quantitative:** High payment failure rate \u2192 check gateway errors. Long time on payment screen \u2192 UX confusion. Low completion on specific methods \u2192 redesign or remove.\n\n**Actions:** Streamline options (auto-suggest saved cards, UPI), offer COD, highlight trust elements (secure badge, money-back guarantee).\n\n**Smart incentives:** Segment by order value (offer only above threshold), customer type (new vs repeat), and test time-limited discounts vs free delivery vs loyalty points."},
+    ],
+  },
+  {
+    num:9, title:"Improving Monthly Retention for a Meditation App",
+    prompt:"How could habit formation, content relevance, and churn triggers inform retention-focused KPIs?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"You're the PM for a meditation app. Goal: **increase monthly retention** of paid users. How would you build a KPI framework using habit formation, content relevance, and churn signals?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd use a **Retention KPI Tree** across three themes: why users stay or churn."},
+      {t:"code",code:"              \u2191 Monthly Retention Rate\n                        |\n  ------------------------------------------\n  |                   |                    |\nHabit            Content             Churn Trigger\nFormation KPIs   Relevance KPIs      & Risk KPIs"},
+      {t:"h3",txt:"1. Habit Formation KPIs — Building a routine?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Days Active per Week","Shows frequency and stickiness"],
+        ["Streak Days Maintained","Gamified behaviour reinforcement"],
+        ["Median Session Time per User","Signals depth of engagement"],
+        ["Notification Opt-in & Open Rate","Habit reinforcement responsiveness"],
+        ["Time to First Session Post Signup","Delay often leads to lower retention"],
+      ]},
+      {t:"h3",txt:"2. Content Relevance KPIs — Personalized and sticky?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Content Completion Rate","Do users finish sessions they start?"],
+        ["Repeat Consumption of Specific Series","Indicates anchor content"],
+        ["% of Users Engaging with New Content Drop","Freshness attracts re-engagement"],
+        ["Category Preference Spread","Helps personalize recommendations"],
+        ["Ratings / Thumbs-up Rate on Sessions","Quality and emotional connection"],
+      ]},
+      {t:"h3",txt:"3. Churn Risk KPIs — Detect and intervene early"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Days Since Last Session","Early sign of disengagement"],
+        ["Drop after Free Trial","Price or value mismatch"],
+        ["Drop in Session Frequency (Week over Week)","Identifies habit decay"],
+        ["Support Tickets about Billing/Content","Leading churn friction signal"],
+        ["Retention Recovery from Re-engagement Nudges","Effectiveness of churn prevention"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"How do you know your retention efforts are working?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"**Diagnose first** \u2014 is high churn due to lack of habit, irrelevant content, or subscription friction?\n\n**Act based on diagnosis:**\n\u2022 Low habit formation \u2192 Gamify streaks, morning reminders\n\u2022 Content feels generic \u2192 Personalize via user goals and past sessions\n\u2022 Drop after trial \u2192 Add lower-tier plans, better value onboarding\n\u2022 Usage decline week 2 \u2192 Progressive unlocks or curated journeys\n\n**Success check:** If newer user cohorts retain better over 30/60/90 days than older ones \u2192 initiatives are working."},
+    ],
+  },
+  {
+    num:10, title:"Increasing Transactions per User in a Banking App",
+    prompt:"What behavioural and product-usage metrics would drive frequent engagement with financial tools?",
+    blocks:[
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"As PM for a digital banking app, how would you increase the number of **transactions per user (TPU)**?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"I'd structure a **KPI Tree** to systematically address the goal. TPU = Total Transactions / MAU. Goal: increase both **breadth** (types) and **depth** (frequency)."},
+      {t:"code",code:"              \u2191 Transactions per User (TPU)\n                         |\n  ------------------------------------------\n  |                   |                    |\nUser              Product             Engagement &\nBehavior KPIs  Feature Usage KPIs   Nudging KPIs"},
+      {t:"h3",txt:"1. User Behaviour KPIs — Patterns & Triggers"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Avg. Number of Transactions per Week","Frequency of use"],
+        ["% of Users Making 3+ Transaction Types","Indicates feature exploration"],
+        ["UPI/NEFT/IMPS Share in Transactions","Popular methods = UX priority"],
+        ["Median Transaction Value","Gauge intent (micro vs high-value)"],
+        ["Last Transaction Recency","Detects drop in momentum"],
+      ]},
+      {t:"h3",txt:"2. Product Usage KPIs — Which tools drive engagement?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["% of Users Using Bill Pay, Recharge, EMI","Diversification of utility"],
+        ["Investment Tool Usage (FDs, SIPs, Gold)","Higher engagement loops"],
+        ["Cross-Product Penetration Rate","Users using more than 1 product"],
+        ["% of Users Saving Beneficiaries/Payees","Ease = more repeat payments"],
+        ["Active Use of Wallet / Cashback Features","Gamified incentive behaviour"],
+      ]},
+      {t:"h3",txt:"3. Engagement & Nudging KPIs — Do reminders work?"},
+      {t:"table",heads:["KPI","Why it Matters"],rows:[
+        ["Nudged Transactions Conversion Rate","Efficacy of reminders"],
+        ["Reminder Opt-in & Engagement Rate","Acceptance of behavioural nudging"],
+        ["Personalized Offer Redemption Rate","Incentive-driven action"],
+        ["In-App Notification Click-through Rate","Content-to-action efficiency"],
+        ["Scheduled Transaction Setup Rate","Repeatability boost"],
+      ]},
+      {t:"callout",color:"#0d9488",title:"Interviewer",txt:"Transactions are flat despite MAUs rising. What do you investigate?"},
+      {t:"callout",color:"#635bff",title:"Candidate",txt:"Key signals:\n\n\u2022 **Low % Multi-use Users** \u2192 users doing only 1 type of transaction\n\u2022 **Low Repeat Bill Payments** \u2192 friction or lack of reminders\n\u2022 **High Dormancy Post Signup** \u2192 poor onboarding/activation\n\u2022 **Low Investment Tool Engagement** \u2192 unclear value proposition\n\n**Growth strategies:**\n\u2192 Smart nudges (due bills, reminders) \u2192 \u2191 Bill pay frequency\n\u2192 Gamify streaks or cashback missions \u2192 \u2191 Weekly transactions\n\u2192 Simplify flows (1-tap repeat) \u2192 \u2191 Conversion Rate\n\u2192 Targeted education for savings/investments \u2192 \u2191 financial tool engagement"},
+    ],
+  },
+];
+
+
+/* ═══════════════════════════════════════════════════
+   PRACTICE Q&A COMPONENTS
+═══════════════════════════════════════════════════ */
+function PracticeCard({ q, idx, accent }: { q: PracticeQ; idx: number; accent: string }) {
+  const [state, setState] = useState<"idle" | "confirm" | "revealed">("idle");
+
+  return (
+    <div className="mb-4 rounded-2xl overflow-hidden"
+      style={{ border: `1px solid ${BORDER}`, background: SURFACE, boxShadow: "0 1px 6px rgba(99,91,255,0.05)" }}>
+
+      {/* Question row */}
+      <div className="flex items-start gap-4 p-5">
+        <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm"
+          style={{ background: `${accent}14`, color: accent, border: `1px solid ${accent}28` }}>
+          {idx + 1}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold mb-1 leading-snug" style={{ color: WHITE }}>{q.title}</p>
+          <p className="text-[13px] leading-relaxed" style={{ color: MUTED }}>{q.prompt}</p>
+        </div>
+        {state !== "revealed" && (
+          <button onClick={() => setState(state === "confirm" ? "idle" : "confirm")}
+            className="flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-150 whitespace-nowrap"
+            style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}25` }}
+            onMouseEnter={e => { e.currentTarget.style.background = `${accent}20`; }}
+            onMouseLeave={e => { e.currentTarget.style.background = `${accent}12`; }}>
+            View Sample Answer
+          </button>
+        )}
+        {state === "revealed" && (
+          <button onClick={() => setState("idle")}
+            className="flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap"
+            style={{ background: CARD, color: MUTED, border: `1px solid ${BORDER}` }}>
+            Collapse ↑
+          </button>
+        )}
+      </div>
+
+      {/* Brainstorm confirmation */}
+      <AnimatePresence>
+        {state === "confirm" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+            style={{ overflow: "hidden" }}>
+            <div className="mx-5 mb-5 p-5 rounded-2xl text-center"
+              style={{ background: `${accent}06`, border: `1px solid ${accent}18` }}>
+              <div className="text-2xl mb-2">🤔</div>
+              <p className="text-sm font-bold mb-1" style={{ color: WHITE }}>
+                Have you brainstormed enough before seeing the answer?
+              </p>
+              <p className="text-xs mb-5" style={{ color: MUTED }}>
+                The best way to learn KPI Trees is to attempt the structure yourself first.
+              </p>
+              <div className="flex items-center justify-center gap-3 flex-wrap">
+                <button onClick={() => setState("revealed")}
+                  className="px-5 py-2 rounded-xl text-sm font-bold transition-all duration-150"
+                  style={{ background: `linear-gradient(135deg, ${accent}, ${VIO})`, color: BTN, boxShadow: `0 4px 14px ${accent}35` }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
+                  Yes, show me the answer ✓
+                </button>
+                <button onClick={() => setState("idle")}
+                  className="px-5 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                  style={{ background: CARD, color: MUTED, border: `1px solid ${BORDER}` }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#e0e0f0"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = CARD; }}>
+                  Let me think again →
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Answer */}
+      <AnimatePresence>
+        {state === "revealed" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            style={{ overflow: "hidden" }}>
+            <div className="px-5 pb-6 pt-2 border-t" style={{ borderColor: BORDER }}>
+              {renderBlocks(q.blocks, accent)}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function PracticeSection({ accent }: { accent: string }) {
+  return (
+    <div className="my-10">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="h-px flex-1" style={{ background: BORDER }} />
+        <span className="text-xs font-mono uppercase tracking-widest px-3 py-1.5 rounded-full font-semibold"
+          style={{ background: `${accent}10`, color: accent, border: `1px solid ${accent}22` }}>
+          🎯 Practice Questions
+        </span>
+        <div className="h-px flex-1" style={{ background: BORDER }} />
+      </div>
+      <p className="text-sm text-center mb-7" style={{ color: MUTED }}>
+        10 interview-style scenarios — attempt each yourself before revealing the sample answer.
+      </p>
+      {PRACTICE_QS.map((q, i) => (
+        <PracticeCard key={q.num} q={q} idx={i} accent={accent} />
+      ))}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   STORAGE KEY
+═══════════════════════════════════════════════════ */
 const TOTAL = CHAPTERS.length;
 const STORAGE_KEY = "pm-course-v1";
 
@@ -942,30 +1529,30 @@ function Sidebar({
 
       <aside
         className={`fixed top-0 left-0 h-full z-40 flex flex-col overflow-hidden transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
-        style={{ width: 272, background: SURFACE, borderRight: `1px solid ${BORDER}` }}>
+        style={{ width: 272, background: SB_BG, borderRight: `1px solid ${SB_BORDER}` }}>
 
         {/* header */}
-        <div className="flex-shrink-0 px-5 pt-5 pb-4 border-b" style={{ borderColor: BORDER }}>
+        <div className="flex-shrink-0 px-5 pt-5 pb-4 border-b" style={{ borderColor: SB_BORDER }}>
           <div className="flex items-center justify-between mb-4">
             <Link href="/#library"
               className="flex items-center gap-1.5 text-xs transition-colors"
-              style={{ color: MUTED, fontFamily: "var(--font-mono)" }}
-              onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
-              onMouseLeave={e => (e.currentTarget.style.color = MUTED)}>
+              style={{ color: D_MUTED, fontFamily: "var(--font-mono)" }}
+              onMouseEnter={e => (e.currentTarget.style.color = D_WHITE)}
+              onMouseLeave={e => (e.currentTarget.style.color = D_MUTED)}>
               <ArrowLeft size={12} /> home
             </Link>
-            <button onClick={onClose} className="lg:hidden p-1 rounded" style={{ color: MUTED }}>
+            <button onClick={onClose} className="lg:hidden p-1 rounded" style={{ color: D_MUTED }}>
               <X size={16} />
             </button>
           </div>
 
-          <p className="text-[10px] uppercase tracking-[0.2em] font-mono mb-1" style={{ color: MUTED }}>PM Master Guide</p>
-          <h2 className="text-sm font-black leading-snug" style={{ color: WHITE }}>Beginner to Intermediate</h2>
+          <p className="text-[10px] uppercase tracking-[0.2em] font-mono mb-1" style={{ color: D_MUTED }}>PM Master Guide</p>
+          <h2 className="text-sm font-black leading-snug" style={{ color: D_WHITE }}>Beginner to Intermediate</h2>
 
           {/* progress */}
           <div className="mt-4">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[11px]" style={{ color: MUTED }}>Progress</span>
+              <span className="text-[11px]" style={{ color: D_MUTED }}>Progress</span>
               <span className="text-[11px] font-semibold" style={{ color: PRI }}>{pct}%</span>
             </div>
             <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
@@ -974,7 +1561,7 @@ function Sidebar({
                 animate={{ width: `${pct}%` }}
                 transition={{ duration: 0.5 }} />
             </div>
-            <p className="text-[10px] mt-1.5" style={{ color: DIM }}>{completed.size} of {TOTAL} chapters</p>
+            <p className="text-[10px] mt-1.5" style={{ color: D_DIM }}>{completed.size} of {TOTAL} chapters</p>
           </div>
         </div>
 
@@ -1001,23 +1588,23 @@ function Sidebar({
                       onClick={() => { onSelect(i); onClose(); }}
                       className="w-full text-left px-3 py-2.5 rounded-lg mb-0.5 flex items-start gap-2.5 transition-all duration-150"
                       style={{
-                        background: isCurrent ? `${accent}18` : "transparent",
-                        border: isCurrent ? `1px solid ${accent}30` : "1px solid transparent",
+                        background: isCurrent ? `${accent}22` : "transparent",
+                        border: isCurrent ? `1px solid ${accent}35` : "1px solid transparent",
                       }}>
                       <div className="flex-shrink-0 mt-0.5">
                         {isDone
                           ? <CheckCircle2 size={13} style={{ color: accent }} />
-                          : <Circle size={13} style={{ color: isCurrent ? accent : DIM }} />
+                          : <Circle size={13} style={{ color: isCurrent ? accent : D_DIM }} />
                         }
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[9px] font-mono" style={{ color: isCurrent ? accent : DIM }}>
+                          <span className="text-[9px] font-mono" style={{ color: isCurrent ? accent : D_DIM }}>
                             {typeof ch.num === "string" ? ch.num : String(ch.num).padStart(2, "0")}
                           </span>
                         </div>
                         <p className="text-[12px] leading-snug font-medium truncate"
-                          style={{ color: isCurrent ? WHITE : (isDone ? TEXT : MUTED) }}>
+                          style={{ color: isCurrent ? D_WHITE : (isDone ? "rgba(255,255,255,0.55)" : D_MUTED) }}>
                           {ch.title}
                         </p>
                       </div>
@@ -1041,7 +1628,7 @@ function ChapterContent({ ch, idx, completed }: { ch: Chapter; idx: number; comp
   const isDone = completed.has(ch.id);
 
   return (
-    <div className="max-w-[720px] mx-auto px-6 py-10">
+    <div className="max-w-[740px] mx-auto px-6 sm:px-10 py-12">
       {/* chapter meta */}
       <div className="flex items-center gap-3 flex-wrap mb-6">
         <span className="text-[10px] px-2.5 py-1 rounded-full font-semibold"
@@ -1101,14 +1688,14 @@ function BottomNav({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 border-t"
-      style={{ background: `${SURFACE}ee`, borderColor: BORDER, backdropFilter: "blur(20px)" }}>
+      style={{ background: "rgba(255,255,255,0.96)", borderColor: BORDER, backdropFilter: "blur(20px)", boxShadow: "0 -1px 12px rgba(99,91,255,0.07)" }}>
       <div className="max-w-[720px] mx-auto px-6 py-3 flex items-center gap-4">
         {/* prev */}
         <button onClick={onPrev} disabled={current === 0}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed"
-          style={{ background: "rgba(255,255,255,0.05)", color: TEXT, border: `1px solid ${BORDER}` }}
-          onMouseEnter={e => { if (current > 0) e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}>
+          style={{ background: CARD, color: TEXT, border: `1px solid ${BORDER}` }}
+          onMouseEnter={e => { if (current > 0) e.currentTarget.style.background = "#e4e4f4"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = CARD; }}>
           <ArrowLeft size={14} /> Prev
         </button>
 
@@ -1132,13 +1719,13 @@ function BottomNav({
           {isLast ? (
             <button onClick={onComplete}
               className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200"
-              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 4px 16px ${PRI}40` }}>
+              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 4px 16px ${PRI}40` }}>
               <Award size={14} /> Finish!
             </button>
           ) : (
             <button onClick={onNext}
               className="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200"
-              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 4px 16px ${PRI}40` }}
+              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 4px 16px ${PRI}40` }}
               onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}>
               Next <ArrowRight size={14} />
@@ -1157,8 +1744,10 @@ function PMLanding({ onOpenCourse, completed }: {
   onOpenCourse: () => void;
   completed: Set<string>;
 }) {
-  const pct = Math.round((completed.size / TOTAL) * 100);
+  const pct = Math.min(Math.round((completed.size / TOTAL) * 100), 100);
   const hasProgress = completed.size > 0;
+  const isComplete = completed.size >= TOTAL;
+  const nextChapter = Math.min(completed.size + 1, TOTAL);
 
   const tiles = [
     {
@@ -1166,12 +1755,12 @@ function PMLanding({ onOpenCourse, completed }: {
       label: "PM Master Guide",
       tag: hasProgress ? `${pct}% complete` : "Beginner → Intermediate",
       tagColor: hasProgress ? EMR : PRI,
-      desc: "23 chapters covering frameworks, metrics, strategy, design thinking, and technical fundamentals — all in one place.",
+      desc: `${TOTAL} chapters covering frameworks, metrics, strategy, design thinking, and technical fundamentals — all in one place.`,
       color: PRI,
       bg: `${PRI}0e`,
       border: `${PRI}25`,
       ready: true,
-      cta: hasProgress ? `Continue (Ch ${completed.size + 1}/${TOTAL})` : "Start Course →",
+      cta: isComplete ? "Review Course →" : hasProgress ? `Continue (Ch ${nextChapter}/${TOTAL})` : "Start Course →",
       onClick: onOpenCourse,
     },
     {
@@ -1203,7 +1792,7 @@ function PMLanding({ onOpenCourse, completed }: {
   ];
 
   return (
-    <div className="min-h-screen px-5 py-16 sm:py-24 relative overflow-hidden" style={{ background: BG }}>
+    <div className="min-h-screen px-5 py-16 sm:py-24 relative overflow-hidden" style={{ background: D_BG }}>
       {/* ambient glows */}
       <div className="absolute pointer-events-none" style={{ top: "-10%", left: "-5%", width: 600, height: 600,
         background: `radial-gradient(ellipse, ${PRI}14 0%, transparent 65%)` }} />
@@ -1230,14 +1819,14 @@ function PMLanding({ onOpenCourse, completed }: {
             <span className="text-[11px] font-mono" style={{ color: PRI }}>PM &amp; Startups</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black leading-tight mb-3"
-            style={{ color: WHITE, letterSpacing: "-1.5px" }}>
+            style={{ color: D_WHITE, letterSpacing: "-1.5px" }}>
             Build. Think. Ship.<br />
             <span style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Repeat.
             </span>
           </h1>
-          <p className="text-base leading-relaxed max-w-xl" style={{ color: TEXT }}>
+          <p className="text-base leading-relaxed max-w-xl" style={{ color: D_TEXT }}>
             Career guides, startup notes, and frameworks — everything I wish someone had handed me when I was starting out.
           </p>
         </motion.div>
@@ -1276,8 +1865,8 @@ function PMLanding({ onOpenCourse, completed }: {
                     </span>
                   </div>
 
-                  <p className="text-sm font-bold mb-2" style={{ color: WHITE }}>{tile.label}</p>
-                  <p className="text-xs leading-relaxed mb-5 flex-1" style={{ color: MUTED }}>{tile.desc}</p>
+                  <p className="text-sm font-bold mb-2" style={{ color: D_WHITE }}>{tile.label}</p>
+                  <p className="text-xs leading-relaxed mb-5 flex-1" style={{ color: D_MUTED }}>{tile.desc}</p>
 
                   {/* progress bar (course only) */}
                   {tile.ready && hasProgress && (
@@ -1293,14 +1882,14 @@ function PMLanding({ onOpenCourse, completed }: {
                   {tile.ready ? (
                     <button onClick={tile.onClick}
                       className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold transition-all duration-200"
-                      style={{ background: `linear-gradient(135deg, ${tile.color}, ${VIO})`, color: WHITE, boxShadow: `0 4px 16px ${tile.color}30` }}
+                      style={{ background: `linear-gradient(135deg, ${tile.color}, ${VIO})`, color: BTN, boxShadow: `0 4px 16px ${tile.color}30` }}
                       onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = `0 8px 24px ${tile.color}45`; }}
                       onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 4px 16px ${tile.color}30`; }}>
                       {tile.cta}
                     </button>
                   ) : (
                     <div className="flex items-center justify-center w-full py-2.5 rounded-xl text-xs font-semibold"
-                      style={{ background: "rgba(255,255,255,0.03)", color: DIM, border: `1px solid ${BORDER}` }}>
+                      style={{ background: "rgba(255,255,255,0.04)", color: D_DIM, border: `1px solid ${D_BORDER}` }}>
                       {tile.cta}
                     </div>
                   )}
@@ -1337,7 +1926,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-20 relative overflow-hidden"
-      style={{ background: BG }}>
+      style={{ background: D_BG }}>
 
       {/* ambient glows */}
       <div className="absolute pointer-events-none" style={{ top: "-20%", left: "-10%", width: 600, height: 600,
@@ -1353,9 +1942,9 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
         {/* badge */}
         <div className="flex items-center gap-2 mb-6">
           <button onClick={onBack} className="flex items-center gap-1.5 text-xs transition-colors"
-            style={{ color: MUTED, fontFamily: "var(--font-mono)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-            onMouseEnter={e => (e.currentTarget.style.color = WHITE)}
-            onMouseLeave={e => (e.currentTarget.style.color = MUTED)}>
+            style={{ color: D_MUTED, fontFamily: "var(--font-mono)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            onMouseEnter={e => (e.currentTarget.style.color = D_WHITE)}
+            onMouseLeave={e => (e.currentTarget.style.color = D_MUTED)}>
             <ArrowLeft size={12} /> back to PM &amp; Startups
           </button>
         </div>
@@ -1367,7 +1956,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight mb-4"
-          style={{ color: WHITE, letterSpacing: "-1.5px" }}>
+          style={{ color: D_WHITE, letterSpacing: "-1.5px" }}>
           Everything you need to
           <span style={{ display: "block", background: `linear-gradient(135deg, ${PRI}, ${VIO})`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
@@ -1375,7 +1964,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
           </span>
         </h1>
 
-        <p className="text-base leading-relaxed mb-8 max-w-lg" style={{ color: TEXT }}>
+        <p className="text-base leading-relaxed mb-8 max-w-lg" style={{ color: D_TEXT }}>
           A self-paced course covering frameworks, metrics, strategy, design thinking, and technical fundamentals — curated for aspiring and growing Product Managers.
         </p>
 
@@ -1387,9 +1976,9 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
             { label: "Frameworks", value: "20+" },
           ].map(s => (
             <div key={s.label} className="rounded-xl px-4 py-4 text-center"
-              style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <p className="text-2xl font-black mb-0.5" style={{ color: WHITE }}>{s.value}</p>
-              <p className="text-[11px]" style={{ color: MUTED }}>{s.label}</p>
+              style={{ background: D_CARD, border: `1px solid ${D_BORDER}` }}>
+              <p className="text-2xl font-black mb-0.5" style={{ color: D_WHITE }}>{s.value}</p>
+              <p className="text-[11px]" style={{ color: D_MUTED }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -1406,8 +1995,8 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
                   <Icon size={13} style={{ color: m.color }} />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold" style={{ color: WHITE }}>{m.label}</p>
-                  <p className="text-[10px]" style={{ color: MUTED }}>{m.count} chapters</p>
+                  <p className="text-xs font-semibold" style={{ color: D_WHITE }}>{m.label}</p>
+                  <p className="text-[10px]" style={{ color: D_MUTED }}>{m.count} chapters</p>
                 </div>
               </div>
             );
@@ -1419,19 +2008,19 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button onClick={onContinue}
               className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-bold transition-all duration-200"
-              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 8px 32px ${PRI}40` }}>
+              style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 8px 32px ${PRI}40` }}>
               Continue ({pct}% done) <ChevronRight size={18} />
             </button>
             <button onClick={onStart}
               className="flex items-center justify-center gap-2 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-150"
-              style={{ background: CARD, color: MUTED, border: `1px solid ${BORDER}` }}>
+              style={{ background: D_CARD, color: D_MUTED, border: `1px solid ${D_BORDER}` }}>
               <RotateCcw size={14} /> Restart
             </button>
           </div>
         ) : (
           <button onClick={onStart}
             className="w-full flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-bold transition-all duration-200"
-            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 8px 32px ${PRI}40` }}
+            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 8px 32px ${PRI}40` }}
             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = `0 12px 40px ${PRI}55`; }}
             onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 8px 32px ${PRI}40`; }}>
             Start Course <ChevronRight size={18} />
@@ -1448,14 +2037,11 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
 function CompletionScreen({ onRestart }: { onRestart: () => void }) {
   const [showFeedback, setShowFeedback] = useState(false);
 
-  const feedbackHref =
-    "mailto:yugalagrawal11@gmail.com" +
-    "?subject=PM%20Course%20Feedback" +
-    "&body=Hey%20Yugal%2C%0A%0AI%20just%20finished%20your%20PM%20Master%20Guide%20and%20wanted%20to%20share%20some%20thoughts%3A%0A%0A";
+  const feedbackHref = "https://www.linkedin.com/in/yugal11/";
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 text-center relative overflow-hidden"
-      style={{ background: BG }}>
+      style={{ background: D_BG }}>
       <div className="absolute pointer-events-none inset-0"
         style={{ background: `radial-gradient(ellipse at 50% 40%, ${PRI}20 0%, transparent 60%)` }} />
 
@@ -1470,14 +2056,14 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
           <Award size={14} style={{ color: PRI }} />
           <span className="text-xs font-semibold" style={{ color: PRI }}>Course Complete!</span>
         </div>
-        <h1 className="text-4xl font-black mb-4 leading-tight" style={{ color: WHITE, letterSpacing: "-1px" }}>
+        <h1 className="text-4xl font-black mb-4 leading-tight" style={{ color: D_WHITE, letterSpacing: "-1px" }}>
           You&apos;ve completed the
           <span style={{ display: "block", background: `linear-gradient(135deg, ${PRI}, ${VIO})`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             PM Master Guide.
           </span>
         </h1>
-        <p className="text-base leading-relaxed mb-8" style={{ color: TEXT }}>
+        <p className="text-base leading-relaxed mb-8" style={{ color: D_TEXT }}>
           You now have a solid foundation in product thinking — from discovery to metrics, strategy, design, and tech. Go build something.
         </p>
 
@@ -1485,14 +2071,14 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
           <button
             onClick={() => setShowFeedback(true)}
             className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
-            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 8px 28px ${PRI}40` }}
+            style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 8px 28px ${PRI}40` }}
             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; }}
             onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
             Finish! 🎉
           </button>
           <button onClick={onRestart}
             className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium"
-            style={{ background: CARD, color: TEXT, border: `1px solid ${BORDER}` }}>
+            style={{ background: D_CARD, color: D_TEXT, border: `1px solid ${D_BORDER}` }}>
             <RotateCcw size={14} /> Restart Course
           </button>
         </div>
@@ -1521,13 +2107,13 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 16 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              style={{ background: SURFACE, border: `1px solid ${BORDER2}`, boxShadow: `0 32px 80px rgba(0,0,0,0.6)` }}
+              style={{ background: D_SURFACE, border: `1px solid ${D_BORDER2}`, boxShadow: `0 32px 80px rgba(0,0,0,0.6)` }}
               onClick={e => e.stopPropagation()}>
 
               {/* close */}
               <button onClick={() => setShowFeedback(false)}
                 className="absolute top-4 right-4 w-7 h-7 rounded-full flex items-center justify-center transition-all"
-                style={{ background: "rgba(255,255,255,0.06)", color: MUTED }}
+                style={{ background: "rgba(255,255,255,0.06)", color: D_MUTED }}
                 onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}>
                 <X size={13} />
@@ -1535,10 +2121,10 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
 
               <div className="text-4xl mb-4">🙏</div>
 
-              <h2 className="text-2xl font-black mb-2" style={{ color: WHITE, letterSpacing: "-0.5px" }}>
+              <h2 className="text-2xl font-black mb-2" style={{ color: D_WHITE, letterSpacing: "-0.5px" }}>
                 Hope you learned something!
               </h2>
-              <p className="text-sm leading-relaxed mb-6" style={{ color: TEXT }}>
+              <p className="text-sm leading-relaxed mb-6" style={{ color: D_TEXT }}>
                 I&apos;d genuinely love to hear what you thought — what was useful, what was confusing, or just a quick hi. Drop me a note, it takes 30 seconds.
               </p>
 
@@ -1551,17 +2137,17 @@ function CompletionScreen({ onRestart }: { onRestart: () => void }) {
 
               <a href={feedbackHref}
                 className="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl text-sm font-bold mb-3 transition-all duration-200"
-                style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: WHITE, boxShadow: `0 6px 24px ${PRI}40`, textDecoration: "none" }}
+                style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 6px 24px ${PRI}40`, textDecoration: "none" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-                <Mail size={14} /> Send Feedback →
+                <Mail size={14} /> Connect on LinkedIn →
               </a>
 
               <button onClick={() => setShowFeedback(false)}
                 className="text-xs transition-colors"
-                style={{ color: DIM, background: "none", border: "none", cursor: "pointer" }}
-                onMouseEnter={e => (e.currentTarget.style.color = MUTED)}
-                onMouseLeave={e => (e.currentTarget.style.color = DIM)}>
+                style={{ color: D_DIM, background: "none", border: "none", cursor: "pointer" }}
+                onMouseEnter={e => (e.currentTarget.style.color = D_MUTED)}
+                onMouseLeave={e => (e.currentTarget.style.color = D_DIM)}>
                 Maybe later
               </button>
             </motion.div>
@@ -1582,6 +2168,8 @@ export default function PMCoursePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [showMidFeedback, setShowMidFeedback] = useState(false);
+  const [midShown, setMidShown] = useState(false);
 
   /* load from localStorage */
   useEffect(() => {
@@ -1591,11 +2179,10 @@ export default function PMCoursePage() {
         const { completedIds, currentIdx, phaseVal } = JSON.parse(raw);
         if (completedIds) setCompleted(new Set(completedIds));
         if (typeof currentIdx === "number") setCurrent(currentIdx);
-        // Restore phase but always land on "landing" if they were mid-course
-        // so they go through the tile hub first
         if (phaseVal === "done") setPhase("done");
         else if (phaseVal === "reading" || phaseVal === "cover") setPhase("landing");
       }
+      if (localStorage.getItem("pm-mid-feedback-shown") === "1") setMidShown(true);
     } catch { /* ignore */ }
     setHydrated(true);
   }, []);
@@ -1626,11 +2213,17 @@ export default function PMCoursePage() {
       const nextIdx = current + 1;
       setCurrent(nextIdx);
       save(completed, nextIdx, "reading");
+      // mid-course nudge after completing Chapter 3 (index 2)
+      if (current === 2 && !midShown) {
+        setTimeout(() => setShowMidFeedback(true), 700);
+        setMidShown(true);
+        try { localStorage.setItem("pm-mid-feedback-shown", "1"); } catch { /* ignore */ }
+      }
     } else {
       setPhase("done");
       save(completed, current, "done");
     }
-  }, [current, markComplete, completed, save]);
+  }, [current, markComplete, completed, save, midShown]);
 
   const goPrev = useCallback(() => {
     if (current > 0) {
@@ -1701,14 +2294,14 @@ export default function PMCoursePage() {
       <ProgressBar pct={pct} />
 
       {/* mobile top bar */}
-      <div className="fixed top-0.5 inset-x-0 z-40 flex items-center justify-between px-4 py-3 lg:hidden"
-        style={{ background: `${SURFACE}f0`, borderBottom: `1px solid ${BORDER}`, backdropFilter: "blur(20px)" }}>
+      <div className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-4 py-3 lg:hidden"
+        style={{ background: "rgba(255,255,255,0.95)", borderBottom: `1px solid ${BORDER}`, backdropFilter: "blur(20px)", boxShadow: "0 1px 8px rgba(99,91,255,0.06)" }}>
         <button onClick={() => setSidebarOpen(true)}
-          className="flex items-center gap-2 text-sm font-medium" style={{ color: TEXT }}>
+          className="flex items-center gap-2 text-sm font-medium" style={{ color: WHITE }}>
           <Menu size={18} />
           <span className="text-xs" style={{ color: MUTED }}>Ch {current + 1}/{TOTAL}</span>
         </button>
-        <span className="text-xs font-mono" style={{ color: PRI }}>{pct}% done</span>
+        <span className="text-xs font-mono font-semibold" style={{ color: PRI }}>{pct}% done</span>
       </div>
 
       <Sidebar current={current} completed={completed}
@@ -1732,6 +2325,62 @@ export default function PMCoursePage() {
         <BottomNav current={current} completed={completed}
           onPrev={goPrev} onNext={goNext} onComplete={markComplete} />
       </div>
+
+      {/* ── Mid-course LinkedIn feedback popup ── */}
+      <AnimatePresence>
+        {showMidFeedback && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4 pb-6 sm:pb-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ background: "rgba(7,9,26,0.75)", backdropFilter: "blur(10px)" }}
+            onClick={() => setShowMidFeedback(false)}>
+            <motion.div
+              className="relative w-full max-w-sm rounded-3xl px-7 py-8"
+              initial={{ y: 40, scale: 0.95 }}
+              animate={{ y: 0, scale: 1 }}
+              exit={{ y: 30, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{ background: D_SURFACE, border: `1px solid ${D_BORDER2}`, boxShadow: "0 24px 60px rgba(0,0,0,0.5)" }}
+              onClick={e => e.stopPropagation()}>
+
+              <button onClick={() => setShowMidFeedback(false)}
+                className="absolute top-3.5 right-3.5 w-6 h-6 rounded-full flex items-center justify-center"
+                style={{ background: "rgba(255,255,255,0.06)", color: D_MUTED }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}>
+                <X size={12} />
+              </button>
+
+              <div className="text-3xl mb-3">👋</div>
+              <h3 className="text-lg font-black mb-1.5" style={{ color: D_WHITE, letterSpacing: "-0.3px" }}>
+                3 chapters in — how&apos;s it going?
+              </h3>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: D_TEXT }}>
+                I&apos;d love to hear your thoughts so far. Connect with me on LinkedIn and drop a quick note — I read every message.
+              </p>
+
+              <a href="https://www.linkedin.com/in/yugal11/" target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-bold mb-2.5 transition-all duration-200"
+                style={{ background: `linear-gradient(135deg, ${PRI}, ${VIO})`, color: BTN, boxShadow: `0 4px 18px ${PRI}35`, textDecoration: "none" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+                <Mail size={13} /> Connect on LinkedIn →
+              </a>
+
+              <button onClick={() => setShowMidFeedback(false)}
+                className="w-full text-center text-xs py-1.5 transition-colors"
+                style={{ color: D_DIM, background: "none", border: "none", cursor: "pointer" }}
+                onMouseEnter={e => (e.currentTarget.style.color = D_MUTED)}
+                onMouseLeave={e => (e.currentTarget.style.color = D_DIM)}>
+                Continue reading
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
