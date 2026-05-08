@@ -15,6 +15,7 @@ const CATEGORIES = [
     bg: "rgba(99,91,255,0.08)",
     border: "rgba(99,91,255,0.18)",
     funny: "🚧 Still under construction. Unlike most product roadmaps, this one will actually ship.",
+    href: "/library/pm",
   },
   {
     icon: BookOpen,
