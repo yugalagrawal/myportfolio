@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Rocket, BookOpen, PenLine, Sparkles, X } from "lucide-react";
+import { Rocket, BookOpen, PenLine, Sparkles, X, ArrowUpRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 const CATEGORIES = [
@@ -27,16 +28,27 @@ const CATEGORIES = [
   {
     icon: PenLine,
     label: "Poetry & Writing",
-    desc: "Original work — some refined, some raw. The creative side of the same brain that writes PRDs.",
+    desc: "Original works — some refined, some raw, mostly lame. Written when PRDs feel too serious. Read at your own risk.",
     color: "#845ef7",
     bg: "rgba(132,94,247,0.08)",
     border: "rgba(132,94,247,0.18)",
     funny: "✍️ The poet is still editing. He's been editing since 2021. We're working on it.",
+    href: "/library/poetry",
   },
 ];
 
 export default function Library() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const router = useRouter();
+
+  function handleTileClick(i: number) {
+    const cat = CATEGORIES[i] as typeof CATEGORIES[number] & { href?: string };
+    if (cat.href) {
+      router.push(cat.href);
+    } else {
+      setOpenIdx(openIdx === i ? null : i);
+    }
+  }
 
   return (
     <section id="library" className="relative">
@@ -115,7 +127,7 @@ export default function Library() {
               {CATEGORIES.map((cat, i) => (
                 <div key={cat.label} className="flex flex-col gap-0">
                   <motion.button
-                    onClick={() => setOpenIdx(openIdx === i ? null : i)}
+                    onClick={() => handleTileClick(i)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="rounded-2xl p-5 text-left w-full transition-all duration-200 cursor-pointer"
@@ -137,15 +149,19 @@ export default function Library() {
                           {cat.label}
                         </p>
                       </div>
-                      <motion.div
-                        animate={{ rotate: openIdx === i ? 45 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {openIdx === i
-                          ? <X size={13} style={{ color: cat.color }} />
-                          : <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 18, lineHeight: 1 }}>+</span>
-                        }
-                      </motion.div>
+                      {(cat as typeof cat & { href?: string }).href ? (
+                        <ArrowUpRight size={13} style={{ color: cat.color, opacity: 0.7 }} />
+                      ) : (
+                        <motion.div
+                          animate={{ rotate: openIdx === i ? 45 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {openIdx === i
+                            ? <X size={13} style={{ color: cat.color }} />
+                            : <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 18, lineHeight: 1 }}>+</span>
+                          }
+                        </motion.div>
+                      )}
                     </div>
                     <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.32)" }}>
                       {cat.desc}
