@@ -31,7 +31,7 @@ data-driven decision-making, and cross-functional collaboration.`,
   location: "Bangalore",
   locationNative: "Native: Agra",
   email: "yugalagrawal11@gmail.com",
-  resumeUrl: "https://drive.google.com/file/d/19PWi3DSe87A1tK0oVK0jSYT9n96qdLQu/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1phb8zrDPJlURrPH-fvtMUjb7z5NZxbQm/view?usp=sharing",
 
   socials: {
     linkedin: "https://www.linkedin.com/in/yugal11/",

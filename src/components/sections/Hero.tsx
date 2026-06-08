@@ -316,7 +316,7 @@ export default function Hero() {
               Years in Product
             </div>
             <div className="text-xs" style={{ color: "rgba(255,255,255,0.15)", fontFamily: "var(--font-mono)" }}>
-              (Logistics / AdTech)
+              (AdTech / eComm)
             </div>
           </div>
 
