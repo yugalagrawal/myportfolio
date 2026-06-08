@@ -17,23 +17,10 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    company:     "LetsTransport",
-    role:        "Product Manager",
-    period:      "May 2026 – Present",
-    location:    "Bangalore, India",
-    type:        "Full-time",
-    current:     true,
-    description: "Freshly onboarded. Impact: loading...",
-    bullets: [
-      "Still finding the coffee machine! Impact loading soon... ☕",
-    ],
-    tags: ["Logistics", "Growth"],
-    url: "https://www.letstransport.com",
-  },
-  {
     company:     "Media.net",
     role:        "Sr. Product Analyst",
-    period:      "May 2023 – May 2026",
+    period:      "May 2023 – Present",
+    current:     true,
     location:    "Bangalore, India",
     type:        "Full-time",
     description: "Owned AdTech analytics — RTB pipelines, keyword intelligence, and the tool nobody knew they needed.",

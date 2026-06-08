@@ -9,9 +9,9 @@ export const profile = {
 
   // Typewriter roles in Hero
   roles: [
-    "Product Manager",
+    "Product",
     "Analyst",
-    "Ex-Founder",
+    "Founder",
     "Content Creator",
     "Traveller",
   ],
