@@ -97,7 +97,7 @@ export default function About() {
                     border: "1px solid rgba(255,255,255,0.15)",
                   }}
                 >
-                  3+ yrs · PM
+                  3+ yrs · Product
                 </motion.div>
               </div>
 

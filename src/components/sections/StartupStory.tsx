@@ -322,7 +322,7 @@ export default function StartupStory() {
                 className="text-2xl sm:text-3xl font-black leading-[1.15] mb-3"
                 style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.92)", letterSpacing: "-1px" }}
               >
-                Before the PM job,<br />
+                Before the Product job,<br />
                 <span style={{ color: "#10b981" }}>there was a startup.</span>
               </h3>
 
