@@ -17,12 +17,25 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    company:     "Media.net",
-    role:        "Sr. Product Analyst",
-    period:      "Jun 2023 – Present",
+    company:     "Letstransport",
+    role:        "Product Manager",
+    period:      "May 2026 – Present",
     location:    "Bengaluru, India",
     type:        "Full-time",
     current:     true,
+    description: "Placeholder — details to be added soon.",
+    bullets: [
+      "Details coming soon.",
+    ],
+    tags: ["Product", "Logistics"],
+    url: "https://www.letstransport.team",
+  },
+  {
+    company:     "Media.net",
+    role:        "Sr. Product Analyst",
+    period:      "Jun 2023 – May 2026",
+    location:    "Bengaluru, India",
+    type:        "Full-time",
     description: "Owned product roadmap for an internal data intelligence platform — PRDs, sprint priorities, and high-impact feature delivery across AdTech.",
     bullets: [
       "**Product Roadmap Ownership:** Owned product roadmap for an internal data intelligence platform; defined PRDs, user stories, and sprint priorities in collaboration with engineering and business stakeholders, improving feature delivery velocity by **30%**.",
