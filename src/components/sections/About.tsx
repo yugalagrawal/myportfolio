@@ -78,6 +78,7 @@ export default function About() {
                     src="/images/avatar.jpg"
                     alt={profile.name}
                     fill
+                    sizes="256px"
                     className="object-cover object-top"
                     priority
                   />

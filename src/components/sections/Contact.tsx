@@ -92,7 +92,7 @@ export default function Contact() {
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.97 }}
                 className="glass rounded-2xl p-5 flex flex-col gap-3 group transition-all duration-200"
-                style={{ border: "1px solid rgba(255,255,255,0.07)" }}
+                style={{ borderWidth: 1, borderStyle: "solid", borderColor: "rgba(255,255,255,0.07)" }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.borderColor = `${color}44`;

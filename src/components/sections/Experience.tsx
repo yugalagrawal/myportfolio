@@ -6,7 +6,6 @@ import { X, MapPin, Briefcase, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { experience, ExperienceItem } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
-import ImpactStrip from "@/components/sections/ImpactStrip";
 
 const companyTheme: Record<string, { color: string; border: string; bg: string; glow: string }> = {
   "LetsTransport": {
@@ -31,144 +30,115 @@ const companyTheme: Record<string, { color: string; border: string; bg: string; 
 
 const defaultTheme = { color: "var(--accent-text)", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
 
-/* ── Truck animation ── */
-function TruckAnimation({ color }: { color: string }) {
-  return (
-    <div className="relative w-full h-14 overflow-hidden flex items-end">
-      {/* Road */}
-      <div className="absolute bottom-2 left-0 right-0 h-px" style={{ background: `${color}33` }} />
-      {/* Moving dashes */}
-      <motion.div className="absolute bottom-2 flex gap-4"
-        animate={{ x: [0, -56] }}
-        transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}>
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-5 h-px flex-shrink-0" style={{ background: `${color}55` }} />
-        ))}
-      </motion.div>
-      {/* Truck — cabin on RIGHT (facing right, moving left→right) */}
-      <motion.div className="absolute bottom-3" style={{ left: 0 }}
-        animate={{ x: ["-130%", "160%"] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
-        <svg width="72" height="30" viewBox="0 0 72 30" fill="none">
-          {/* Cargo (left/back) */}
-          <rect x="4"  y="3"  width="46" height="20" rx="2" fill={`${color}22`} stroke={color} strokeWidth="1.2" />
-          {/* Cabin (right/front) */}
-          <rect x="52" y="10" width="18" height="13" rx="2" fill={`${color}33`} stroke={color} strokeWidth="1.2" />
-          {/* Windshield (front-facing right) */}
-          <rect x="60" y="12" width="8"  height="8"  rx="1" fill={`${color}55`} />
-          {/* Exhaust pipe on top of cabin */}
-          <rect x="54" y="6"  width="3"  height="5"  rx="1" fill={`${color}44`} stroke={color} strokeWidth="1" />
-          {/* Wheels */}
-          <circle cx="14" cy="26" r="3.5" fill={`${color}22`} stroke={color} strokeWidth="1.2" />
-          <circle cx="34" cy="26" r="3.5" fill={`${color}22`} stroke={color} strokeWidth="1.2" />
-          <circle cx="62" cy="26" r="3.5" fill={`${color}22`} stroke={color} strokeWidth="1.2" />
-          {/* Speed lines trailing behind (left side) */}
-          <line x1="3" y1="9"  x2="10" y2="9"  stroke={`${color}44`} strokeWidth="1" strokeDasharray="2 2" />
-          <line x1="1" y1="13" x2="10" y2="13" stroke={`${color}33`} strokeWidth="1" strokeDasharray="2 2" />
-        </svg>
-      </motion.div>
-    </div>
-  );
+function themeFor(company: string) {
+  const key = Object.keys(companyTheme).find(k => company.toLowerCase().startsWith(k.toLowerCase()));
+  return key ? companyTheme[key] : defaultTheme;
 }
 
-/* ── RTB / AdTech animation ── */
-const barHeights = [
-  [28, 44, 20, 36],
-  [40, 20, 44, 28],
-  [20, 36, 28, 44],
-  [44, 28, 36, 20],
-  [32, 44, 24, 40],
-  [44, 24, 40, 32],
-  [28, 40, 44, 20],
-];
+const startDate = (period: string) => {
+  const m = period.match(/([A-Za-z]{3}) (\d{4})/);
+  return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
+};
+const startYear = (period: string) => period.match(/\d{4}/)?.[0] ?? "";
+const endLabel  = (period: string) =>
+  /present/i.test(period) ? "Now" : (period.match(/(\d{4})\s*$/)?.[1] ?? "");
 
-function DataAnimation({ color }: { color: string }) {
+/* ── Growth timeline: newest first, one rail, one card per role ── */
+function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
+  const sorted = [...items].sort((a, b) => startDate(b.period).getTime() - startDate(a.period).getTime());
   return (
-    <div className="flex items-end justify-center gap-1.5 w-full h-14 px-2 pb-1">
-      {barHeights.map((heights, i) => (
-        <motion.div key={i} className="w-3 rounded-t flex-shrink-0"
-          style={{ background: `${color}33`, border: `1px solid ${color}66` }}
-          animate={{ height: heights.map(h => `${h}px`) }}
-          transition={{ duration: 2 + i * 0.3, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
-        />
-      ))}
-      {/* Bid price tag */}
-      <motion.div className="absolute"
-        animate={{ opacity: [0, 1, 1, 0], y: [-4, -8, -12, -16] }}
-        transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
-        style={{ fontSize: "12px", color, fontFamily: "monospace", marginBottom: "2px" }}>
-        $2.4
-      </motion.div>
-    </div>
-  );
-}
+    <ol className="relative">
+      {sorted.map((item, i) => {
+        const theme = themeFor(item.company);
+        const last = i === sorted.length - 1;
+        return (
+          <motion.li
+            key={item.company}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.45, delay: i * 0.05 }}
+            className="relative flex gap-4 md:gap-6"
+          >
+            {/* Year (desktop) */}
+            <div className="hidden md:flex w-20 shrink-0 flex-col items-end pt-5">
+              <span className="text-2xl font-black leading-none"
+                style={{ color: theme.color, fontFamily: "var(--font-display)" }}>
+                {startYear(item.period)}
+              </span>
+              <span className="text-xs mt-1" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                → {endLabel(item.period)}
+              </span>
+            </div>
 
-/* ── Bookshelf animation (Nogozo) ── */
-const shelfBooks = [
-  { x: 6,   w: 12, h: 30, shade: "55" },
-  { x: 20,  w: 9,  h: 22, shade: "33" },
-  { x: 31,  w: 14, h: 32, shade: "44" },
-  { x: 47,  w: 10, h: 26, shade: "2a" },
-  { x: 59,  w: 11, h: 20, shade: "55" }, // picked-up book
-  { x: 72,  w: 13, h: 29, shade: "33" },
-  { x: 87,  w: 9,  h: 23, shade: "44" },
-  { x: 98,  w: 14, h: 31, shade: "2a" },
-  { x: 114, w: 10, h: 24, shade: "55" },
-  { x: 126, w: 12, h: 28, shade: "33" },
-  { x: 140, w: 13, h: 22, shade: "44" },
-];
-
-const SHELF_Y = 43;
-
-function BookAnimation({ color }: { color: string }) {
-  return (
-    <div className="flex items-center justify-center w-full h-14 px-1">
-      <svg width="158" height="50" viewBox="0 0 158 50" fill="none">
-
-        {shelfBooks.map((b, i) => {
-          const topY = SHELF_Y - b.h;
-          const isFloating = i === 4;
-          return (
-            <motion.g key={i}
-              animate={{ y: isFloating ? [0, -7, 0] : [0, i % 2 === 0 ? -1 : -0.5, 0] }}
-              transition={isFloating
-                ? { duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
-                : { duration: 2.6 + i * 0.15, repeat: Infinity, ease: "easeInOut", delay: i * 0.12 }
-              }
-            >
-              {/* Book spine / body */}
-              <rect x={b.x} y={topY} width={b.w} height={b.h} rx="1"
-                fill={`${color}${b.shade}`} stroke={`${color}77`} strokeWidth="0.8" />
-              {/* Top cap — gives slight 3-D depth */}
-              <rect x={b.x + 1} y={topY} width={b.w - 2} height="2.5" rx="0.5"
-                fill={`${color}88`} />
-              {/* Spine centre line */}
-              {b.h > 23 && (
-                <line
-                  x1={b.x + Math.round(b.w / 2)} y1={topY + 6}
-                  x2={b.x + Math.round(b.w / 2)} y2={SHELF_Y - 5}
-                  stroke={`${color}33`} strokeWidth="0.8"
-                />
+            {/* Rail */}
+            <div className="flex flex-col items-center shrink-0 w-5" aria-hidden="true">
+              <span className="mt-6 w-3 h-3 rounded-full shrink-0"
+                style={{
+                  border: `2px solid ${theme.color}`,
+                  background: item.current ? theme.color : "#06030f",
+                  boxShadow: item.current ? `0 0 14px ${theme.color}` : "none",
+                }} />
+              {!last && (
+                <span className="flex-1 w-px mt-2"
+                  style={{ background: `linear-gradient(to bottom, ${theme.color}99, rgba(255,255,255,0.08))` }} />
               )}
-            </motion.g>
-          );
-        })}
+            </div>
 
-        {/* Shelf board */}
-        <rect x="2" y={SHELF_Y} width="154" height="5" rx="1.5"
-          fill={`${color}1a`} stroke={`${color}55`} strokeWidth="0.9" />
-        {/* Shelf shadow line */}
-        <line x1="2" y1="49" x2="156" y2="49" stroke={`${color}18`} strokeWidth="1" strokeLinecap="round" />
-      </svg>
-    </div>
+            {/* Card */}
+            <div className="flex-1 min-w-0 pb-8 md:pb-10">
+              <button
+                type="button"
+                onClick={() => onOpen(item)}
+                style={{ "--t": theme.color } as React.CSSProperties}
+                className="group w-full text-left rounded-2xl p-5 md:p-6 transition-colors duration-200 border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-[var(--t)] focus-visible:border-[var(--t)] outline-none"
+              >
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+                  <span className="text-xs tracking-wide" style={{ color: theme.color, fontFamily: "var(--font-mono)" }}>
+                    {item.stage}
+                  </span>
+                  {item.current && (
+                    <span className="text-xs px-2 py-0.5 rounded-full"
+                      style={{ background: `${theme.color}18`, color: theme.color, border: `1px solid ${theme.color}44`, fontFamily: "var(--font-mono)" }}>
+                      Current
+                    </span>
+                  )}
+                  <span className="md:hidden text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                    {item.period}
+                  </span>
+                </div>
+
+                <h3 className="text-lg md:text-xl font-bold leading-snug" style={{ color: "var(--text-1)" }}>
+                  {item.role}
+                </h3>
+                <p className="text-sm mt-0.5 mb-3" style={{ fontFamily: "var(--font-mono)" }}>
+                  <span style={{ color: theme.color }}>{item.company}</span>
+                  <span style={{ color: "var(--text-3)" }}> · {item.location}</span>
+                </p>
+
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-2)" }}>
+                  {item.description}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {item.highlights.map((h) => (
+                    <span key={h} className="text-xs px-2.5 py-1 rounded-full"
+                      style={{ background: `${theme.color}12`, color: "var(--text-1)", border: `1px solid ${theme.color}33` }}>
+                      {h}
+                    </span>
+                  ))}
+                  <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold transition-transform group-hover:translate-x-0.5"
+                    style={{ color: theme.color }}>
+                    Details <ArrowUpRight size={12} />
+                  </span>
+                </div>
+              </button>
+            </div>
+          </motion.li>
+        );
+      })}
+    </ol>
   );
-}
-
-function CompanyVisual({ company, color }: { company: string; color: string }) {
-  if (company === "LetsTransport") return <TruckAnimation color={color} />;
-  if (company === "Media.net")     return <DataAnimation  color={color} />;
-  if (company === "Nogozo")        return <BookAnimation  color={color} />;
-  return null;
 }
 
 export default function Experience() {
@@ -181,109 +151,20 @@ export default function Experience() {
         <SectionHeading label="// experience" title="Work Experience"
           subtitle="Spoiler: I did not single-handedly save any of these companies. But I helped." />
 
-        <ImpactStrip />
-
-        <p className="text-xs mb-3 tracking-widest uppercase"
+        <p className="text-xs mb-2 tracking-widest uppercase"
           style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
-          Roles
+          How I&apos;ve grown
         </p>
-        <div className="flex flex-col gap-4">
-          {experience.map((item, i) => {
-            const theme = companyTheme[item.company] ?? defaultTheme;
-            return (
-              <motion.button
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                onClick={() => setActive(item)}
-                className="w-full text-left rounded-2xl overflow-hidden group transition-all duration-300"
-                style={{
-                  background: theme.bg,
-                  border: `1px solid ${theme.border}`,
-                  boxShadow: `0 0 0 0 ${theme.glow}`,
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px ${theme.glow}`;
-                  (e.currentTarget as HTMLElement).style.borderColor = theme.color + "66";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 0 transparent";
-                  (e.currentTarget as HTMLElement).style.borderColor = theme.border;
-                }}
-              >
-                {/* Gradient top bar */}
-                <div className="h-0.5 w-full"
-                  style={{ background: `linear-gradient(90deg, ${theme.color}, ${theme.color}44, transparent)` }} />
-
-                <div className="px-4 py-4 sm:px-6 sm:py-5 flex items-center gap-4 overflow-hidden">
-                  {/* Left — role / company / meta */}
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <div className="flex-shrink-0">
-                      <motion.div className="w-3 h-3 rounded-full border-2"
-                        style={{
-                          borderColor: theme.color,
-                          background: item.current ? theme.color : "transparent",
-                          boxShadow: item.current ? `0 0 10px ${theme.color}` : "none",
-                        }}
-                        animate={item.current ? { boxShadow: [`0 0 6px ${theme.color}`, `0 0 14px ${theme.color}`, `0 0 6px ${theme.color}`] } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="font-bold text-sm sm:text-base" style={{ color: "rgba(255,255,255,0.92)" }}>
-                          {item.role}
-                        </span>
-                        {item.current && (
-                          <span className="text-xs font-mono px-2 py-0.5 rounded-full flex-shrink-0"
-                            style={{ background: `${theme.color}18`, color: theme.color, border: `1px solid ${theme.color}44` }}>
-                            Current
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs"
-                        style={{ fontFamily: "var(--font-mono)" }}>
-                        <span className="font-bold text-sm" style={{ color: theme.color }}>{item.company}</span>
-                        <span className="flex items-center gap-1" style={{ color: "var(--text-3)" }}>
-                          <Briefcase size={9} />{item.period}
-                        </span>
-                        <span className="flex items-center gap-1" style={{ color: "var(--text-3)" }}>
-                          <MapPin size={9} />{item.location}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Middle — animated visual */}
-                  <div className="hidden md:block w-48 flex-shrink-0 relative" aria-hidden="true">
-                    <CompanyVisual company={item.company} color={theme.color} />
-                  </div>
-
-                  {/* Right — one-liner + arrow */}
-                  <div className="hidden sm:flex items-center gap-3 flex-shrink-0 max-w-[220px]">
-                    <p className="text-xs text-right leading-snug" style={{ color: "var(--text-3)" }}>
-                      {item.description}
-                    </p>
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200"
-                      style={{ background: `${theme.color}18`, border: `1px solid ${theme.color}33` }}>
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 10L10 2M10 2H4M10 2V8" stroke={theme.color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </motion.button>
-            );
-          })}
-        </div>
+        <p className="text-base mb-8 max-w-2xl" style={{ color: "var(--text-2)" }}>
+          Founder, then product craft, then scale, then AI. Four steps, one arc.
+        </p>
+        <Timeline items={experience} onOpen={setActive} />
       </div>
 
       {/* Drawer */}
       <AnimatePresence>
         {active && (() => {
-          const theme = companyTheme[active.company] ?? defaultTheme;
+          const theme = themeFor(active.company);
           return (
             <>
               <motion.div
@@ -336,7 +217,7 @@ export default function Experience() {
                       style={{ background: `${theme.color}15`, color: theme.color, border: `1px solid ${theme.color}33`, fontFamily: "var(--font-mono)" }}>
                       {active.type}
                     </span>
-                    {active.company === "Nogozo" && (
+                    {active.company.startsWith("Nogozo") && (
                       <Link href="/startup-story"
                         className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-semibold transition-all duration-200"
                         style={{

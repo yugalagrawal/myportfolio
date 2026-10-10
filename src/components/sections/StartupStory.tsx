@@ -360,7 +360,7 @@ export default function StartupStory() {
                 style={{
                   background: "rgba(16,185,129,0.11)",
                   color: "#10b981",
-                  border: "1px solid rgba(16,185,129,0.28)",
+                  borderWidth: 1, borderStyle: "solid", borderColor: "rgba(16,185,129,0.28)",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;

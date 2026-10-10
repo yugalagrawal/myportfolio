@@ -79,7 +79,7 @@ export default function Skills() {
                         style={{
                           background: "rgba(255,255,255,0.04)",
                           color: "var(--text-3)",
-                          border: "1px solid rgba(255,255,255,0.07)",
+                          borderWidth: 1, borderStyle: "solid", borderColor: "rgba(255,255,255,0.07)",
                           whiteSpace: "nowrap",
                           fontFamily: "var(--font-mono)",
                         }}
