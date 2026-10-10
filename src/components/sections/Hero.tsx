@@ -188,12 +188,11 @@ export default function Hero() {
             textWrap: "balance",
           }}
         >
-          {profile.headline.split("0→1").map((part, i, arr) => (
-            <React.Fragment key={i}>
-              {part}
-              {i < arr.length - 1 && <span className="gradient-text">0→1</span>}
-            </React.Fragment>
-          ))}
+          {profile.headline.split(/(0→1|1→n)/).map((part, i) =>
+            part === "0→1" || part === "1→n"
+              ? <span key={i} className="gradient-text">{part}</span>
+              : <React.Fragment key={i}>{part}</React.Fragment>
+          )}
         </p>
 
         {/* Where I've built things */}
