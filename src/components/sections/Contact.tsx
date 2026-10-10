@@ -18,7 +18,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative">
       <div className="section-divider" />
-      <div className="section-container" style={{ paddingTop: 48, paddingBottom: 16 }}>
+      <div className="section-container" style={{ paddingTop: 48, paddingBottom: 64 }}>
         <SectionHeading
           title="Get In Touch"
           subtitle="Have an opportunity, a question, or just want to say hi?"
@@ -43,15 +43,6 @@ export default function Contact() {
         </ScrollReveal>
       </div>
 
-      {/* Footer */}
-      <footer className="text-center py-5 px-6 mt-4"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: "var(--text-3)" }}>
-        <p className="text-xs font-mono" style={{ fontFamily: "var(--font-mono)" }}>
-          Built with Next.js · Tailwind · Framer Motion ·{" "}
-          <span className="gradient-text font-semibold">{profile.name}</span>{" "}
-          © {new Date().getFullYear()}
-        </p>
-      </footer>
     </section>
   );
 }
