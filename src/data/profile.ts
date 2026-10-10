@@ -11,7 +11,7 @@ export const profile = {
   headline: "I take products from 0→1 and scale them 1→n.",
 
   // One-line background (shown under the headline)
-  context: ["Product Manager at LetsTransport", "ex-Media.net", "Founder, Nogozo"],
+  context: ["AI Product Manager at LetsTransport", "ex-Media.net", "Founder, Nogozo"],
 
   // Short tagline under the typewriter
   tagline: `"In God we trust; all others must bring data."`,
