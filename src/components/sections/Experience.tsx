@@ -204,7 +204,7 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
                 </span>
               )}
               <span className="block text-lg font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
-                {item.role}
+                {item.cardRole ?? item.role}
               </span>
               <span className="block text-sm mt-0.5" style={{ color: "var(--accent2-text)" }}>
                 {item.company}

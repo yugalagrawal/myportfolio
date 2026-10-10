@@ -10,6 +10,8 @@
 export interface ExperienceItem {
   company:     string;
   role:        string;
+  /** Shorter title for the timeline card; the details view shows the full `role`. */
+  cardRole?:   string;
   period:      string;
   location:    string;
   type:        "Full-time" | "Contract" | "Intern" | "Founder";
@@ -56,6 +58,7 @@ export const experience: ExperienceItem[] = [
   {
     company:     "Media.net",
     role:        "Sr. Product Analyst · Product Owner, Data Platform & Bidding",
+    cardRole:    "Sr. Product Analyst",
     period:      "Jun 2023 – May 2026",
     location:    "Bengaluru, India",
     type:        "Full-time",
