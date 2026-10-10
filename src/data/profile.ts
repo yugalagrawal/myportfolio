@@ -8,7 +8,7 @@ export const profile = {
   title: "Product Manager",
 
   // One-line positioning shown under the name in the Hero
-  headline: "I take products from 0→1 and scale them 1→n.",
+  headline: "I take products from 0→1 and scale them 1→n",
 
   // One-line background (shown under the headline)
   context: ["AI Product Manager at LetsTransport", "ex-Media.net", "Founder, Nogozo"],
