@@ -223,18 +223,18 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <button
-            onClick={() => scrollTo("projects")}
-            className="btn-primary w-full sm:w-auto min-h-[48px] justify-center"
-          >
-            <FolderKanban size={15} />
-            View My Projects
-          </button>
-          <button
             onClick={() => scrollTo("experience")}
-            className="btn-outline w-full sm:w-auto min-h-[48px] justify-center"
+            className="btn-primary w-full sm:w-auto min-h-[48px] justify-center"
           >
             <Building2 size={15} />
             Work Experience
+          </button>
+          <button
+            onClick={() => scrollTo("projects")}
+            className="btn-outline w-full sm:w-auto min-h-[48px] justify-center"
+          >
+            <FolderKanban size={15} />
+            View My Projects
           </button>
         </motion.div>
       </div>
