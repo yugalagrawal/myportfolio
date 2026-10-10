@@ -259,7 +259,7 @@ export default function StartupStory() {
           <SectionHeading
             label="// startup"
             title="The Startup Chapter"
-            subtitle="Before corporate life, in the middle of college, I was trying to build something from scratch — and it taught me more than any IIT/IIM degree ever could have."
+            subtitle="Mid-college, I built from scratch, and it out-taught any IIT/IIM degree."
           />
         </div>
 
