@@ -40,6 +40,8 @@ const startDate = (period: string) => {
   return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
 };
 
+const startYear = (period: string) => period.match(/\d{4}/)?.[0] ?? "";
+
 /* ── Journey map: cards on alternating sides of a winding, scroll-drawn road ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
   const sorted = [...items].sort((a, b) => startDate(b.period).getTime() - startDate(a.period).getTime());
@@ -123,23 +125,38 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
                 className={`hidden md:block absolute top-[39px] h-px border-t border-dashed border-white/20 ${left ? "left-0 w-[calc(50%-27px)]" : "left-[calc(50%+27px)] right-0"}`} />
             </div>
 
+            {/* Big date on the open side of the road (desktop) */}
+            <div className={`hidden md:flex ${left ? "col-start-3" : "col-start-1"} row-start-1 flex-col justify-start pt-3 ${left ? "items-start pl-6 lg:pl-10" : "items-end pr-6 lg:pr-10 text-right"}`}>
+              <span className={`text-5xl lg:text-6xl font-black leading-none tracking-tight ${item.current ? "gradient-text" : ""}`}
+                style={{ fontFamily: "var(--font-display)", color: item.current ? undefined : "var(--text-1)" }}>
+                {startYear(item.period)}
+              </span>
+              <span className="text-sm mt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                {item.period}
+              </span>
+            </div>
+
             {/* Card */}
             <button
               type="button"
               onClick={() => onOpen(item)}
               className={`group col-start-2 row-start-1 ${left ? "md:col-start-1" : "md:col-start-3"} text-left w-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6 transition duration-200 hover:bg-white/[0.05] hover:border-[#8b85ff99] hover:-translate-y-0.5 focus-visible:border-[#8b85ff99] outline-none`}
             >
-              <span className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+              <span className="md:hidden flex items-baseline flex-wrap gap-x-3 gap-y-1 mb-3">
+                <span className={`text-4xl font-black leading-none tracking-tight ${item.current ? "gradient-text" : ""}`}
+                  style={{ fontFamily: "var(--font-display)", color: item.current ? undefined : "var(--text-1)" }}>
+                  {startYear(item.period)}
+                </span>
                 <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                   {item.period}
                 </span>
-                {item.current && (
-                  <span className="text-xs px-2 py-0.5 rounded-full"
-                    style={{ background: "rgba(139,133,255,0.14)", color: "var(--accent-text)", border: "1px solid rgba(139,133,255,0.35)", fontFamily: "var(--font-mono)" }}>
-                    Current
-                  </span>
-                )}
               </span>
+              {item.current && (
+                <span className="inline-block text-xs px-2 py-0.5 rounded-full mb-2"
+                  style={{ background: "rgba(139,133,255,0.14)", color: "var(--accent-text)", border: "1px solid rgba(139,133,255,0.35)", fontFamily: "var(--font-mono)" }}>
+                  Current
+                </span>
+              )}
               <span className="block text-lg font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
                 {item.role}
               </span>
