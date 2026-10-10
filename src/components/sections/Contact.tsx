@@ -1,12 +1,13 @@
 "use client";
 
-import { Mail } from "lucide-react";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa6";
+import { SiGmail } from "react-icons/si";
 import { profile } from "@/data/profile";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const socials = [
+  { icon: SiGmail,    href: `mailto:${profile.email}`,                label: "Gmail",        color: "#ea4335" },
   { icon: FaLinkedin,  href: profile.socials.linkedin,                label: "LinkedIn",     color: "#0a66c2" },
   { icon: FaGithub,    href: profile.socials.github,                  label: "GitHub",       color: "#8b949e" },
   { icon: FaInstagram, href: "https://www.instagram.com/yugal_agarwal_/", label: "Instagram",    color: "#e1306c" },
@@ -26,20 +27,12 @@ export default function Contact() {
 
         <ScrollReveal direction="up">
           <div className="flex flex-wrap items-center gap-3">
-            <a href={`mailto:${profile.email}`} className="btn-primary justify-center min-h-[44px]"
-              title={profile.email}>
-              <Mail size={15} />
-              Say hello
-            </a>
-
-            <span className="hidden sm:block w-px h-6 mx-1" style={{ background: "rgba(255,255,255,0.12)" }} aria-hidden="true" />
-
             {socials.map(({ icon: Icon, href, label, color }) => (
               <a
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                title={href.startsWith("mailto:") ? profile.email : undefined}
                 className="inline-flex items-center gap-2 px-4 min-h-[44px] rounded-xl text-sm border border-white/10 bg-white/[0.03] transition-colors hover:bg-white/[0.06] hover:border-white/25"
                 style={{ color: "var(--text-2)" }}
               >
