@@ -183,12 +183,17 @@ export default function Hero() {
           className="font-semibold max-w-3xl mx-auto mb-3 leading-snug"
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(18px, 2.4vw, 26px)",
+            fontSize: "clamp(20px, 2.8vw, 30px)",
             color: "rgba(255,255,255,0.88)",
             textWrap: "balance",
           }}
         >
-          {profile.headline}
+          {profile.headline.split("0→1").map((part, i, arr) => (
+            <React.Fragment key={i}>
+              {part}
+              {i < arr.length - 1 && <span className="gradient-text">0→1</span>}
+            </React.Fragment>
+          ))}
         </p>
 
         {/* Where I've built things */}

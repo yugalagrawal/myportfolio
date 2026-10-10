@@ -8,13 +8,13 @@ export const profile = {
   title: "Product Manager",
 
   // One-line positioning shown under the name in the Hero
-  headline: "Product Manager building 0‑to‑1 products, AI-enabled workflows and data platforms.",
+  headline: "I build 0→1 products people actually use.",
 
-  // Where you've built things (shown under the headline)
-  context: ["~4 yrs in Product", "LetsTransport", "ex-Media.net", "Founder, Nogozo", "IIT (BHU)"],
+  // One-line background (shown under the headline)
+  context: ["Product Manager at LetsTransport", "ex-Media.net", "Founder, Nogozo"],
 
   // Short tagline under the typewriter
-  tagline: `Believer of "In God we trust; all others must bring data."`,
+  tagline: `"In God we trust; all others must bring data."`,
 
   // Personal philosophy shown in About section
   philosophy: `Lifelong RCB fan — which means I'm biologically engineered for unshakeable optimism and extreme loyalty under pressure.`,
