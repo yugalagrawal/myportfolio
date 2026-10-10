@@ -243,8 +243,7 @@ export default function Experience() {
     <section id="experience" className="relative">
       <div className="section-divider" />
       <div className="section-container">
-        <SectionHeading label="// experience" title="Work Experience"
-          subtitle="Spoiler: I did not single-handedly save any of these companies. But I helped." />
+        <SectionHeading label="// experience" title="Work Experience" />
 
         <p className="text-base mb-10 max-w-2xl" style={{ color: "var(--text-2)" }}>
           Founder, then scale, then AI. Three steps, one arc.
