@@ -7,33 +7,10 @@ import Link from "next/link";
 import { experience, ExperienceItem } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const companyTheme: Record<string, { color: string; border: string; bg: string; glow: string }> = {
-  "LetsTransport": {
-    color:  "#f59e0b",
-    border: "rgba(245,158,11,0.3)",
-    bg:     "rgba(245,158,11,0.06)",
-    glow:   "rgba(245,158,11,0.15)",
-  },
-  "Media.net": {
-    color:  "#06b6d4",
-    border: "rgba(6,182,212,0.3)",
-    bg:     "rgba(6,182,212,0.06)",
-    glow:   "rgba(6,182,212,0.15)",
-  },
-  "Nogozo": {
-    color:  "#10b981",
-    border: "rgba(16,185,129,0.3)",
-    bg:     "rgba(16,185,129,0.06)",
-    glow:   "rgba(16,185,129,0.15)",
-  },
-};
-
 const defaultTheme = { color: "var(--accent-text)", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
 
-function themeFor(company: string) {
-  const key = Object.keys(companyTheme).find(k => company.toLowerCase().startsWith(k.toLowerCase()));
-  return key ? companyTheme[key] : defaultTheme;
-}
+/** One accent for the whole section, so the timeline and the drawer match. */
+const themeFor = (_company: string) => defaultTheme;
 
 const startDate = (period: string) => {
   const m = period.match(/([A-Za-z]{3}) (\d{4})/);
@@ -184,8 +161,13 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
               <span className="block text-sm mt-0.5" style={{ color: "var(--accent2-text)" }}>
                 {item.company}
               </span>
-              <span className="block text-sm leading-relaxed mt-3" style={{ color: "var(--text-2)" }}>
-                {item.description}
+              <span className="flex flex-wrap gap-1.5 mt-4">
+                {item.keywords.map((k) => (
+                  <span key={k} className="text-xs px-2.5 py-1 rounded-full border border-white/10"
+                    style={{ color: "var(--text-2)", background: "rgba(255,255,255,0.03)" }}>
+                    {k}
+                  </span>
+                ))}
               </span>
               <span className="inline-flex items-center gap-1 mt-3 text-xs transition-colors group-hover:text-[var(--accent-text)]"
                 style={{ color: "var(--text-3)" }}>
@@ -317,7 +299,7 @@ export default function Experience() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    {active.tags.map((tag) => (
+                    {active.keywords.map((tag) => (
                       <span key={tag} className="text-xs px-3 py-1 rounded-full"
                         style={{ background: `${theme.color}12`, color: theme.color, border: `1px solid ${theme.color}33`, fontFamily: "var(--font-mono)" }}>
                         {tag}
