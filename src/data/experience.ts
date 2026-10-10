@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────
 //  EDIT THIS FILE to update your work experience
 //  Source of truth: the resume (YugalAgarwal_Resume_Sept26.pdf)
-//  - `keywords` (exactly 5) show on the timeline cards
+//  - `keywords` (exactly 3, industry / ecosystem names) show on the timeline cards
 //  - `description` + `bullets` show in the detail drawer
 //    (wrap a phrase in **double asterisks** to highlight it)
 // ─────────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ export const experience: ExperienceItem[] = [
     location:    "Bengaluru, India",
     type:        "Full-time",
     current:     true,
-    keywords:    ["AI Automation", "0→1 Platform", "Invoicing & Compliance", "Partner Growth", "Agile Delivery"],
+    keywords:    ["Logistics", "Applied AI", "B2B Platforms"],
     description: "Building AI-enabled operations and a ground-up logistics platform, from invoicing automation to partner growth.",
     bullets: [
       "**AI-powered invoicing & compliance:** Designed and rolled out automated invoicing operations for **$40M+ annual** intra-B2B volume. Standardised invoice formats and billing structures to cut billing discrepancies and audit exposure, and rebuilt MIS review for compliance visibility. Brought Finance and Operations on board for **75%+ adoption in 2 months** and a **9/10 NPS**.",
@@ -43,7 +43,7 @@ export const experience: ExperienceItem[] = [
     period:      "Jun 2023 – May 2026",
     location:    "Bengaluru, India",
     type:        "Full-time",
-    keywords:    ["Programmatic Bidding", "Root-Cause Analysis", "PRDs & Roadmap", "Keyword Optimization", "Workflow Automation"],
+    keywords:    ["AdTech", "RTB", "Data Platforms"],
     description: "Product owner for the internal data platform behind bidding, keyword and yield decisions across the ad exchange.",
     bullets: [
       "**Roadmap ownership:** Owned the roadmap for the internal data intelligence platform powering bidding, keyword and yield analytics across the ad exchange. Turned auction-level signals into structured PRDs, cutting roadmap-to-ship cycle time by **20%**.",
@@ -59,7 +59,7 @@ export const experience: ExperienceItem[] = [
     period:      "Oct 2021 – Jun 2022",
     location:    "Remote",
     type:        "Intern",
-    keywords:    ["ONDC", "A/B Testing", "Churn Reduction", "Funnel Analysis", "Mixpanel & GA"],
+    keywords:    ["ONDC", "eCommerce", "Hyperlocal"],
     description: "Product management intern on ONDC merchant enablement and in-app retention.",
     bullets: [
       "**ONDC merchant enablement:** Enabled merchant-side onboarding for eSamudaay's ONDC integration, streamlining workflows and setting up Google Analytics and Mixpanel tracking for funnel and cohort visibility.",
@@ -72,7 +72,7 @@ export const experience: ExperienceItem[] = [
     period:      "Jun 2020 – Mar 2023",
     location:    "Agra, Uttar Pradesh",
     type:        "Founder",
-    keywords:    ["0→1 Build", "Marketplace + SaaS", "Led 12 People", "UP Govt Grant", "Shark Tank India"],
+    keywords:    ["eCommerce", "Startup India", "Shark Tank India"],
     description: "Founder of a books marketplace turned merchant and logistics suite, from first idea to Shark Tank India.",
     bullets: [
       "**0→1 product and team:** Founded and scaled a Buy/Rent/Sell books marketplace to **10K+ active users** and **INR 4L+ in commissions** (**INR 3.5Cr+ GMV**) with no marketing capital. Expanded into a Merchant & Logistics app suite, leading a **12-person** team across engineering, operations and growth.",
