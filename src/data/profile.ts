@@ -17,7 +17,7 @@ export const profile = {
   tagline: `"In God we trust; all others must bring data."`,
 
   // Personal philosophy shown in About section
-  philosophy: `Lifelong RCB fan: 17 years of loyalty, then the trophy. Ee Sala Cup Namdu.`,
+  philosophy: `Lifelong RCB fan — which means I'm biologically engineered for unshakeable optimism and extreme loyalty under pressure. Proof it pays off: Ee Sala Cup Namdu.`,
 
   location: "Bangalore",
   locationNative: "Native: Agra",
