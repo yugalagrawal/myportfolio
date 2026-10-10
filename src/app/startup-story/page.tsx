@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import SiteBar from "@/components/nav/SiteBar";
 import { useRef, ReactNode } from "react";
@@ -507,7 +507,7 @@ export default function StartupStoryPage() {
 
         {/* ── Footer ── */}
         <Fade>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-10 border-t"
+          <div className="flex items-center justify-center pt-10 border-t"
             style={{ borderColor: "#e7e5e1" }}>
             <Link href="/#startup"
               className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200"
@@ -516,14 +516,6 @@ export default function StartupStoryPage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "#f0ece7"; }}>
               <ArrowLeft size={14} /> Back to Portfolio
             </Link>
-            <a href="https://drive.google.com/file/d/1odXkU_B_5MiXI1AtidsRfkA1reU4NIme/view?usp=sharing"
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200"
-              style={{ background: "rgba(5,150,105,0.07)", color: E, border: "1px solid rgba(5,150,105,0.18)" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(5,150,105,0.14)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(5,150,105,0.07)"; }}>
-              Deck that helped us win ₹5L Grant <ExternalLink size={13} />
-            </a>
           </div>
         </Fade>
 
