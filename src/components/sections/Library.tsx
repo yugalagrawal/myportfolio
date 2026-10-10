@@ -12,7 +12,7 @@ const CATEGORIES = [
     stat: "24 chapters",
     desc: "The PM Master Guide: frameworks, metrics, strategy, design thinking and technical fundamentals, everything I wish I'd been handed when starting out.",
     cta: "Start the guide",
-    color: "#635bff",
+    color: "var(--accent-text)",
     bg: "rgba(99,91,255,0.08)",
     border: "rgba(99,91,255,0.22)",
     href: "/library/pm",
@@ -23,7 +23,7 @@ const CATEGORIES = [
     stat: "54 pieces",
     desc: "Original शायरी, कविताएं and English poems. Written when PRDs feel too serious. Read at your own risk.",
     cta: "Read the notebook",
-    color: "#845ef7",
+    color: "var(--accent2-text)",
     bg: "rgba(132,94,247,0.08)",
     border: "rgba(132,94,247,0.22)",
     href: "/library/poetry",
@@ -76,7 +76,7 @@ export default function Library() {
                 >
                   {cat.stat}
                 </p>
-                <p className="text-sm leading-relaxed flex-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-2)" }}>
                   {cat.desc}
                 </p>
                 {cat.href && (

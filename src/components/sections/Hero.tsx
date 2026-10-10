@@ -58,7 +58,7 @@ function FloatingBubble({ emoji, text, hoverText, style, delay, duration, classN
         border:         "1px solid rgba(99,91,255,0.25)",
         backdropFilter: "blur(16px)",
         boxShadow:      "0 8px 32px rgba(99,91,255,0.12)",
-        color:          "rgba(255,255,255,0.75)",
+        color:          "var(--text-2)",
         whiteSpace:     "normal",
         fontFamily:     "var(--font-mono)",
         fontSize:       "clamp(0.62rem, 1.8vw, 0.78rem)",
@@ -194,11 +194,11 @@ export default function Hero() {
         {/* Where I've built things */}
         <p
           className="mb-5 flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-2 gap-y-1"
-          style={{ fontFamily: "var(--font-mono)", fontSize: "clamp(11px,1.5vw,13px)", color: "rgba(255,255,255,0.5)" }}
+          style={{ fontFamily: "var(--font-mono)", fontSize: "clamp(12px,1.5vw,13px)", color: "var(--text-3)" }}
         >
           {profile.context.map((c, i) => (
             <React.Fragment key={c}>
-              {i > 0 && <span aria-hidden="true" className="hidden sm:inline" style={{ color: "rgba(255,255,255,0.2)" }}>·</span>}
+              {i > 0 && <span aria-hidden="true" className="hidden sm:inline" style={{ color: "var(--text-3)" }}>·</span>}
               <span>{c}</span>
             </React.Fragment>
           ))}
@@ -210,7 +210,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-sm sm:text-base max-w-lg mx-auto mb-6 sm:mb-9 leading-relaxed italic"
-          style={{ color: "rgba(255,255,255,0.5)" }}
+          style={{ color: "var(--text-3)" }}
         >
           {profile.tagline}
         </motion.p>

@@ -26,7 +26,7 @@ const socials = [
     icon: Mail,
     href: `mailto:${profile.email}`,
     label: "Email",
-    color: "#635bff",
+    color: "var(--accent-text)",
     sub: profile.email,
   },
   {
@@ -58,7 +58,7 @@ export default function Contact() {
 
         <ScrollReveal direction="up">
           <p className="text-base sm:text-lg leading-relaxed mb-6 max-w-xl"
-            style={{ color: "rgba(255,255,255,0.65)" }}>
+            style={{ color: "var(--text-2)" }}>
             Happy to talk product, logistics, AI-enabled workflows, or startups.
           </p>
 
@@ -78,7 +78,7 @@ export default function Contact() {
           </div>
 
           <p className="text-xs font-mono tracking-widest uppercase mb-5"
-            style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-mono)" }}>
+            style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
             Or find me on
           </p>
 
@@ -112,7 +112,7 @@ export default function Contact() {
                   <p className="text-sm font-semibold mb-0.5" style={{ color: "rgba(255,255,255,0.85)" }}>
                     {label}
                   </p>
-                  <p className="text-xs truncate" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-mono)", maxWidth: "100%" }}>
+                  <p className="text-xs truncate" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)", maxWidth: "100%" }}>
                     {sub}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="text-center py-8 px-6 mt-16"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.45)" }}>
+        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: "var(--text-3)" }}>
         <p className="text-xs font-mono" style={{ fontFamily: "var(--font-mono)" }}>
           Built with Next.js · Tailwind · Framer Motion ·{" "}
           <span className="gradient-text font-semibold">{profile.name}</span>{" "}

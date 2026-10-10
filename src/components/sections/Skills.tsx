@@ -23,7 +23,7 @@ export default function Skills() {
         {/* PM Skills */}
         <div className="mb-12">
           <p className="text-xs font-mono tracking-widest uppercase mb-5"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+            style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
             Core PM Skills
           </p>
           <motion.div
@@ -51,7 +51,7 @@ export default function Skills() {
         {/* Tools by category */}
         <div>
           <p className="text-xs font-mono tracking-widest uppercase mb-5"
-            style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+            style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
             Tools & Platforms
           </p>
           <div className="flex flex-col gap-4">
@@ -78,7 +78,7 @@ export default function Skills() {
                         className="text-xs px-3 py-1.5 rounded-lg flex-shrink-0 transition-all duration-200 cursor-default"
                         style={{
                           background: "rgba(255,255,255,0.04)",
-                          color: "rgba(255,255,255,0.3)",
+                          color: "var(--text-3)",
                           border: "1px solid rgba(255,255,255,0.07)",
                           whiteSpace: "nowrap",
                           fontFamily: "var(--font-mono)",

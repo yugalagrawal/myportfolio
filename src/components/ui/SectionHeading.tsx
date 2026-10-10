@@ -19,7 +19,7 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
     >
       <p
         className="text-xs font-mono mb-3 tracking-widest uppercase"
-        style={{ color: "#635bff", fontFamily: "var(--font-mono, monospace)" }}
+        style={{ color: "var(--accent-text)", fontFamily: "var(--font-mono, monospace)" }}
       >
         {label}
       </p>
@@ -31,7 +31,7 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
       </h2>
       {subtitle && (
         <p className="mt-4 text-base md:text-lg max-w-2xl leading-relaxed"
-          style={{ color: "rgba(255,255,255,0.35)" }}>
+          style={{ color: "var(--text-3)" }}>
           {subtitle}
         </p>
       )}

@@ -20,7 +20,7 @@ export default function Projects() {
         />
 
         {/* ── Shipped at work ── */}
-        <p className="text-xs mb-3" style={{ color: "#845ef7", fontFamily: "var(--font-mono)" }}>
+        <p className="text-xs mb-3" style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
           // shipped at work
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
@@ -37,19 +37,19 @@ export default function Projects() {
               style={{ border: "1px solid rgba(99,91,255,0.15)" }}
               aria-label={`${item.title} at ${item.company} — see work experience`}
             >
-              <span className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-mono)" }}>
+              <span className="text-xs mb-3" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                 {item.company}
               </span>
               <span className="text-2xl font-black gradient-text leading-none mb-1" style={{ fontFamily: "var(--font-display)" }}>
                 {item.metric}
               </span>
-              <span className="text-xs mb-3 leading-snug" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-mono)" }}>
+              <span className="text-xs mb-3 leading-snug" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                 {item.label}
               </span>
               <span className="text-sm font-semibold mb-1.5 leading-snug" style={{ color: "rgba(255,255,255,0.92)" }}>
                 {item.title}
               </span>
-              <span className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+              <span className="text-xs leading-relaxed" style={{ color: "var(--text-3)" }}>
                 {item.detail}
               </span>
             </motion.button>
@@ -57,7 +57,7 @@ export default function Projects() {
         </div>
 
         {/* ── Case studies ── */}
-        <p className="text-xs mb-3" style={{ color: "#845ef7", fontFamily: "var(--font-mono)" }}>
+        <p className="text-xs mb-3" style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
           // case studies &amp; concepts
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
@@ -96,7 +96,7 @@ export default function Projects() {
                   >
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-5xl font-black opacity-10 select-none"
-                        style={{ fontFamily: "var(--font-display)", color: "#635bff" }}>
+                        style={{ fontFamily: "var(--font-display)", color: "var(--accent-text)" }}>
                         {project.title.charAt(0)}
                       </span>
                     </div>
@@ -110,7 +110,7 @@ export default function Projects() {
                   <span className="text-xl font-black gradient-text" style={{ fontFamily: "var(--font-display)" }}>
                     {project.metric}
                   </span>
-                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                     {project.metricLabel}
                   </span>
                 </div>
@@ -122,7 +122,7 @@ export default function Projects() {
                   {project.type} · {project.company}
                 </p>
                 <p className="text-sm leading-relaxed flex-1 mb-5 line-clamp-4"
-                  style={{ color: "rgba(255,255,255,0.6)" }}>
+                  style={{ color: "var(--text-2)" }}>
                   {project.description}
                 </p>
 
@@ -133,7 +133,7 @@ export default function Projects() {
                       <span key={tag} className="text-xs px-2.5 py-1 rounded-full"
                         style={{
                           background: "rgba(99,91,255,0.07)",
-                          color: "rgba(255,255,255,0.5)",
+                          color: "var(--text-3)",
                           border: "1px solid rgba(99,91,255,0.15)",
                           fontFamily: "var(--font-mono)",
                         }}>
@@ -151,7 +151,7 @@ export default function Projects() {
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all duration-200"
                       style={{
                         background: "rgba(99,91,255,0.1)",
-                        color: "#635bff",
+                        color: "var(--accent-text)",
                         border: "1px solid rgba(99,91,255,0.25)",
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = "rgba(99,91,255,0.2)")}
@@ -165,7 +165,7 @@ export default function Projects() {
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all duration-200"
                       style={{
                         background: "rgba(99,91,255,0.1)",
-                        color: "#635bff",
+                        color: "var(--accent-text)",
                         border: "1px solid rgba(99,91,255,0.25)",
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = "rgba(99,91,255,0.2)")}

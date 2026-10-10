@@ -95,7 +95,7 @@ function GalleryCard({
           {item.title && (
             <div className="absolute bottom-0 inset-x-0 px-3 py-2"
               style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }}>
-              <p className="text-xs font-mono truncate" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <p className="text-xs font-mono truncate" style={{ color: "var(--text-2)" }}>
                 {item.title}
               </p>
             </div>
@@ -314,7 +314,7 @@ export default function StartupStory() {
               </motion.div>
 
               <p className="text-xs font-mono tracking-widest uppercase mb-3"
-                style={{ color: "rgba(16,185,129,0.55)", fontFamily: "var(--font-mono)" }}>
+                style={{ color: "rgba(52,211,153,0.9)", fontFamily: "var(--font-mono)" }}>
                 // Nogozo · 2019 – 2022
               </p>
 
@@ -326,7 +326,7 @@ export default function StartupStory() {
                 <span style={{ color: "#10b981" }}>there was a startup.</span>
               </h3>
 
-              <p className="text-sm leading-relaxed mb-7" style={{ color: "rgba(255,255,255,0.33)" }}>
+              <p className="text-sm leading-relaxed mb-7" style={{ color: "var(--text-3)" }}>
                 A COVID-born idea that grew to 10K+ users, won a ₹5L government grant, and made it to Shark Tank Season 1.
               </p>
 
@@ -345,8 +345,8 @@ export default function StartupStory() {
                       style={{ color: "#10b981", fontFamily: "var(--font-display)" }}>
                       {value}
                     </p>
-                    <p className="text-[11px]"
-                      style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)" }}>
+                    <p className="text-xs"
+                      style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                       {label}
                     </p>
                   </motion.div>
@@ -377,8 +377,8 @@ export default function StartupStory() {
               </Link>
 
               {/* Hint for clickable videos */}
-              <p className="mt-4 text-[11px] font-mono"
-                style={{ color: "rgba(255,255,255,0.14)", fontFamily: "var(--font-mono)" }}>
+              <p className="mt-4 text-xs font-mono"
+                style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                 hover the gallery · click ▶ to watch
               </p>
             </motion.div>

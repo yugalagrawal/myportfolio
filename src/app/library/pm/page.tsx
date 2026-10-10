@@ -42,8 +42,8 @@ const D_BORDER  = "rgba(255,255,255,0.07)";
 const D_BORDER2 = "rgba(255,255,255,0.12)";
 const D_WHITE   = "rgba(255,255,255,0.93)";
 const D_TEXT    = "rgba(255,255,255,0.72)";
-const D_MUTED   = "rgba(255,255,255,0.35)";
-const D_DIM     = "rgba(255,255,255,0.18)";
+const D_MUTED   = "rgba(255,255,255,0.58)";
+const D_DIM     = "rgba(255,255,255,0.45)";
 
 /* ── sidebar specific ── */
 const SB_BG     = "#10112a";
@@ -158,7 +158,7 @@ function renderBlocks(blocks: BlockType[], accent: string) {
           <div key={i} className="my-5 rounded-xl px-5 py-4"
             style={{ background: `${cc}10`, border: `1px solid ${cc}28`, borderLeft: `3px solid ${cc}` }}>
             {b.title && (
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-2"
+              <p className="text-xs font-bold uppercase tracking-[0.18em] mb-2"
                 style={{ color: cc, fontFamily: "var(--font-mono)" }}>{b.title}</p>
             )}
             <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: TEXT }}>{ri(b.txt)}</p>
@@ -204,7 +204,7 @@ function renderBlocks(blocks: BlockType[], accent: string) {
                 <div className="flex gap-1.5">
                   {["#ff5f57","#febc2e","#28c840"].map((c, ci) => <div key={ci} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />)}
                 </div>
-                <span className="ml-2 text-[10px] font-mono uppercase tracking-widest" style={{ color: MUTED }}>{b.lang}</span>
+                <span className="ml-2 text-xs font-mono uppercase tracking-widest" style={{ color: MUTED }}>{b.lang}</span>
               </div>
             )}
             <pre className="px-6 py-5 text-sm overflow-x-auto leading-[1.8]"
@@ -221,7 +221,7 @@ function renderBlocks(blocks: BlockType[], accent: string) {
               <thead>
                 <tr style={{ background: CARD }}>
                   {b.heads.map((h, j) => (
-                    <th key={j} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap"
+                    <th key={j} className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap"
                       style={{ color: accent, borderBottom: `1px solid ${BORDER}` }}>{h}</th>
                   ))}
                 </tr>
@@ -323,7 +323,7 @@ function renderBlocks(blocks: BlockType[], accent: string) {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-mono tracking-widest uppercase mb-1" style={{ color: accent, fontFamily: "var(--font-mono)" }}>
+              <p className="text-xs font-mono tracking-widest uppercase mb-1" style={{ color: accent, fontFamily: "var(--font-mono)" }}>
                 📖 Recommended Read{b.source ? ` · ${b.source}` : ""}
               </p>
               <p className="text-sm font-semibold leading-snug group-hover:underline" style={{ color: WHITE, textDecoration: "none" }}>
@@ -1546,14 +1546,14 @@ function Sidebar({
             </button>
           </div>
 
-          <p className="text-[10px] uppercase tracking-[0.2em] font-mono mb-1" style={{ color: D_MUTED }}>PM Master Guide</p>
+          <p className="text-xs uppercase tracking-[0.2em] font-mono mb-1" style={{ color: D_MUTED }}>PM Master Guide</p>
           <h2 className="text-sm font-black leading-snug" style={{ color: D_WHITE }}>Beginner to Intermediate</h2>
 
           {/* progress */}
           <div className="mt-4">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[11px]" style={{ color: D_MUTED }}>Progress</span>
-              <span className="text-[11px] font-semibold" style={{ color: PRI }}>{pct}%</span>
+              <span className="text-xs" style={{ color: D_MUTED }}>Progress</span>
+              <span className="text-xs font-semibold" style={{ color: PRI }}>{pct}%</span>
             </div>
             <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
               <motion.div className="h-full rounded-full"
@@ -1561,7 +1561,7 @@ function Sidebar({
                 animate={{ width: `${pct}%` }}
                 transition={{ duration: 0.5 }} />
             </div>
-            <p className="text-[10px] mt-1.5" style={{ color: D_DIM }}>{completed.size} of {TOTAL} chapters</p>
+            <p className="text-xs mt-1.5" style={{ color: D_DIM }}>{completed.size} of {TOTAL} chapters</p>
           </div>
         </div>
 
@@ -1576,7 +1576,7 @@ function Sidebar({
               <div key={cat} className="mb-4">
                 <div className="flex items-center gap-2 px-3 mb-1.5">
                   <Icon size={10} style={{ color: accent }} />
-                  <span className="text-[9px] uppercase tracking-[0.18em] font-semibold"
+                  <span className="text-xs uppercase tracking-[0.18em] font-semibold"
                     style={{ color: accent, fontFamily: "var(--font-mono)" }}>{CAT_LABEL[cat]}</span>
                 </div>
                 {indices.map(i => {
@@ -1599,7 +1599,7 @@ function Sidebar({
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[9px] font-mono" style={{ color: isCurrent ? accent : D_DIM }}>
+                          <span className="text-xs font-mono" style={{ color: isCurrent ? accent : D_DIM }}>
                             {typeof ch.num === "string" ? ch.num : String(ch.num).padStart(2, "0")}
                           </span>
                         </div>
@@ -1631,15 +1631,15 @@ function ChapterContent({ ch, idx, completed }: { ch: Chapter; idx: number; comp
     <div className="max-w-[740px] mx-auto px-6 sm:px-10 py-12">
       {/* chapter meta */}
       <div className="flex items-center gap-3 flex-wrap mb-6">
-        <span className="text-[10px] px-2.5 py-1 rounded-full font-semibold"
+        <span className="text-xs px-2.5 py-1 rounded-full font-semibold"
           style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}28`, fontFamily: "var(--font-mono)" }}>
           {CAT_LABEL[ch.category]}
         </span>
-        <span className="flex items-center gap-1.5 text-[11px]" style={{ color: MUTED }}>
+        <span className="flex items-center gap-1.5 text-xs" style={{ color: MUTED }}>
           <Clock size={11} /> {ch.readTime}
         </span>
         {isDone && (
-          <span className="flex items-center gap-1.5 text-[11px]" style={{ color: accent }}>
+          <span className="flex items-center gap-1.5 text-xs" style={{ color: accent }}>
             <CheckCircle2 size={11} /> Completed
           </span>
         )}
@@ -1652,7 +1652,7 @@ function ChapterContent({ ch, idx, completed }: { ch: Chapter; idx: number; comp
           {typeof ch.num === "string" ? ch.num : String(ch.num).padStart(2, "0")}
         </div>
         <div className="relative">
-          <p className="text-[11px] font-mono uppercase tracking-widest mb-1" style={{ color: accent }}>
+          <p className="text-xs font-mono uppercase tracking-widest mb-1" style={{ color: accent }}>
             {typeof ch.num === "number" ? `Chapter ${ch.num}` : "Bonus"} · {ch.emoji}
           </p>
           <h1 className="text-3xl sm:text-4xl font-black leading-tight tracking-tight" style={{ color: WHITE }}>
@@ -1701,7 +1701,7 @@ function BottomNav({
 
         {/* center */}
         <div className="flex-1 text-center">
-          <p className="text-[11px]" style={{ color: MUTED, fontFamily: "var(--font-mono)" }}>
+          <p className="text-xs" style={{ color: MUTED, fontFamily: "var(--font-mono)" }}>
             {current + 1} / {TOTAL}
           </p>
         </div>
@@ -1816,7 +1816,7 @@ function PMLanding({ onOpenCourse, completed }: {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
             style={{ background: `${PRI}12`, border: `1px solid ${PRI}28` }}>
             <Layers size={11} style={{ color: PRI }} />
-            <span className="text-[11px] font-mono" style={{ color: PRI }}>PM &amp; Startups</span>
+            <span className="text-xs font-mono" style={{ color: PRI }}>PM &amp; Startups</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black leading-tight mb-3"
             style={{ color: D_WHITE, letterSpacing: "-1.5px" }}>
@@ -1859,7 +1859,7 @@ function PMLanding({ onOpenCourse, completed }: {
                       style={{ background: `${tile.color}18`, border: `1px solid ${tile.color}28` }}>
                       <Icon size={16} style={{ color: tile.color }} />
                     </div>
-                    <span className="text-[10px] font-semibold px-2 py-1 rounded-full"
+                    <span className="text-xs font-semibold px-2 py-1 rounded-full"
                       style={{ background: `${tile.tagColor}14`, color: tile.tagColor, border: `1px solid ${tile.tagColor}22` }}>
                       {tile.tag}
                     </span>
@@ -1952,7 +1952,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
           style={{ background: `${PRI}14`, border: `1px solid ${PRI}28` }}>
           <BookOpen size={11} style={{ color: PRI }} />
-          <span className="text-[11px] font-mono" style={{ color: PRI }}>PM Master Guide · Beginner to Intermediate</span>
+          <span className="text-xs font-mono" style={{ color: PRI }}>PM Master Guide · Beginner to Intermediate</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight mb-4"
@@ -1978,7 +1978,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
             <div key={s.label} className="rounded-xl px-4 py-4 text-center"
               style={{ background: D_CARD, border: `1px solid ${D_BORDER}` }}>
               <p className="text-2xl font-black mb-0.5" style={{ color: D_WHITE }}>{s.value}</p>
-              <p className="text-[11px]" style={{ color: D_MUTED }}>{s.label}</p>
+              <p className="text-xs" style={{ color: D_MUTED }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -1996,7 +1996,7 @@ function CoverPage({ onStart, hasProgress, completed, onContinue, onBack }: {
                 </div>
                 <div>
                   <p className="text-xs font-semibold" style={{ color: D_WHITE }}>{m.label}</p>
-                  <p className="text-[10px]" style={{ color: D_MUTED }}>{m.count} chapters</p>
+                  <p className="text-xs" style={{ color: D_MUTED }}>{m.count} chapters</p>
                 </div>
               </div>
             );

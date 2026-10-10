@@ -28,7 +28,7 @@ const companyTheme: Record<string, { color: string; border: string; bg: string; 
   },
 };
 
-const defaultTheme = { color: "#635bff", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
+const defaultTheme = { color: "var(--accent-text)", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
 
 /* ── Truck animation ── */
 function TruckAnimation({ color }: { color: string }) {
@@ -95,7 +95,7 @@ function DataAnimation({ color }: { color: string }) {
       <motion.div className="absolute"
         animate={{ opacity: [0, 1, 1, 0], y: [-4, -8, -12, -16] }}
         transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
-        style={{ fontSize: "9px", color, fontFamily: "monospace", marginBottom: "2px" }}>
+        style={{ fontSize: "12px", color, fontFamily: "monospace", marginBottom: "2px" }}>
         $2.4
       </motion.div>
     </div>
@@ -239,10 +239,10 @@ export default function Experience() {
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs"
                         style={{ fontFamily: "var(--font-mono)" }}>
                         <span className="font-bold text-sm" style={{ color: theme.color }}>{item.company}</span>
-                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+                        <span className="flex items-center gap-1" style={{ color: "var(--text-3)" }}>
                           <Briefcase size={9} />{item.period}
                         </span>
-                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+                        <span className="flex items-center gap-1" style={{ color: "var(--text-3)" }}>
                           <MapPin size={9} />{item.location}
                         </span>
                       </div>
@@ -256,7 +256,7 @@ export default function Experience() {
 
                   {/* Right — one-liner + arrow */}
                   <div className="hidden sm:flex items-center gap-3 flex-shrink-0 max-w-[220px]">
-                    <p className="text-xs text-right leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    <p className="text-xs text-right leading-snug" style={{ color: "var(--text-3)" }}>
                       {item.description}
                     </p>
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200"
@@ -344,7 +344,7 @@ export default function Experience() {
                     )}
                   </div>
 
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-3)" }}>
                     {active.description}
                   </p>
 
@@ -352,7 +352,7 @@ export default function Experience() {
 
                   <div>
                     <p className="text-xs font-mono tracking-widest uppercase mb-4"
-                      style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+                      style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                       Highlights
                     </p>
                     <ul className="flex flex-col gap-3">
@@ -362,7 +362,7 @@ export default function Experience() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.1 + i * 0.08 }}
                           className="flex items-start gap-3 text-sm leading-relaxed"
-                          style={{ color: "rgba(255,255,255,0.65)", wordBreak: "break-word", overflowWrap: "anywhere" }}>
+                          style={{ color: "var(--text-2)", wordBreak: "break-word", overflowWrap: "anywhere" }}>
                           <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: theme.color }} />
                           <span>{b.split(/(\*\*[^*]+\*\*)/).map((part, j) =>
                             part.startsWith("**") && part.endsWith("**")

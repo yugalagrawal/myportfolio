@@ -49,13 +49,13 @@ export default function About() {
           label="// about"
           title="About Me"
           subtitle={
-            <span style={{ fontSize: "clamp(11px, 1.5vw, 14px)", whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: "clamp(12px, 1.5vw, 14px)", whiteSpace: "nowrap" }}>
               &ldquo;The self is not something one finds, it is something one creates.&rdquo; —{" "}
               <a
                 href="https://en.wikipedia.org/wiki/Thomas_Szasz"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "#635bff", textDecoration: "underline", textUnderlineOffset: "3px" }}
+                style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}
               >
                 Thomas Szasz
               </a>
@@ -108,13 +108,13 @@ export default function About() {
                   style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ background: "rgba(99,91,255,0.15)" }}>
-                    <MapPin size={14} style={{ color: "#635bff" }} />
+                    <MapPin size={14} style={{ color: "var(--accent-text)" }} />
                   </div>
                   <div>
                     <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
                       {(profile as { location: string }).location}
                     </p>
-                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}>
+                    <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                       {(profile as { locationNative?: string }).locationNative}
                     </p>
                   </div>
@@ -131,7 +131,7 @@ export default function About() {
                     <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
                       IIT BHU, Varanasi
                     </p>
-                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}>
+                    <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                       Grad Year 2023
                     </p>
                   </div>
@@ -161,12 +161,12 @@ export default function About() {
                           <p className="text-xs font-mono leading-tight"
                             style={{ color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-mono)" }}>
                             <span className="gradient-text font-bold">{age.years}y </span>
-                            <span style={{ color: "rgba(255,255,255,0.5)" }}>{age.months}mo </span>
-                            <span style={{ color: "rgba(255,255,255,0.5)" }}>{age.days}d </span>
-                            <span style={{ color: "rgba(255,255,255,0.35)" }}>{age.hours}hr </span>
-                            <span style={{ color: "rgba(255,255,255,0.25)" }}>{age.minutes}min</span>
+                            <span style={{ color: "var(--text-3)" }}>{age.months}mo </span>
+                            <span style={{ color: "var(--text-3)" }}>{age.days}d </span>
+                            <span style={{ color: "var(--text-3)" }}>{age.hours}hr </span>
+                            <span style={{ color: "var(--text-3)" }}>{age.minutes}min</span>
                           </p>
-                          <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)" }}>
+                          <p className="text-xs mt-0.5" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                             Age (live)
                           </p>
                         </motion.div>
@@ -178,7 +178,7 @@ export default function About() {
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.2 }}
                           className="text-xs italic leading-snug"
-                          style={{ color: "#635bff" }}
+                          style={{ color: "var(--accent-text)" }}
                         >
                           But My Heart is a kid &amp; Age is just a number 💙
                         </motion.p>
@@ -193,26 +193,26 @@ export default function About() {
           {/* Right — Bio + Stats */}
           <ScrollReveal direction="right" delay={0.1}>
             <div className="space-y-4 mb-8">
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
                 I&rsquo;m a Product professional with ~4 years of experience across AdTech and eCommerce, fueled by the conviction that &ldquo;in God we trust; all others must bring data.&rdquo;
               </p>
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
                 An IIT BHU alumnus and former founder, I scaled my startup{" "}
                 <a href="https://www.nogozo.com" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "#635bff", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   Nogozo
                 </a>{" "}
                 to 10k+ users and reached the Shark Tank India Season 1 pre-finals. That experience, combined with my time at{" "}
                 <a href="https://www.media.net" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "#635bff", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   Media.net
                 </a>
                 , taught me how to architect high-impact efficiencies and distill chaos into data-driven roadmaps.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
                 Beyond the metrics, I&rsquo;m a writer, traveller, and cricket enthusiast who enjoys everything from old Hindi classics to modern hits. Lately, I&rsquo;ve been exploring content creation at{" "}
                 <a href="https://www.instagram.com/talksofyug/" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "#635bff", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   @talksofyug
                 </a>
                 , translating my founder&rsquo;s mindset into stories that bridge the gap between &ldquo;what&rsquo;s happening&rdquo; and &ldquo;what&rsquo;s next.&rdquo;
@@ -220,7 +220,7 @@ export default function About() {
             </div>
 
             <blockquote className="border-l-2 pl-5 mb-10 italic text-sm sm:text-base"
-              style={{ borderColor: "#635bff", color: "rgba(255,255,255,0.25)" }}>
+              style={{ borderColor: "#635bff", color: "var(--text-3)" }}>
               {profile.philosophy}
             </blockquote>
 

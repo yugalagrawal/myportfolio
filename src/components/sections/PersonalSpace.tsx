@@ -33,12 +33,12 @@ export default function PersonalSpace() {
           >
             <div className="w-14 h-14 mx-auto mb-5 rounded-2xl flex items-center justify-center"
               style={{ background: "rgba(99,91,255,0.1)", border: "1px solid rgba(99,91,255,0.2)" }}>
-              <PenLine size={26} style={{ color: "#635bff" }} />
+              <PenLine size={26} style={{ color: "var(--accent-text)" }} />
             </div>
             <h3 className="text-xl font-bold mb-2" style={{ color: "rgba(255,255,255,0.92)" }}>
               Articles Coming Soon
             </h3>
-            <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-3)" }}>
               Working on a collection of essays on product strategy, PM craft, and lessons from building products.
             </p>
             <p className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.15)", fontFamily: "var(--font-mono)" }}>
@@ -70,20 +70,20 @@ export default function PersonalSpace() {
                     </span>
                     <ArrowUpRight size={14}
                       className="opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ color: "#635bff" }} />
+                      style={{ color: "var(--accent-text)" }} />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold leading-snug mb-2 flex-1"
                     style={{ color: "rgba(255,255,255,0.92)" }}>
                     {article.title}
                   </h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-3)" }}>
                     {article.excerpt}
                   </p>
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>{article.date}</span>
+                    <span className="text-xs" style={{ color: "var(--text-3)" }}>{article.date}</span>
                     {article.readTime && (
                       <span className="text-xs flex items-center gap-1"
-                        style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+                        style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                         <Clock size={10} />{article.readTime}
                       </span>
                     )}

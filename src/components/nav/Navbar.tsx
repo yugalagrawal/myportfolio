@@ -67,7 +67,7 @@ export default function Navbar() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             <span className="gradient-text-name">YA</span>
-            <span style={{ color: "rgba(255,255,255,0.2)" }}>.</span>
+            <span style={{ color: "var(--text-3)" }}>.</span>
           </a>
 
           {/* Desktop links */}
@@ -80,7 +80,7 @@ export default function Navbar() {
                     onClick={() => handleNavClick(link.href)}
                     className="text-sm font-medium transition-all duration-200 relative group px-3 py-1.5 rounded-lg"
                     style={{
-                      color: isActive ? "#fff" : "rgba(255,255,255,0.35)",
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.62)",
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement;
@@ -93,7 +93,7 @@ export default function Navbar() {
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement;
                       if (!isActive) {
-                        el.style.color = "rgba(255,255,255,0.35)";
+                        el.style.color = "rgba(255,255,255,0.62)";
                         el.style.background = "transparent";
                         el.style.boxShadow = "none";
                       }
@@ -126,7 +126,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             className="md:hidden p-2 rounded-lg"
-            style={{ color: "rgba(255,255,255,0.7)" }}
+            style={{ color: "var(--text-2)" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
@@ -147,7 +147,7 @@ export default function Navbar() {
             style={{ background: "rgba(6,3,15,0.97)", backdropFilter: "blur(24px)" }}
           >
             <div className="flex justify-end p-6">
-              <button onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)" }}>
+              <button onClick={() => setMenuOpen(false)} style={{ color: "var(--text-2)" }}>
                 <X size={26} />
               </button>
             </div>
@@ -160,7 +160,7 @@ export default function Navbar() {
                   transition={{ delay: 0.05 * i }}
                   onClick={() => handleNavClick(link.href)}
                   className="text-2xl font-bold transition-colors duration-200 min-h-[44px] flex items-center"
-                  style={{ color: active === link.href.slice(1) ? "#fff" : "rgba(255,255,255,0.35)" }}
+                  style={{ color: active === link.href.slice(1) ? "#fff" : "rgba(255,255,255,0.62)" }}
                 >
                   {link.label}
                 </motion.button>

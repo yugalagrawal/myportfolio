@@ -8,10 +8,10 @@ import { projects } from "@/data/projects";
 
 /* ── Per-section accent colours (cycles for sections 2-N) ── */
 const ACCENTS = [
-  { color: "#635bff", bg: "rgba(99,91,255,0.04)",  border: "rgba(99,91,255,0.18)",  left: "rgba(99,91,255,0.5)"  },
+  { color: "var(--accent-text)", bg: "rgba(99,91,255,0.04)",  border: "rgba(99,91,255,0.18)",  left: "rgba(99,91,255,0.5)"  },
   { color: "#228be6", bg: "rgba(34,139,230,0.04)", border: "rgba(34,139,230,0.18)", left: "rgba(34,139,230,0.5)" },
   { color: "#14b8a6", bg: "rgba(20,184,166,0.04)", border: "rgba(20,184,166,0.18)", left: "rgba(20,184,166,0.5)" },
-  { color: "#845ef7", bg: "rgba(132,94,247,0.04)", border: "rgba(132,94,247,0.18)", left: "rgba(132,94,247,0.5)" },
+  { color: "var(--accent2-text)", bg: "rgba(132,94,247,0.04)", border: "rgba(132,94,247,0.18)", left: "rgba(132,94,247,0.5)" },
   { color: "#f97316", bg: "rgba(249,115,22,0.04)", border: "rgba(249,115,22,0.18)", left: "rgba(249,115,22,0.5)" },
 ];
 
@@ -34,7 +34,7 @@ function ContentBlock({ content, accentColor = "#635bff" }: { content: string; a
             <div key={i} className="flex flex-col gap-2">
               {textLines.map((line, j) => (
                 <p key={j} className="text-sm font-semibold mb-1"
-                  style={{ color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-display)" }}>
+                  style={{ color: "var(--text-2)", fontFamily: "var(--font-display)" }}>
                   {line.replace(/:$/, "")}
                 </p>
               ))}
@@ -43,7 +43,7 @@ function ContentBlock({ content, accentColor = "#635bff" }: { content: string; a
                   <li key={j} className="flex items-start gap-3">
                     <span className="mt-[7px] w-1.5 h-1.5 rounded-full flex-shrink-0"
                       style={{ background: accentColor }} />
-                    <span className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
+                    <span className="text-sm leading-relaxed" style={{ color: "var(--text-3)" }}>
                       {line.replace(/^•\s*/, "")}
                     </span>
                   </li>
@@ -60,8 +60,8 @@ function ContentBlock({ content, accentColor = "#635bff" }: { content: string; a
           const isLabel = colonIdx > 0 && colonIdx < 42 && !line.slice(0, colonIdx).includes(".");
           if (isLabel && colonIdx < line.length - 1) {
             return (
-              <p key={i} className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
-                <strong style={{ color: "rgba(255,255,255,0.78)", fontWeight: 600 }}>
+              <p key={i} className="text-sm leading-relaxed" style={{ color: "var(--text-3)" }}>
+                <strong style={{ color: "var(--text-2)", fontWeight: 600 }}>
                   {line.slice(0, colonIdx)}:{" "}
                 </strong>
                 {line.slice(colonIdx + 1).trim()}
@@ -69,7 +69,7 @@ function ContentBlock({ content, accentColor = "#635bff" }: { content: string; a
             );
           }
           return (
-            <p key={i} className="text-sm sm:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
+            <p key={i} className="text-sm sm:text-base leading-relaxed" style={{ color: "var(--text-3)" }}>
               {line}
             </p>
           );
@@ -79,11 +79,11 @@ function ContentBlock({ content, accentColor = "#635bff" }: { content: string; a
         const [firstLine, ...rest] = lines;
         return (
           <div key={i} className="flex flex-col gap-1.5">
-            <p className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.75)", fontFamily: "var(--font-display)" }}>
+            <p className="text-sm font-semibold" style={{ color: "var(--text-2)", fontFamily: "var(--font-display)" }}>
               {firstLine.replace(/:$/, "")}
             </p>
             {rest.map((line, j) => (
-              <p key={j} className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
+              <p key={j} className="text-sm leading-relaxed" style={{ color: "var(--text-3)" }}>
                 {line}
               </p>
             ))}
@@ -111,7 +111,7 @@ export default function ProjectPage() {
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/#projects"
             className="inline-flex items-center gap-2 text-sm font-mono transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-mono)" }}
+            style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}
             onMouseEnter={e => (e.currentTarget.style.color = "#635bff")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}>
             <ArrowLeft size={14} /> Back
@@ -119,7 +119,7 @@ export default function ProjectPage() {
           {project.externalLink && (
             <a href={project.externalLink} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg transition-all duration-200"
-              style={{ color: "#635bff", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>
+              style={{ color: "var(--accent-text)", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>
               Open File <ArrowUpRight size={11} />
             </a>
           )}
@@ -142,12 +142,12 @@ export default function ProjectPage() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
             className="flex flex-wrap items-center gap-2 mb-7">
             <span className="text-xs px-2.5 py-1 rounded-full font-mono"
-              style={{ background: "rgba(99,91,255,0.12)", color: "#635bff",
+              style={{ background: "rgba(99,91,255,0.12)", color: "var(--accent-text)",
                 border: "1px solid rgba(99,91,255,0.25)", fontFamily: "var(--font-mono)" }}>
               {project.type}
             </span>
             <span style={{ color: "rgba(255,255,255,0.12)" }}>·</span>
-            <span className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}>
+            <span className="text-xs font-mono" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
               {project.company}
             </span>
           </motion.div>
@@ -169,7 +169,7 @@ export default function ProjectPage() {
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.13 }}
             className="text-base sm:text-lg leading-relaxed max-w-2xl mb-9"
-            style={{ color: "rgba(255,255,255,0.38)" }}>
+            style={{ color: "var(--text-3)" }}>
             {project.description}
           </motion.p>
 
@@ -179,17 +179,17 @@ export default function ProjectPage() {
             className="flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl"
               style={{ background: "rgba(99,91,255,0.1)", border: "1px solid rgba(99,91,255,0.25)" }}>
-              <TrendingUp size={13} style={{ color: "#635bff" }} />
-              <span className="text-xl font-black" style={{ color: "#635bff", fontFamily: "var(--font-display)", letterSpacing: "-0.5px" }}>
+              <TrendingUp size={13} style={{ color: "var(--accent-text)" }} />
+              <span className="text-xl font-black" style={{ color: "var(--accent-text)", fontFamily: "var(--font-display)", letterSpacing: "-0.5px" }}>
                 {project.metric}
               </span>
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>{project.metricLabel}</span>
+              <span className="text-xs" style={{ color: "var(--text-3)" }}>{project.metricLabel}</span>
             </div>
             {project.tags.map(tag => (
               <span key={tag} className="text-xs px-2.5 py-1 rounded-full"
                 style={{
                   background: "rgba(99,91,255,0.06)",
-                  color: "rgba(255,255,255,0.28)",
+                  color: "var(--text-3)",
                   border: "1px solid rgba(99,91,255,0.12)",
                   fontFamily: "var(--font-mono)",
                 }}>

@@ -13,8 +13,17 @@
   --color-blue:     #228be6;
   --color-violet:   #845ef7;
   --color-text:     rgba(255,255,255,0.92);
-  --color-muted:    rgba(255,255,255,0.35);
+  --color-muted:    rgba(255,255,255,0.58);
   --color-subtle:   rgba(255,255,255,0.08);
+}
+
+/* ─── Text & accent tokens (min 4.5:1 on the dark background) ─── */
+:root {
+  --text-1: rgba(255,255,255,0.92);   /* headings, key content   */
+  --text-2: rgba(255,255,255,0.74);   /* body copy                */
+  --text-3: rgba(255,255,255,0.58);   /* captions, meta — the floor */
+  --accent-text:  #8b85ff;            /* indigo, readable as text  */
+  --accent2-text: #a78bfa;            /* violet, readable as text  */
 }
 
 /* ─── Base ─── */
@@ -116,7 +125,7 @@ body {
   font-weight: 500;
   font-family: "JetBrains Mono", monospace;
   border: 1px solid rgba(99,91,255,0.2);
-  color: rgba(255,255,255,0.35);
+  color: var(--text-3);
   background: rgba(99,91,255,0.06);
   transition: all 0.2s ease;
   cursor: default;
