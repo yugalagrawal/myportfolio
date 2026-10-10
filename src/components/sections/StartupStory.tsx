@@ -313,11 +313,6 @@ export default function StartupStory() {
                 <Rocket size={22} style={{ color: "#10b981" }} />
               </motion.div>
 
-              <p className="text-xs font-mono tracking-widest uppercase mb-3"
-                style={{ color: "rgba(52,211,153,0.9)", fontFamily: "var(--font-mono)" }}>
-                // Nogozo · 2019 – 2022
-              </p>
-
               <h3
                 className="text-2xl sm:text-3xl font-black leading-[1.15] mb-3"
                 style={{ fontFamily: "var(--font-display)", color: "rgba(255,255,255,0.92)", letterSpacing: "-1px" }}
