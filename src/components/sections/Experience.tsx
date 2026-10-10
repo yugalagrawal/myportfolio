@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useLayoutEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { X, MapPin, Briefcase, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { experience, ExperienceItem } from "@/data/experience";
@@ -39,56 +39,124 @@ const startDate = (period: string) => {
   const m = period.match(/([A-Za-z]{3}) (\d{4})/);
   return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
 };
-const startYear = (period: string) => period.match(/\d{4}/)?.[0] ?? "";
-const endLabel  = (period: string) =>
-  /present/i.test(period) ? "Now" : (period.match(/(\d{4})\s*$/)?.[1] ?? "");
 
-/* ── Minimal timeline: one hairline, one accent, one outcome line per role ── */
+/* ── Journey map: cards on alternating sides of a winding, scroll-drawn road ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
   const sorted = [...items].sort((a, b) => startDate(b.period).getTime() - startDate(a.period).getTime());
+  const wrapRef  = useRef<HTMLOListElement>(null);
+  const nodeRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [road, setRoad] = useState({ d: "", w: 0, h: 0 });
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: wrapRef, offset: ["start 75%", "end 55%"] });
+  const drawn = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Build the road from the real node positions (offset-based, so entrance transforms don't skew it).
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const measure = () => {
+      const pts = nodeRefs.current.filter((n): n is HTMLSpanElement => !!n).map((n) => {
+        let x = n.offsetWidth / 2, y = n.offsetHeight / 2;
+        let el: HTMLElement | null = n;
+        while (el && el !== wrap) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent as HTMLElement | null; }
+        return { x, y };
+      });
+      if (pts.length < 2) return;
+      let d = `M ${pts[0].x} 0 L ${pts[0].x} ${pts[0].y}`;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const a = pts[i], b = pts[i + 1], m = (a.y + b.y) / 2;
+        d += ` C ${a.x} ${m}, ${b.x} ${m}, ${b.x} ${b.y}`;
+      }
+      d += ` L ${pts[pts.length - 1].x} ${wrap.offsetHeight}`;
+      setRoad({ d, w: wrap.offsetWidth, h: wrap.offsetHeight });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, [sorted.length]);
+
   return (
-    <ol className="relative ml-1.5 border-l border-white/10">
-      {sorted.map((item, i) => (
-        <motion.li
-          key={item.company}
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.4, delay: i * 0.04 }}
-          className="relative pl-7 sm:pl-10 pb-12 last:pb-0"
-        >
-          <span aria-hidden="true"
-            className="absolute -left-[5px] top-[9px] w-[9px] h-[9px] rounded-full"
-            style={{
-              background: item.current ? "var(--accent-text)" : "#06030f",
-              border: `1px solid ${item.current ? "var(--accent-text)" : "rgba(255,255,255,0.45)"}`,
-            }} />
-          <button
-            type="button"
-            onClick={() => onOpen(item)}
-            className="group w-full text-left grid gap-1 md:grid-cols-[11rem_1fr] md:gap-8 outline-none"
+    <ol ref={wrapRef} className="relative">
+      {road.d && (
+        <svg className="absolute inset-0 pointer-events-none" width={road.w} height={road.h}
+          viewBox={`0 0 ${road.w} ${road.h}`} fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="road-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#8b85ff" />
+              <stop offset="1" stopColor="#a78bfa" stopOpacity="0.55" />
+            </linearGradient>
+          </defs>
+          {/* the road */}
+          <path d={road.d} stroke="rgba(255,255,255,0.05)" strokeWidth="22" strokeLinecap="round" />
+          {/* lane marking */}
+          <path d={road.d} stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeDasharray="6 9" strokeLinecap="round" />
+          {/* progress, drawn as you scroll */}
+          <motion.path d={road.d} stroke="url(#road-grad)" strokeWidth="3" strokeLinecap="round"
+            style={{ pathLength: reduce ? 1 : drawn, filter: "drop-shadow(0 0 6px rgba(139,133,255,0.55))" }} />
+        </svg>
+      )}
+
+      {sorted.map((item, i) => {
+        const left = i % 2 === 0; // card on the left of the road (desktop)
+        return (
+          <motion.li
+            key={item.company}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.45, delay: 0.05 }}
+            className="relative grid grid-cols-[2.5rem_1fr] md:grid-cols-[1fr_6rem_1fr] gap-x-3 md:gap-x-0 pb-10 md:pb-14 last:pb-0"
           >
-            <span className="text-sm md:pt-1" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-              {item.period.replace(/\s+–\s+/, " – ")}
-            </span>
-            <span className="block">
-              <span className="block text-xl font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
+            {/* Road column: node + connector */}
+            <div className="relative col-start-1 row-start-1 md:col-start-2">
+              <span
+                ref={(el) => { nodeRefs.current[i] = el; }}
+                className={`absolute top-8 w-3.5 h-3.5 rounded-full ${left ? "left-[6px] md:left-[calc(50%-34px)]" : "left-[20px] md:left-[calc(50%+20px)]"}`}
+                style={{
+                  background: item.current ? "var(--accent-text)" : "#06030f",
+                  border: `2px solid ${item.current ? "var(--accent-text)" : "rgba(167,139,250,0.7)"}`,
+                  boxShadow: item.current ? "0 0 0 5px rgba(139,133,255,0.18), 0 0 18px rgba(139,133,255,0.6)" : "none",
+                }}
+              />
+              <span aria-hidden="true"
+                className={`hidden md:block absolute top-[39px] h-px border-t border-dashed border-white/20 ${left ? "left-0 w-[calc(50%-27px)]" : "left-[calc(50%+27px)] right-0"}`} />
+            </div>
+
+            {/* Card */}
+            <button
+              type="button"
+              onClick={() => onOpen(item)}
+              className={`group col-start-2 row-start-1 ${left ? "md:col-start-1" : "md:col-start-3"} text-left w-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6 transition duration-200 hover:bg-white/[0.05] hover:border-[#8b85ff99] hover:-translate-y-0.5 focus-visible:border-[#8b85ff99] outline-none`}
+            >
+              <span className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+                <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                  {item.period}
+                </span>
+                {item.current && (
+                  <span className="text-xs px-2 py-0.5 rounded-full"
+                    style={{ background: "rgba(139,133,255,0.14)", color: "var(--accent-text)", border: "1px solid rgba(139,133,255,0.35)", fontFamily: "var(--font-mono)" }}>
+                    Current
+                  </span>
+                )}
+              </span>
+              <span className="block text-lg font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
                 {item.role}
               </span>
-              <span className="block text-sm mt-0.5" style={{ color: "var(--text-2)" }}>
+              <span className="block text-sm mt-0.5" style={{ color: "var(--accent2-text)" }}>
                 {item.company}
               </span>
-              <span className="block text-base leading-relaxed mt-3 max-w-2xl" style={{ color: "var(--text-2)" }}>
+              <span className="block text-sm leading-relaxed mt-3" style={{ color: "var(--text-2)" }}>
                 {item.description}
               </span>
-              <span className="inline-flex items-center gap-1 mt-3 text-sm transition-colors group-hover:text-[var(--accent-text)] group-focus-visible:text-[var(--accent-text)]"
+              <span className="inline-flex items-center gap-1 mt-3 text-xs transition-colors group-hover:text-[var(--accent-text)]"
                 style={{ color: "var(--text-3)" }}>
-                Details <ArrowUpRight size={13} />
+                Details <ArrowUpRight size={12} />
               </span>
-            </span>
-          </button>
-        </motion.li>
-      ))}
+            </button>
+          </motion.li>
+        );
+      })}
     </ol>
   );
 }
