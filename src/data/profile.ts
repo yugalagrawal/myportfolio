@@ -7,23 +7,14 @@ export const profile = {
   initials: "YA",
   title: "Product Manager",
 
-  // Typewriter roles in Hero
-  roles: [
-    "Product",
-    "Analyst",
-    "Founder",
-    "Content Creator",
-    "Traveller",
-  ],
+  // One-line positioning shown under the name in the Hero
+  headline: "Product Manager building 0‑to‑1 products, AI-enabled workflows and data platforms.",
+
+  // Where you've built things (shown under the headline)
+  context: ["~4 yrs in Product", "LetsTransport", "ex-Media.net", "Founder, Nogozo", "IIT (BHU)"],
 
   // Short tagline under the typewriter
   tagline: `Believer of "In God we trust; all others must bring data."`,
-
-  // About Me bio (fill this in Step 2)
-  bio: `I'm a Product Manager with 3+ years of experience and a founder's mindset.
-I've built products across eCommerce and SaaS, led a startup from 0→1 through a UP Government grant,
-and reached the pre-finals of Shark Tank India Season 1. I thrive at the intersection of user empathy,
-data-driven decision-making, and cross-functional collaboration.`,
 
   // Personal philosophy shown in About section
   philosophy: `Lifelong RCB fan — which means I'm biologically engineered for unshakeable optimism and extreme loyalty under pressure.`,
@@ -31,20 +22,12 @@ data-driven decision-making, and cross-functional collaboration.`,
   location: "Bangalore",
   locationNative: "Native: Agra",
   email: "yugalagrawal11@gmail.com",
-  resumeUrl: "https://drive.google.com/file/d/1e4eYpaqkeOMMxcJQYzfK8PBTMixvUtJP/view?usp=sharing",
+  // Served from /public so the Resume buttons download directly (no redirect)
+  resumeUrl: "/YugalAgarwal_Resume_Sept26.pdf",
+  resumeFileName: "YugalAgarwal_Resume_Sept26.pdf",
 
   socials: {
     linkedin: "https://www.linkedin.com/in/yugal11/",
-    github:   "",
-    twitter:  "",
-    medium:   "",
+    github:   "https://github.com/yugalagrawal",
   },
-
-  // Stats shown in About section (hero has its own custom layout)
-  stats: [
-    { value: "3+",  label: "Years in Product" },
-    { value: "₹5L", label: "Govt Grant Won" },
-    { value: "0→1", label: "Startup Built" },
-    { value: "S1",  label: "Shark Tank" },
-  ],
 };

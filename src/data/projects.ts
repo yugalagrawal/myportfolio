@@ -33,7 +33,7 @@ export const projects: ProjectItem[] = [
     metricLabel: "ARR Blueprint",
     tags:        ["Logistics", "AI/ML", "Marketplace", "B2B", "Strategy", "0→1"],
     type:        "Case Study",
-    image:       "/images/projects/vahansync.png",
+    image:       "/images/projects/vahansync.jpg",
     embedUrl:    "https://drive.google.com/file/d/1Ohr5GmujpLZI9p3k8UQtKstlfTVSR56t/preview",
     featured:    true,
     sections: [
@@ -68,7 +68,7 @@ export const projects: ProjectItem[] = [
     metricLabel: "The eCommerce Delta",
     tags:        ["Consumer", "Product Strategy", "Marketplace", "SMB", "UX", "0→1"],
     type:        "Case Study",
-    image:       "/images/projects/whatsappmarketplace.png",
+    image:       "/images/projects/whatsappmarketplace.jpg",
     embedUrl:    "https://drive.google.com/file/d/1Poe_poVp0LSKzuN4IxhwRsEeXy8yjLjI/preview",
     sections: [
       {
@@ -102,7 +102,7 @@ export const projects: ProjectItem[] = [
     metricLabel: "Oversubscription — Solved",
     tags:        ["Consumer", "Product", "UX", "Marketplace", "Strategy"],
     type:        "Case Study",
-    image:       "/images/projects/BMS.png",
+    image:       "/images/projects/BMS.jpg",
     embedUrl:    "https://drive.google.com/file/d/1IPz-h44HF1TuCeI6P_Wcx0VPT1agDYbW/preview",
     featured:    true,
     sections: [
@@ -137,7 +137,7 @@ export const projects: ProjectItem[] = [
     metricLabel: "Original Concept",
     tags:        ["AI/ML", "Mental Wellness", "UX", "Product Strategy", "Consumer"],
     type:        "Case Study",
-    image:       "/images/projects/edimension.png",
+    image:       "/images/projects/edimension.jpg",
     embedUrl:    "https://drive.google.com/file/d/1oe47Ff9an5NF1RJuH26FaDWJMA0Cxqh4/preview",
     featured:    true,
     sections: [
@@ -172,7 +172,7 @@ export const projects: ProjectItem[] = [
     metricLabel: "Market by 2033",
     tags:        ["D2C", "Research", "Market Analysis", "Strategy", "Health"],
     type:        "Deck",
-    image:       "/images/projects/D2CHealth.png",
+    image:       "/images/projects/D2CHealth.jpg",
     embedUrl:    "https://drive.google.com/file/d/1l92WCoI1ry3pOtRRRJuRTJLLxZ00kWYC/preview",
     sections: [
       {

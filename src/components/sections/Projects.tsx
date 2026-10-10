@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, TrendingUp } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
+import { impact } from "@/data/impact";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function Projects() {
@@ -18,6 +19,47 @@ export default function Projects() {
           subtitle="The kind of work that starts with 'why does this even exist?' and ends with 'here's how to fix it'."
         />
 
+        {/* ── Shipped at work ── */}
+        <p className="text-xs mb-3" style={{ color: "#845ef7", fontFamily: "var(--font-mono)" }}>
+          // shipped at work
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+          {impact.map((item, i) => (
+            <motion.button
+              key={item.title}
+              type="button"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: i * 0.07 }}
+              onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })}
+              className="glass glass-hover rounded-2xl p-5 text-left flex flex-col"
+              style={{ border: "1px solid rgba(99,91,255,0.15)" }}
+              aria-label={`${item.title} at ${item.company} — see work experience`}
+            >
+              <span className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-mono)" }}>
+                {item.company}
+              </span>
+              <span className="text-2xl font-black gradient-text leading-none mb-1" style={{ fontFamily: "var(--font-display)" }}>
+                {item.metric}
+              </span>
+              <span className="text-xs mb-3 leading-snug" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-mono)" }}>
+                {item.label}
+              </span>
+              <span className="text-sm font-semibold mb-1.5 leading-snug" style={{ color: "rgba(255,255,255,0.92)" }}>
+                {item.title}
+              </span>
+              <span className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                {item.detail}
+              </span>
+            </motion.button>
+          ))}
+        </div>
+
+        {/* ── Case studies ── */}
+        <p className="text-xs mb-3" style={{ color: "#845ef7", fontFamily: "var(--font-mono)" }}>
+          // case studies &amp; concepts
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
           {projects.map((project, i) => (
             <motion.div
@@ -34,7 +76,7 @@ export default function Projects() {
               }}
             >
               {/* ── Image area ── */}
-              <div className="relative w-full h-48 overflow-hidden bg-[#0d0a1a] flex-shrink-0">
+              <div className="relative w-full aspect-[1.9/1] overflow-hidden bg-[#0d0a1a] flex-shrink-0">
                 {project.image ? (
                   <Image
                     src={project.image}
@@ -60,39 +102,27 @@ export default function Projects() {
                     </div>
                   </div>
                 )}
-
-                {/* Bottom fade into card */}
-                <div className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-                  style={{ background: "linear-gradient(to bottom, transparent, rgba(13,10,26,0.95))" }} />
-
-                {/* Metric badge — overlaid on image */}
-                <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold"
-                  style={{
-                    background: "rgba(6,3,15,0.75)",
-                    color: "#635bff",
-                    border: "1px solid rgba(99,91,255,0.3)",
-                    backdropFilter: "blur(8px)",
-                  }}>
-                  <TrendingUp size={10} />
-                  <span>{project.metric}</span>
-                  <span className="font-normal" style={{ color: "rgba(255,255,255,0.35)" }}>
-                    {project.metricLabel}
-                  </span>
-                </div>
-
               </div>
 
               {/* ── Content ── */}
               <div className="p-5 sm:p-6 flex flex-col flex-1">
+                <div className="inline-flex items-baseline gap-2 mb-2">
+                  <span className="text-xl font-black gradient-text" style={{ fontFamily: "var(--font-display)" }}>
+                    {project.metric}
+                  </span>
+                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-mono)" }}>
+                    {project.metricLabel}
+                  </span>
+                </div>
                 <h3 className="text-lg sm:text-xl font-bold mb-1"
                   style={{ color: "rgba(255,255,255,0.92)", fontFamily: "var(--font-display)" }}>
                   {project.title}
                 </h3>
-                <p className="text-xs font-mono mb-3" style={{ color: "#845ef7", fontFamily: "var(--font-mono)" }}>
-                  @ {project.company}
+                <p className="text-xs font-mono mb-3" style={{ color: "#a78bfa", fontFamily: "var(--font-mono)" }}>
+                  {project.type} · {project.company}
                 </p>
-                <p className="text-sm leading-relaxed flex-1 mb-5"
-                  style={{ color: "rgba(255,255,255,0.35)" }}>
+                <p className="text-sm leading-relaxed flex-1 mb-5 line-clamp-4"
+                  style={{ color: "rgba(255,255,255,0.6)" }}>
                   {project.description}
                 </p>
 
@@ -103,7 +133,7 @@ export default function Projects() {
                       <span key={tag} className="text-xs px-2.5 py-1 rounded-full"
                         style={{
                           background: "rgba(99,91,255,0.07)",
-                          color: "rgba(255,255,255,0.3)",
+                          color: "rgba(255,255,255,0.5)",
                           border: "1px solid rgba(99,91,255,0.15)",
                           fontFamily: "var(--font-mono)",
                         }}>

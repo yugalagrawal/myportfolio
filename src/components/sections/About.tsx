@@ -97,7 +97,7 @@ export default function About() {
                     border: "1px solid rgba(255,255,255,0.15)",
                   }}
                 >
-                  3+ yrs · Product
+                  ~4 yrs · Product
                 </motion.div>
               </div>
 
@@ -194,7 +194,7 @@ export default function About() {
           <ScrollReveal direction="right" delay={0.1}>
             <div className="space-y-4 mb-8">
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
-                I&rsquo;m a Product professional with 3+ years of experience across AdTech and eCommerce, fueled by the conviction that &ldquo;in God we trust; all others must bring data.&rdquo;
+                I&rsquo;m a Product professional with ~4 years of experience across AdTech and eCommerce, fueled by the conviction that &ldquo;in God we trust; all others must bring data.&rdquo;
               </p>
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
                 An IIT BHU alumnus and former founder, I scaled my startup{" "}

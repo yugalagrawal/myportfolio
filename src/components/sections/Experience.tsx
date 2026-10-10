@@ -239,10 +239,10 @@ export default function Experience() {
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs"
                         style={{ fontFamily: "var(--font-mono)" }}>
                         <span className="font-bold text-sm" style={{ color: theme.color }}>{item.company}</span>
-                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.28)" }}>
+                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
                           <Briefcase size={9} />{item.period}
                         </span>
-                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.28)" }}>
+                        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
                           <MapPin size={9} />{item.location}
                         </span>
                       </div>
@@ -250,13 +250,13 @@ export default function Experience() {
                   </div>
 
                   {/* Middle — animated visual */}
-                  <div className="hidden md:block w-48 flex-shrink-0 relative">
+                  <div className="hidden md:block w-48 flex-shrink-0 relative" aria-hidden="true">
                     <CompanyVisual company={item.company} color={theme.color} />
                   </div>
 
                   {/* Right — one-liner + arrow */}
                   <div className="hidden sm:flex items-center gap-3 flex-shrink-0 max-w-[220px]">
-                    <p className="text-xs text-right leading-snug" style={{ color: "rgba(255,255,255,0.3)" }}>
+                    <p className="text-xs text-right leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>
                       {item.description}
                     </p>
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200"

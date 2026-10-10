@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const navLinks = [
@@ -116,10 +116,10 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <a
             href={profile.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex btn-outline text-sm py-2 px-5"
+            download={profile.resumeFileName}
+            className="btn-outline hidden! md:inline-flex! text-sm py-2! px-5!"
           >
+            <Download size={14} />
             Resume
           </a>
 
@@ -170,11 +170,11 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.32 }}
                 href={profile.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                download={profile.resumeFileName}
                 className="btn-primary mt-4 px-8 py-3"
                 onClick={() => setMenuOpen(false)}
               >
+                <Download size={15} />
                 Download Resume
               </motion.a>
             </nav>
