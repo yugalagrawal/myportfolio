@@ -37,10 +37,180 @@ function useAge() {
   return age;
 }
 
-export default function About() {
+/** The photo + bio block. Shared by the About section and the hero's "swap" view. */
+export function AboutBody({ priority = false }: { priority?: boolean }) {
   const age = useAge();
   const [ageHovered, setAgeHovered] = useState(false);
 
+  return (
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+
+    {/* Left — Avatar */}
+    <ScrollReveal direction="left">
+      <div className="flex flex-col items-center lg:items-start gap-6">
+        {/* Photo */}
+        <div className="relative">
+          <div
+            className="w-44 h-44 sm:w-64 sm:h-64 rounded-3xl overflow-hidden relative"
+            style={{ border: "1px solid rgba(99,91,255,0.35)", boxShadow: "0 0 50px rgba(99,91,255,0.18)" }}
+          >
+            <Image
+              src="/images/avatar.jpg"
+              alt={profile.name}
+              fill
+              sizes="256px"
+              className="object-cover object-top"
+              priority={priority}
+            />
+          </div>
+          {/* Glow rings */}
+          <div className="absolute -inset-3 rounded-3xl -z-10" style={{ border: "1px solid rgba(99,91,255,0.12)" }} />
+          <div className="absolute -inset-6 rounded-3xl -z-10" style={{ border: "1px solid rgba(34,139,230,0.07)" }} />
+          {/* Floating badge */}
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-4 -right-4 rounded-xl px-3 py-2 text-xs font-mono font-bold"
+            style={{
+              background: "linear-gradient(135deg, rgba(99,91,255,0.9), rgba(34,139,230,0.85))",
+              color: "#fff",
+              boxShadow: "0 4px 20px rgba(99,91,255,0.4)",
+              border: "1px solid rgba(255,255,255,0.15)",
+            }}
+          >
+            ~4 yrs · Product
+          </motion.div>
+        </div>
+
+        {/* Info pills */}
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:flex lg:flex-col gap-3 w-full max-w-md lg:max-w-xs">
+          {/* Location */}
+          <div className="glass rounded-xl px-4 py-3 flex items-center gap-3"
+            style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: "rgba(99,91,255,0.15)" }}>
+              <MapPin size={14} style={{ color: "var(--accent-text)" }} />
+            </div>
+            <div>
+              <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+                {(profile as { location: string }).location}
+              </p>
+              <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                {(profile as { locationNative?: string }).locationNative}
+              </p>
+            </div>
+          </div>
+
+          {/* College */}
+          <div className="glass rounded-xl px-4 py-3 flex items-center gap-3"
+            style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: "rgba(99,91,255,0.15)" }}>
+              <span style={{ fontSize: "14px" }}>🎓</span>
+            </div>
+            <div>
+              <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+                IIT BHU, Varanasi
+              </p>
+              <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                Grad Year 2023
+              </p>
+            </div>
+          </div>
+
+          {/* Age counter */}
+          <motion.div
+            className="hidden lg:block glass rounded-xl px-4 py-3 cursor-default relative overflow-hidden"
+            style={{ border: "1px solid rgba(99,91,255,0.12)" }}
+            onMouseEnter={() => setAgeHovered(true)}
+            onMouseLeave={() => setAgeHovered(false)}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(99,91,255,0.15)" }}>
+                <span style={{ fontSize: "14px" }}>🎂</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                {!ageHovered ? (
+                  <motion.div
+                    key="age"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <p className="text-xs font-mono leading-tight"
+                      style={{ color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-mono)" }}>
+                      <span className="gradient-text font-bold">{age.years}y </span>
+                      <span style={{ color: "var(--text-3)" }}>{age.months}mo </span>
+                      <span style={{ color: "var(--text-3)" }}>{age.days}d </span>
+                      <span style={{ color: "var(--text-3)" }}>{age.hours}hr </span>
+                      <span style={{ color: "var(--text-3)" }}>{age.minutes}min</span>
+                    </p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                      Age (live)
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.p
+                    key="hover"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-xs italic leading-snug"
+                    style={{ color: "var(--accent-text)" }}
+                  >
+                    But My Heart is a kid &amp; Age is just a number 💙
+                  </motion.p>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </ScrollReveal>
+
+    {/* Right — Bio + Stats */}
+    <ScrollReveal direction="right" delay={0.1}>
+      <div className="space-y-4 mb-6">
+        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
+          AI Product Manager with ~4 years across logistics, AdTech and eCommerce, fueled by one conviction: &ldquo;in God we trust; all others must bring data.&rdquo;
+        </p>
+        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
+          IIT BHU alumnus and former founder. I took{" "}
+          <a href="https://www.nogozo.com" target="_blank" rel="noopener noreferrer"
+            style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            Nogozo
+          </a>{" "}
+          to 10k+ users and the Shark Tank India S1 pre-finals, then scaled data platforms at{" "}
+          <a href="https://www.media.net" target="_blank" rel="noopener noreferrer"
+            style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            Media.net
+          </a>
+          . Now I build AI-enabled products at LetsTransport.
+        </p>
+        <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
+          Off the clock I write, travel and talk cricket. I also tell stories at{" "}
+          <a href="https://www.instagram.com/talksofyug/" target="_blank" rel="noopener noreferrer"
+            style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            @talksofyug
+          </a>
+          , where a founder&rsquo;s mindset meets &ldquo;what&rsquo;s happening&rdquo; and &ldquo;what&rsquo;s next.&rdquo;
+        </p>
+      </div>
+
+      <blockquote className="border-l-2 pl-5 mb-10 italic text-sm sm:text-base"
+        style={{ borderColor: "#635bff", color: "var(--text-3)" }}>
+        {profile.philosophy}
+      </blockquote>
+
+    </ScrollReveal>
+  </div>
+  );
+}
+
+export default function About() {
   return (
     <section id="about" className="relative">
       <div className="section-divider" />
@@ -62,170 +232,7 @@ export default function About() {
           }
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-
-          {/* Left — Avatar */}
-          <ScrollReveal direction="left">
-            <div className="flex flex-col items-center lg:items-start gap-6">
-              {/* Photo */}
-              <div className="relative">
-                <div
-                  className="w-44 h-44 sm:w-64 sm:h-64 rounded-3xl overflow-hidden relative"
-                  style={{ border: "1px solid rgba(99,91,255,0.35)", boxShadow: "0 0 50px rgba(99,91,255,0.18)" }}
-                >
-                  <Image
-                    src="/images/avatar.jpg"
-                    alt={profile.name}
-                    fill
-                    sizes="256px"
-                    className="object-cover object-top"
-                    priority
-                  />
-                </div>
-                {/* Glow rings */}
-                <div className="absolute -inset-3 rounded-3xl -z-10" style={{ border: "1px solid rgba(99,91,255,0.12)" }} />
-                <div className="absolute -inset-6 rounded-3xl -z-10" style={{ border: "1px solid rgba(34,139,230,0.07)" }} />
-                {/* Floating badge */}
-                <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -bottom-4 -right-4 rounded-xl px-3 py-2 text-xs font-mono font-bold"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(99,91,255,0.9), rgba(34,139,230,0.85))",
-                    color: "#fff",
-                    boxShadow: "0 4px 20px rgba(99,91,255,0.4)",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                  }}
-                >
-                  ~4 yrs · Product
-                </motion.div>
-              </div>
-
-              {/* Info pills */}
-              <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:flex lg:flex-col gap-3 w-full max-w-md lg:max-w-xs">
-                {/* Location */}
-                <div className="glass rounded-xl px-4 py-3 flex items-center gap-3"
-                  style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(99,91,255,0.15)" }}>
-                    <MapPin size={14} style={{ color: "var(--accent-text)" }} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
-                      {(profile as { location: string }).location}
-                    </p>
-                    <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                      {(profile as { locationNative?: string }).locationNative}
-                    </p>
-                  </div>
-                </div>
-
-                {/* College */}
-                <div className="glass rounded-xl px-4 py-3 flex items-center gap-3"
-                  style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ background: "rgba(99,91,255,0.15)" }}>
-                    <span style={{ fontSize: "14px" }}>🎓</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
-                      IIT BHU, Varanasi
-                    </p>
-                    <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                      Grad Year 2023
-                    </p>
-                  </div>
-                </div>
-
-                {/* Age counter */}
-                <motion.div
-                  className="hidden lg:block glass rounded-xl px-4 py-3 cursor-default relative overflow-hidden"
-                  style={{ border: "1px solid rgba(99,91,255,0.12)" }}
-                  onMouseEnter={() => setAgeHovered(true)}
-                  onMouseLeave={() => setAgeHovered(false)}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: "rgba(99,91,255,0.15)" }}>
-                      <span style={{ fontSize: "14px" }}>🎂</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      {!ageHovered ? (
-                        <motion.div
-                          key="age"
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <p className="text-xs font-mono leading-tight"
-                            style={{ color: "rgba(255,255,255,0.85)", fontFamily: "var(--font-mono)" }}>
-                            <span className="gradient-text font-bold">{age.years}y </span>
-                            <span style={{ color: "var(--text-3)" }}>{age.months}mo </span>
-                            <span style={{ color: "var(--text-3)" }}>{age.days}d </span>
-                            <span style={{ color: "var(--text-3)" }}>{age.hours}hr </span>
-                            <span style={{ color: "var(--text-3)" }}>{age.minutes}min</span>
-                          </p>
-                          <p className="text-xs mt-0.5" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                            Age (live)
-                          </p>
-                        </motion.div>
-                      ) : (
-                        <motion.p
-                          key="hover"
-                          initial={{ opacity: 0, y: 6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                          className="text-xs italic leading-snug"
-                          style={{ color: "var(--accent-text)" }}
-                        >
-                          But My Heart is a kid &amp; Age is just a number 💙
-                        </motion.p>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Right — Bio + Stats */}
-          <ScrollReveal direction="right" delay={0.1}>
-            <div className="space-y-4 mb-6">
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                AI Product Manager with ~4 years across logistics, AdTech and eCommerce, fueled by one conviction: &ldquo;in God we trust; all others must bring data.&rdquo;
-              </p>
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                IIT BHU alumnus and former founder. I took{" "}
-                <a href="https://www.nogozo.com" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                  Nogozo
-                </a>{" "}
-                to 10k+ users and the Shark Tank India S1 pre-finals, then scaled data platforms at{" "}
-                <a href="https://www.media.net" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                  Media.net
-                </a>
-                . Now I build AI-enabled products at LetsTransport.
-              </p>
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                Off the clock I write, travel and talk cricket. I also tell stories at{" "}
-                <a href="https://www.instagram.com/talksofyug/" target="_blank" rel="noopener noreferrer"
-                  style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                  @talksofyug
-                </a>
-                , where a founder&rsquo;s mindset meets &ldquo;what&rsquo;s happening&rdquo; and &ldquo;what&rsquo;s next.&rdquo;
-              </p>
-            </div>
-
-            <blockquote className="border-l-2 pl-5 mb-10 italic text-sm sm:text-base"
-              style={{ borderColor: "#635bff", color: "var(--text-3)" }}>
-              {profile.philosophy}
-            </blockquote>
-
-          </ScrollReveal>
-        </div>
+        <AboutBody priority />
       </div>
     </section>
   );

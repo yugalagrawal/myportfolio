@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, FolderKanban, Building2 } from "lucide-react";
+import { ArrowDown, FolderKanban, Building2, ArrowLeftRight } from "lucide-react";
 import { profile } from "@/data/profile";
+import { AboutBody } from "./About";
 import dynamic from "next/dynamic";
 
 const MeshBackground = dynamic(() => import("./MeshBackground"), { ssr: false });
@@ -91,6 +92,7 @@ function FloatingBubble({ emoji, text, hoverText, style, delay, duration, classN
 
 export default function Hero() {
   const [showParticles, setShowParticles] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
 
   useEffect(() => {
     setShowParticles(!window.matchMedia("(hover: none)").matches);
@@ -143,7 +145,7 @@ export default function Hero() {
       {showParticles && <MeshBackground />}
 
       {/* Floating bubbles */}
-      {(() => {
+      {!showAbout && (() => {
         const slot = getTimeSlot();
         const g = greetingMap[slot];
         const m = mealMap[slot];
@@ -164,8 +166,20 @@ export default function Hero() {
       })()}
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto w-full pt-20 sm:pt-0">
-        {/* Name */}
+      <div className="relative z-10 text-center px-6 sm:px-8 max-w-5xl mx-auto w-full pt-24 sm:pt-0">
+        {/* Name, with a small swap button above "Agarwal" */}
+        <div className="relative inline-block">
+          <button
+            type="button"
+            onClick={() => setShowAbout((v) => !v)}
+            aria-pressed={showAbout}
+            aria-label={showAbout ? "Back to intro" : "Swap to About me"}
+            className="absolute -top-10 right-0 inline-flex items-center gap-1.5 px-3 min-h-[40px] rounded-full text-xs border border-white/15 bg-white/[0.05] backdrop-blur transition-colors hover:bg-white/10 hover:border-white/30"
+            style={{ color: "var(--text-2)", fontFamily: "var(--font-mono)" }}
+          >
+            <ArrowLeftRight size={13} aria-hidden="true" />
+            {showAbout ? "Back" : "About me"}
+          </button>
         <h1
           className="font-black leading-none tracking-tight mb-5"
           style={{
@@ -177,6 +191,24 @@ export default function Hero() {
           <span style={{ color: "rgba(255,255,255,0.92)" }}>{profile.name.split(" ")[0]}{" "}</span>
           <span className="gradient-text-name">{profile.name.split(" ")[1]}</span>
         </h1>
+        </div>
+
+        <AnimatePresence mode="wait" initial={false}>
+          {showAbout ? (
+            <motion.div
+              key="about"
+              initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.28 }}
+              className="text-left mt-4 sm:mt-6"
+            >
+              <AboutBody />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="intro"
+              initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 40 }}
+              transition={{ duration: 0.28 }}
+            >
 
         {/* Positioning */}
         <p
@@ -241,6 +273,9 @@ export default function Hero() {
             View My Projects
           </button>
         </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Scroll indicator */}
