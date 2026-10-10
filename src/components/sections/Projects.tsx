@@ -15,7 +15,6 @@ export default function Projects() {
         <SectionHeading
           label="// projects"
           title="Decks, Deep Dives & Dossiers"
-          subtitle="The kind of work that starts with 'why does this even exist?' and ends with 'here's how to fix it'."
         />
 
         {/* ── Case studies ── */}
