@@ -206,8 +206,12 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
               <span className="block text-lg font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
                 {item.cardRole ?? item.role}
               </span>
-              <span className="block text-sm mt-0.5" style={{ color: "var(--accent2-text)" }}>
-                {item.company}
+              <span className="flex items-center justify-between gap-3 mt-0.5">
+                <span className="text-sm" style={{ color: "var(--accent2-text)" }}>{item.company}</span>
+                <span className="inline-flex items-center gap-1 text-xs shrink-0 transition-colors group-hover:text-[var(--accent-text)]"
+                  style={{ color: "var(--text-3)" }}>
+                  Details <ArrowUpRight size={12} />
+                </span>
               </span>
               <span className="flex flex-wrap gap-1.5 mt-4">
                 {item.keywords.map((k) => (
@@ -216,10 +220,6 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
                     {k}
                   </span>
                 ))}
-              </span>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs transition-colors group-hover:text-[var(--accent-text)]"
-                style={{ color: "var(--text-3)" }}>
-                Details <ArrowUpRight size={12} />
               </span>
             </button>
           </motion.li>
