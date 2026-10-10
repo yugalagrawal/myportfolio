@@ -40,17 +40,42 @@ const startDate = (period: string) => {
   return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
 };
 
-function YearRange({ period, current, className }: { period: string; current?: boolean; className: string }) {
-  const ys = period.match(/\d{4}/g) ?? [];
-  const start = ys[0] ?? "";
-  const end = /present/i.test(period) ? "Now" : (ys[1] ?? start);
+const MONTHS: Record<string, number> = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+
+/** "Jun 2023 – May 2026" -> { start: "2023", end: "2026", span: "2y 11m" } (current roles end at today) */
+function parseRange(period: string) {
+  const parts = [...period.matchAll(/([A-Za-z]{3}) (\d{4})/g)].map(m => ({ m: MONTHS[m[1]] ?? 0, y: Number(m[2]) }));
+  const first = parts[0], last = parts[1];
+  const now = new Date();
+  const current = /present/i.test(period);
+  const end = current ? { m: now.getMonth(), y: now.getFullYear() } : (last ?? first);
+  const months = Math.max(1, (end.y - first.y) * 12 + (end.m - first.m) + 1);
+  const span = months < 12 ? `${months}m` : `${Math.floor(months / 12)}y${months % 12 ? ` ${months % 12}m` : ""}`;
+  return { start: String(first.y), end: current ? "Now" : String(end.y), span };
+}
+
+/** Start year ┄ duration ┄ end year: the range is something you see, not a typed dash. */
+function RangeBar({ period, current, size }: { period: string; current?: boolean; size: string }) {
+  const { start, end, span } = parseRange(period);
+  const numeral = `${size} font-black leading-none tracking-tight`;
+  const grad = current ? "gradient-text" : "";
   return (
-    <span className={`${className} font-black leading-none tracking-tight whitespace-nowrap ${current ? "gradient-text" : ""}`}
-      style={{ fontFamily: "var(--font-display)", color: current ? undefined : "var(--text-1)" }}>
-      {start}
-      <span className="mx-[0.18em] font-light" style={{ opacity: 0.45 }}>–</span>
-      {end}
-    </span>
+    <div className="flex items-center gap-3 w-full" style={{ fontFamily: "var(--font-display)" }}>
+      <span className={numeral} style={{ color: "var(--text-1)" }}>{start}</span>
+      <span className="relative flex-1 min-w-[2.5rem] h-px" aria-hidden="true"
+        style={{ background: current
+          ? "linear-gradient(90deg, rgba(139,133,255,0.9), rgba(139,133,255,0.2))"
+          : "repeating-linear-gradient(90deg, rgba(255,255,255,0.35) 0 4px, transparent 4px 9px)" }}>
+        <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap"
+          style={{ color: "var(--text-2)", fontFamily: "var(--font-mono)" }} suppressHydrationWarning>
+          {span}
+        </span>
+        <span className="absolute -left-0.5 -top-[3px] w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,255,255,0.5)" }} />
+        <span className="absolute -right-0.5 -top-[3px] w-[7px] h-[7px] rounded-full"
+          style={{ background: current ? "var(--accent-text)" : "rgba(255,255,255,0.5)", boxShadow: current ? "0 0 10px var(--accent-text)" : "none" }} />
+      </span>
+      <span className={`${numeral} ${grad}`} style={{ color: current ? undefined : "var(--text-1)" }}>{end}</span>
+    </div>
   );
 }
 
@@ -139,7 +164,7 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
 
             {/* Big date on the open side of the road (desktop) */}
             <div className={`hidden md:flex ${left ? "col-start-3" : "col-start-1"} row-start-1 flex-col justify-start pt-3 ${left ? "items-start pl-6 lg:pl-10" : "items-end pr-6 lg:pr-10 text-right"}`}>
-              <YearRange period={item.period} current={item.current} className="text-5xl lg:text-6xl" />
+              <div className={`w-full max-w-md pt-6 ${left ? "" : "ml-auto"}`}><RangeBar period={item.period} current={item.current} size="text-4xl lg:text-5xl" /></div>
               <span className="text-sm mt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                 {item.period}
               </span>
@@ -151,9 +176,9 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
               onClick={() => onOpen(item)}
               className={`group col-start-2 row-start-1 ${left ? "md:col-start-1" : "md:col-start-3"} text-left w-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6 transition duration-200 hover:bg-white/[0.05] hover:border-[#8b85ff99] hover:-translate-y-0.5 focus-visible:border-[#8b85ff99] outline-none`}
             >
-              <span className="md:hidden flex items-baseline flex-wrap gap-x-3 gap-y-1 mb-3">
-                <YearRange period={item.period} current={item.current} className="text-3xl" />
-                <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+              <span className="md:hidden block mb-4">
+                <RangeBar period={item.period} current={item.current} size="text-2xl" />
+                <span className="block text-xs mt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                   {item.period}
                 </span>
               </span>
