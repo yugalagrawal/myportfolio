@@ -14,7 +14,7 @@ export default function Projects() {
       <div className="section-container">
         <SectionHeading
           label="// projects"
-          title="Decks, Deep Dives & Dossiers"
+          title="Builds & Breakdowns"
         />
 
         <div className="-mx-6 px-6 sm:mx-0 sm:px-0 flex sm:grid sm:grid-cols-2 gap-4 md:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory no-scrollbar pb-2">
