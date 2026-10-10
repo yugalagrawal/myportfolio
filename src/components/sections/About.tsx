@@ -195,28 +195,28 @@ export default function About() {
           <ScrollReveal direction="right" delay={0.1}>
             <div className="space-y-4 mb-6">
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                I&rsquo;m a Product professional with ~4 years of experience across AdTech and eCommerce, fueled by the conviction that &ldquo;in God we trust; all others must bring data.&rdquo;
+                AI Product Manager with ~4 years across logistics, AdTech and eCommerce, fueled by one conviction: &ldquo;in God we trust; all others must bring data.&rdquo;
               </p>
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                An IIT BHU alumnus and former founder, I scaled my startup{" "}
+                IIT BHU alumnus and former founder. I took{" "}
                 <a href="https://www.nogozo.com" target="_blank" rel="noopener noreferrer"
                   style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   Nogozo
                 </a>{" "}
-                to 10k+ users and reached the Shark Tank India Season 1 pre-finals. That experience, combined with my time at{" "}
+                to 10k+ users and the Shark Tank India S1 pre-finals, then scaled data platforms at{" "}
                 <a href="https://www.media.net" target="_blank" rel="noopener noreferrer"
                   style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   Media.net
                 </a>
-                , taught me how to architect high-impact efficiencies and distill chaos into data-driven roadmaps.
+                . Now I build AI-enabled products at LetsTransport.
               </p>
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
-                Beyond the metrics, I&rsquo;m a writer, traveller, and cricket enthusiast who enjoys everything from old Hindi classics to modern hits. Lately, I&rsquo;ve been exploring content creation at{" "}
+                Off the clock I write, travel and talk cricket. I also tell stories at{" "}
                 <a href="https://www.instagram.com/talksofyug/" target="_blank" rel="noopener noreferrer"
                   style={{ color: "var(--accent-text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                   @talksofyug
                 </a>
-                , translating my founder&rsquo;s mindset into stories that bridge the gap between &ldquo;what&rsquo;s happening&rdquo; and &ldquo;what&rsquo;s next.&rdquo;
+                , where a founder&rsquo;s mindset meets &ldquo;what&rsquo;s happening&rdquo; and &ldquo;what&rsquo;s next.&rdquo;
               </p>
             </div>
 
