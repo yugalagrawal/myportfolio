@@ -13,7 +13,6 @@ export default function Projects() {
       <div className="section-divider" />
       <div className="section-container">
         <SectionHeading
-          label="// projects"
           title="Builds & Breakdowns"
         />
 

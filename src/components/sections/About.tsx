@@ -46,7 +46,6 @@ export default function About() {
       <div className="section-divider" />
       <div className="section-container">
         <SectionHeading
-          label="// about"
           title="About Me"
           subtitle={
             <span style={{ fontSize: "clamp(14px, 1.5vw, 16px)" }}>

@@ -20,7 +20,6 @@ export default function Contact() {
       <div className="section-divider" />
       <div className="section-container" style={{ paddingTop: 48, paddingBottom: 16 }}>
         <SectionHeading
-          label="// contact"
           title="Get In Touch"
           subtitle="Have an opportunity, a question, or just want to say hi?"
         />
