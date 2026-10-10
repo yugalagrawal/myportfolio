@@ -14,9 +14,9 @@ export default function Home() {
       <ScrollProgress />
       <Navbar />
       <Hero />
-      <About />
       <Experience />
       <Projects />
+      <About />
       <StartupStory />
       <Library />
       <Contact />

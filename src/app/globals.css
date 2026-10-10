@@ -113,7 +113,11 @@ body {
   padding: 56px 24px;
 }
 @media (min-width: 768px)  { .section-container { padding: 72px 48px; } }
-@media (min-width: 1024px) { .section-container { padding: 80px 64px; } }
+@media (min-width: 1024px) { .section-container { padding: 72px 64px; } }
+
+/* Hide scrollbar on swipe carousels */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
 /* ─── Pill tags ─── */
 .pill {

@@ -267,7 +267,7 @@ export default function StartupStory() {
         <div className="relative">
 
           {/* Marquee rows — dimmed, serve as backdrop */}
-          <div className="flex flex-col gap-3 sm:gap-4 py-3" style={{ opacity: 0.45 }}>
+          <div className="flex flex-col gap-3 sm:gap-4 py-3 sm:opacity-45">
             <MarqueeRow items={ROW_1} duration={34} onVideoClick={setActiveVideo} />
             <MarqueeRow items={ROW_2} reverse duration={27} onVideoClick={setActiveVideo} />
           </div>
@@ -286,7 +286,7 @@ export default function StartupStory() {
 
           {/* ── CTA card — centred, pointer-events-none wrapper so marquee
                items at the edges stay clickable ─────────────────────── */}
-          <div className="absolute inset-0 flex items-center justify-center z-20 px-4 pointer-events-none">
+          <div className="relative sm:absolute sm:inset-0 flex items-center justify-center z-20 px-4 mt-6 sm:mt-0 sm:pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.88, y: 24 }}
               animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
@@ -379,7 +379,7 @@ export default function StartupStory() {
               {/* Hint for clickable videos */}
               <p className="mt-4 text-xs font-mono"
                 style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                hover the gallery · click ▶ to watch
+                tap or click ▶ to watch the videos
               </p>
             </motion.div>
           </div>

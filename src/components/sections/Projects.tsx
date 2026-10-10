@@ -5,7 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { impact } from "@/data/impact";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function Projects() {
@@ -19,48 +18,11 @@ export default function Projects() {
           subtitle="The kind of work that starts with 'why does this even exist?' and ends with 'here's how to fix it'."
         />
 
-        {/* ── Shipped at work ── */}
-        <p className="text-xs mb-3" style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
-          // shipped at work
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
-          {impact.map((item, i) => (
-            <motion.button
-              key={item.title}
-              type="button"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: i * 0.07 }}
-              onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })}
-              className="glass glass-hover rounded-2xl p-5 text-left flex flex-col"
-              style={{ border: "1px solid rgba(99,91,255,0.15)" }}
-              aria-label={`${item.title} at ${item.company} — see work experience`}
-            >
-              <span className="text-xs mb-3" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                {item.company}
-              </span>
-              <span className="text-2xl font-black gradient-text leading-none mb-1" style={{ fontFamily: "var(--font-display)" }}>
-                {item.metric}
-              </span>
-              <span className="text-xs mb-3 leading-snug" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                {item.label}
-              </span>
-              <span className="text-sm font-semibold mb-1.5 leading-snug" style={{ color: "rgba(255,255,255,0.92)" }}>
-                {item.title}
-              </span>
-              <span className="text-xs leading-relaxed" style={{ color: "var(--text-3)" }}>
-                {item.detail}
-              </span>
-            </motion.button>
-          ))}
-        </div>
-
         {/* ── Case studies ── */}
         <p className="text-xs mb-3" style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
           // case studies &amp; concepts
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+        <div className="-mx-6 px-6 sm:mx-0 sm:px-0 flex sm:grid sm:grid-cols-2 gap-4 md:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory no-scrollbar pb-2">
           {projects.map((project, i) => (
             <motion.div
               key={i}
@@ -68,7 +30,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group glass rounded-2xl overflow-hidden flex flex-col cursor-pointer"
+              className="group glass rounded-2xl overflow-hidden flex flex-col cursor-pointer shrink-0 w-[84%] sm:w-auto snap-center"
               style={{ border: "1px solid rgba(99,91,255,0.12)" }}
               onClick={() => {
                 if (project.externalLink) window.open(project.externalLink, "_blank", "noopener,noreferrer");

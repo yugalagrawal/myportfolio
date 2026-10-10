@@ -55,7 +55,7 @@ export default function Library() {
             const Icon = cat.icon;
             const body = (
               <>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center"
                     style={{ background: cat.bg, border: `1px solid ${cat.border}` }}
@@ -76,7 +76,7 @@ export default function Library() {
                 >
                   {cat.stat}
                 </p>
-                <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-2)" }}>
+                <p className="text-sm leading-relaxed flex-1 line-clamp-2 sm:line-clamp-none" style={{ color: "var(--text-2)" }}>
                   {cat.desc}
                 </p>
                 {cat.href && (
@@ -88,7 +88,7 @@ export default function Library() {
             );
 
             const cardProps = {
-              className: "glass rounded-2xl p-6 flex flex-col text-left h-full",
+              className: "glass rounded-2xl p-5 sm:p-6 flex flex-col text-left h-full",
               style: { border: `1px solid ${cat.border}`, opacity: cat.href ? 1 : 0.75 },
             };
 

@@ -49,7 +49,7 @@ export default function About() {
           label="// about"
           title="About Me"
           subtitle={
-            <span style={{ fontSize: "clamp(12px, 1.5vw, 14px)", whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: "clamp(14px, 1.5vw, 16px)" }}>
               &ldquo;The self is not something one finds, it is something one creates.&rdquo; —{" "}
               <a
                 href="https://en.wikipedia.org/wiki/Thomas_Szasz"
@@ -63,7 +63,7 @@ export default function About() {
           }
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 
           {/* Left — Avatar */}
           <ScrollReveal direction="left">
@@ -71,7 +71,7 @@ export default function About() {
               {/* Photo */}
               <div className="relative">
                 <div
-                  className="w-56 h-56 sm:w-64 sm:h-64 rounded-3xl overflow-hidden relative"
+                  className="w-44 h-44 sm:w-64 sm:h-64 rounded-3xl overflow-hidden relative"
                   style={{ border: "1px solid rgba(99,91,255,0.35)", boxShadow: "0 0 50px rgba(99,91,255,0.18)" }}
                 >
                   <Image
@@ -102,7 +102,7 @@ export default function About() {
               </div>
 
               {/* Info pills */}
-              <div className="flex flex-col gap-3 w-full max-w-xs">
+              <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:flex lg:flex-col gap-3 w-full max-w-md lg:max-w-xs">
                 {/* Location */}
                 <div className="glass rounded-xl px-4 py-3 flex items-center gap-3"
                   style={{ border: "1px solid rgba(99,91,255,0.12)" }}>
@@ -139,7 +139,7 @@ export default function About() {
 
                 {/* Age counter */}
                 <motion.div
-                  className="glass rounded-xl px-4 py-3 cursor-default relative overflow-hidden"
+                  className="hidden lg:block glass rounded-xl px-4 py-3 cursor-default relative overflow-hidden"
                   style={{ border: "1px solid rgba(99,91,255,0.12)" }}
                   onMouseEnter={() => setAgeHovered(true)}
                   onMouseLeave={() => setAgeHovered(false)}
@@ -192,7 +192,7 @@ export default function About() {
 
           {/* Right — Bio + Stats */}
           <ScrollReveal direction="right" delay={0.1}>
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-6">
               <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--text-2)" }}>
                 I&rsquo;m a Product professional with ~4 years of experience across AdTech and eCommerce, fueled by the conviction that &ldquo;in God we trust; all others must bring data.&rdquo;
               </p>

@@ -6,6 +6,7 @@ import { X, MapPin, Briefcase, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { experience, ExperienceItem } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ImpactStrip from "@/components/sections/ImpactStrip";
 
 const companyTheme: Record<string, { color: string; border: string; bg: string; glow: string }> = {
   "LetsTransport": {
@@ -180,6 +181,12 @@ export default function Experience() {
         <SectionHeading label="// experience" title="Work Experience"
           subtitle="Spoiler: I did not single-handedly save any of these companies. But I helped." />
 
+        <ImpactStrip />
+
+        <p className="text-xs mb-3 tracking-widest uppercase"
+          style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
+          Roles
+        </p>
         <div className="flex flex-col gap-4">
           {experience.map((item, i) => {
             const theme = companyTheme[item.company] ?? defaultTheme;
