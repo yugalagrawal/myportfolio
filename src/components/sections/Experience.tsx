@@ -243,7 +243,7 @@ export default function Experience() {
     <section id="experience" className="relative">
       <div className="section-divider" />
       <div className="section-container">
-        <SectionHeading label="// experience" title="Work Experience" />
+        <SectionHeading label="// career" title="Work Experience" />
 
         <Timeline items={experience} onOpen={setActive} />
       </div>

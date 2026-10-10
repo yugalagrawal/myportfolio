@@ -15,7 +15,7 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="mb-12 md:mb-16"
+      className="mb-8 md:mb-10"
     >
       <p
         className="text-xs font-mono mb-3 tracking-widest uppercase"
@@ -35,7 +35,7 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
           {subtitle}
         </p>
       )}
-      <div className="mt-6 flex items-center gap-3">
+      <div className="mt-5 flex items-center gap-3">
         <div className="h-px w-10" style={{ background: "linear-gradient(90deg, #635bff, transparent)" }} />
         <div className="h-1 w-1 rounded-full" style={{ background: "#635bff" }} />
       </div>
