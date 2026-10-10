@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowLeft, Feather, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import SiteBar from "@/components/nav/SiteBar";
 import { useRef, ReactNode, useState } from "react";
 
 const A = "#60a5fa"; // sky blue accent
@@ -26,7 +27,7 @@ function PoemLines({ text, accentColor = A }: { text: string; accentColor?: stri
   const stanzas = text.split("\n\n");
   return (
     <div className="text-sm sm:text-base leading-loose"
-      style={{ color: "rgba(255,255,255,0.72)", fontStyle: "italic" }}>
+      style={{ color: "var(--text-2)", fontStyle: "italic" }}>
       {stanzas.map((stanza, si) => (
         <div key={si}>
           <div>
@@ -430,22 +431,8 @@ export default function EnglishPoemsPage() {
         }} />
       </div>
 
-      {/* ── Top nav ── */}
-      <div className="sticky top-0 z-50 border-b"
-        style={{ background: "rgba(6,3,15,0.92)", borderColor: `${A}18`, backdropFilter: "blur(24px)" }}>
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/library/poetry"
-            className="inline-flex items-center gap-2 text-sm transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}
-            onMouseEnter={e => (e.currentTarget.style.color = A)}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
-            <ArrowLeft size={14} /> Back
-          </Link>
-          <span className="text-xs" style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-mono)" }}>
-            english poems · yugal agarwal
-          </span>
-        </div>
-      </div>
+      <SiteBar variant="dark" backHref="/library/poetry" widthClass="max-w-3xl" meta="english poems · yugal agarwal" />
+
 
       {/* ══ HERO ══ */}
       <div className="relative overflow-hidden max-w-3xl mx-auto px-6 pt-14 sm:pt-20 pb-10">
@@ -473,7 +460,7 @@ export default function EnglishPoemsPage() {
           </h1>
 
           <p className="text-sm leading-relaxed mb-6"
-            style={{ color: "rgba(255,255,255,0.3)", maxWidth: "460px" }}>
+            style={{ color: "var(--text-3)", maxWidth: "460px" }}>
             About 1 in 10 times I write in English. Turns out they don&apos;t sound all that bad.
           </p>
 
@@ -481,7 +468,7 @@ export default function EnglishPoemsPage() {
             <span className="text-xl font-black" style={{ color: A, fontFamily: "var(--font-display)" }}>
               {POEMS.length}
             </span>
-            <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "var(--font-mono)" }}>
+            <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
               poems
             </span>
           </div>
@@ -559,7 +546,7 @@ export default function EnglishPoemsPage() {
       {/* Footer */}
       <div className="border-t text-center py-8 px-6"
         style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-        <p className="text-xs" style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-mono)" }}>
+        <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
           All content © Yugal Agarwal &nbsp;·&nbsp; Originals only &nbsp;·&nbsp; Please credit if you share 🙏
         </p>
       </div>

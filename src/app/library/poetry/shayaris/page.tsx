@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowLeft, Feather, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import SiteBar from "@/components/nav/SiteBar";
 import { useRef, ReactNode, useState } from "react";
 
 const V = "#845ef7";
@@ -47,7 +48,7 @@ function PoemLines({ text, accentColor = V }: { text: string; accentColor?: stri
   const stanzas = text.split("\n\n");
   return (
     <div className="text-sm sm:text-base leading-loose"
-      style={{ color: "rgba(255,255,255,0.72)" }}>
+      style={{ color: "var(--text-2)" }}>
       {stanzas.map((stanza, si) => (
         <div key={si}>
           <div>
@@ -253,22 +254,8 @@ export default function ShayarisPage() {
         }}/>
       </div>
 
-      {/* ── Top nav ── */}
-      <div className="sticky top-0 z-50 border-b"
-        style={{ background:"rgba(6,3,15,0.92)", borderColor:`${V}18`, backdropFilter:"blur(24px)" }}>
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/library/poetry"
-            className="inline-flex items-center gap-2 text-sm transition-colors duration-200"
-            style={{ color:"rgba(255,255,255,0.3)", fontFamily:"var(--font-mono)" }}
-            onMouseEnter={e=>(e.currentTarget.style.color=V)}
-            onMouseLeave={e=>(e.currentTarget.style.color="rgba(255,255,255,0.3)")}>
-            <ArrowLeft size={14}/> Back
-          </Link>
-          <span className="text-xs" style={{ color:"rgba(255,255,255,0.12)", fontFamily:"var(--font-mono)" }}>
-            शायरी · yugal agarwal
-          </span>
-        </div>
-      </div>
+      <SiteBar variant="dark" backHref="/library/poetry" widthClass="max-w-3xl" meta="shayaris · yugal agarwal" />
+
 
       {/* ══ HERO ══ */}
       <div className="relative overflow-hidden max-w-3xl mx-auto px-6 pt-14 sm:pt-20 pb-8">
@@ -296,7 +283,7 @@ export default function ShayarisPage() {
           </h1>
 
           <p className="text-sm leading-relaxed mb-6"
-            style={{ color:"rgba(255,255,255,0.3)", maxWidth:"460px" }}>
+            style={{ color:"var(--text-3)", maxWidth:"460px" }}>
             Sorted new first. All originals — the kind you screenshot and forward at 2am.
           </p>
 
@@ -305,7 +292,7 @@ export default function ShayarisPage() {
             {TABS.map(t => (
               <div key={t.id} className="flex items-baseline gap-1.5">
                 <span className="text-xl font-black" style={{ color:V, fontFamily:"var(--font-display)" }}>{t.n}</span>
-                <span className="text-xs" style={{ color:"rgba(255,255,255,0.2)", fontFamily:"var(--font-mono)" }}>{t.en}</span>
+                <span className="text-xs" style={{ color:"var(--text-3)", fontFamily:"var(--font-mono)" }}>{t.en}</span>
               </div>
             ))}
           </div>
@@ -328,7 +315,7 @@ export default function ShayarisPage() {
                   border:    tab===t.id ? `1px solid ${V}50` : "1px solid transparent",
                 }}>
                 <span>{t.hi}</span>
-                <span className="ml-1.5 text-[10px]"
+                <span className="ml-1.5 text-xs"
                   style={{ color:tab===t.id ? `${V}cc` : "rgba(255,255,255,0.14)",
                            fontFamily:"var(--font-mono)" }}>
                   {t.n}
@@ -377,7 +364,7 @@ export default function ShayarisPage() {
                         style={{ color: open ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.52)" }}>
                         {poem.title}
                         {poem.year && (
-                          <span className="ml-2 text-[10px]" style={{ color:`${m}70`, fontFamily:"var(--font-mono)" }}>
+                          <span className="ml-2 text-xs" style={{ color:`${m}70`, fontFamily:"var(--font-mono)" }}>
                             · {poem.year}
                           </span>
                         )}
@@ -448,7 +435,7 @@ export default function ShayarisPage() {
 
                     {/* Poem lines */}
                     <div className="relative text-sm sm:text-base leading-loose"
-                      style={{ color:"rgba(255,255,255,0.72)" }}>
+                      style={{ color:"var(--text-2)" }}>
                       {s.split("\n").map((line, j) => (
                         <span key={j} style={{ display:"block" }}>{line}</span>
                       ))}
@@ -458,7 +445,7 @@ export default function ShayarisPage() {
                     <div className="mt-5 flex items-center justify-between">
                       <div className="h-px flex-1"
                         style={{ background:`linear-gradient(to right, ${ac}50, transparent)` }}/>
-                      <span className="ml-3 text-[10px]"
+                      <span className="ml-3 text-xs"
                         style={{ color:`${ac}60`, fontFamily:"var(--font-mono)" }}>
                         {String(i+1).padStart(2,"0")}
                       </span>
@@ -492,7 +479,7 @@ export default function ShayarisPage() {
                       style={{ background:`linear-gradient(to right, transparent, ${ac}80, transparent)` }}/>
 
                     <p className="relative text-base sm:text-xl leading-loose"
-                      style={{ color:"rgba(255,255,255,0.78)" }}>
+                      style={{ color:"var(--text-2)" }}>
                       {s.split("\n").map((line, j) => (
                         <span key={j} style={{ display:"block" }}>{line}</span>
                       ))}
@@ -513,7 +500,7 @@ export default function ShayarisPage() {
       {/* Footer */}
       <div className="border-t text-center py-8 px-6"
         style={{ borderColor:"rgba(255,255,255,0.05)" }}>
-        <p className="text-xs" style={{ color:"rgba(255,255,255,0.12)", fontFamily:"var(--font-mono)" }}>
+        <p className="text-xs" style={{ color:"var(--text-3)", fontFamily:"var(--font-mono)" }}>
           All content © Yugal Agarwal &nbsp;·&nbsp; Originals only &nbsp;·&nbsp; Please credit if you share 🙏
         </p>
       </div>

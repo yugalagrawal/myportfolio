@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowLeft, Feather, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import SiteBar from "@/components/nav/SiteBar";
 import { useRef, ReactNode, useState } from "react";
 
 const V = "#845ef7";
@@ -44,7 +45,7 @@ function PoemLines({ text, accentColor = V }: { text: string; accentColor?: stri
   const stanzas = text.split("\n\n");
   return (
     <div className="text-sm sm:text-base leading-loose"
-      style={{ color: "rgba(255,255,255,0.72)" }}>
+      style={{ color: "var(--text-2)" }}>
       {stanzas.map((stanza, si) => (
         <div key={si}>
           <div>
@@ -427,22 +428,7 @@ export default function KavitayeinPage() {
         }} />
       </div>
 
-      {/* Sticky nav */}
-      <div className="sticky top-0 z-50 border-b"
-        style={{ background: "rgba(6,3,15,0.92)", borderColor: `${V}18`, backdropFilter: "blur(24px)" }}>
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/library/poetry"
-            className="inline-flex items-center gap-2 text-sm transition-colors duration-200"
-            style={{ color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-mono)" }}
-            onMouseEnter={e => (e.currentTarget.style.color = V)}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
-            <ArrowLeft size={14} /> Back
-          </Link>
-          <span className="text-xs" style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-mono)" }}>
-            कविताएँ · yugal agarwal
-          </span>
-        </div>
-      </div>
+      <SiteBar variant="dark" backHref="/library/poetry" widthClass="max-w-3xl" meta="कविताएँ · yugal agarwal" />
 
       {/* ══ HERO ══ */}
       <div className="relative overflow-hidden max-w-3xl mx-auto px-6 pt-14 sm:pt-20 pb-8">
@@ -469,10 +455,10 @@ export default function KavitayeinPage() {
           </h1>
 
           <p className="text-sm leading-relaxed mb-2"
-            style={{ color: "rgba(255,255,255,0.3)", maxWidth: "460px" }}>
+            style={{ color: "var(--text-3)", maxWidth: "460px" }}>
             {KAVITAYEIN.length} poems — all originals, sorted new first.
           </p>
-          <p className="text-xs italic" style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-mono)" }}>
+          <p className="text-xs italic" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
             All content on this page are my originals only.
           </p>
 
@@ -509,7 +495,7 @@ export default function KavitayeinPage() {
                       style={{ color: open ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.52)" }}>
                       {poem.title}
                       {poem.year && (
-                        <span className="ml-2 text-[10px]"
+                        <span className="ml-2 text-xs"
                           style={{ color: `${m}70`, fontFamily: "var(--font-mono)" }}>
                           · {poem.year}
                         </span>
@@ -556,7 +542,7 @@ export default function KavitayeinPage() {
       {/* Footer */}
       <div className="border-t text-center py-8 px-6"
         style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-        <p className="text-xs" style={{ color: "rgba(255,255,255,0.12)", fontFamily: "var(--font-mono)" }}>
+        <p className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
           All content © Yugal Agarwal &nbsp;·&nbsp; Originals only &nbsp;·&nbsp; Please credit if you share 🙏
         </p>
       </div>

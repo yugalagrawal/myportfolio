@@ -3,9 +3,10 @@
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import SiteBar from "@/components/nav/SiteBar";
 import { useRef, ReactNode } from "react";
 
-const E = "#059669";
+const E = "#047857";
 
 /* ─── Base scroll-reveal wrapper ────────────────────────────────────────── */
 function Fade({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
@@ -27,7 +28,7 @@ function Era({ date }: { date: string }) {
     <Fade>
       <div className="flex items-center gap-4 py-4">
         <div className="flex-1 h-px" style={{ background: "#e7e5e1" }} />
-        <span className="text-[11px] font-mono tracking-widest uppercase px-2"
+        <span className="text-xs font-mono tracking-widest uppercase px-2"
           style={{ color: E, fontFamily: "var(--font-mono)", flexShrink: 0 }}>
           {date}
         </span>
@@ -74,7 +75,7 @@ function Stat({ value, label }: { value: string; label: string }) {
     <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-sm font-semibold"
       style={{ background: "rgba(5,150,105,0.08)", color: E, border: "1px solid rgba(5,150,105,0.15)" }}>
       {value}
-      <span className="font-normal text-xs" style={{ color: "#78716c" }}>{label}</span>
+      <span className="font-normal text-xs" style={{ color: "#6b645f" }}>{label}</span>
     </span>
   );
 }
@@ -118,7 +119,7 @@ function FloatSection({
           />
           {img.caption && (
             <figcaption style={{
-              fontSize: 11, textAlign: "center", color: "#a8a29e",
+              fontSize: 12, textAlign: "center", color: "#6b645f",
               fontStyle: "italic", marginTop: 6, lineHeight: 1.4,
             }}>
               {img.caption}
@@ -148,7 +149,7 @@ function ImgPair({ a, b }: {
                 className="w-full h-full object-cover object-top" />
             </div>
             {img.caption && (
-              <figcaption className="mt-2 text-xs text-center italic" style={{ color: "#a8a29e" }}>
+              <figcaption className="mt-2 text-xs text-center italic" style={{ color: "#6b645f" }}>
                 {img.caption}
               </figcaption>
             )}
@@ -193,7 +194,7 @@ function Gallery({ photos }: {
               <figcaption
                 style={{
                   position: "absolute", bottom: 6, left: 0, right: 0,
-                  textAlign: "center", fontSize: 10, color: "#a8a29e",
+                  textAlign: "center", fontSize: 12, color: "#6b645f",
                   fontFamily: "var(--font-mono)",
                 }}>
                 {photo.caption}
@@ -240,28 +241,13 @@ export default function StartupStoryPage() {
         }
       `}</style>
 
-      {/* ── Nav ── */}
-      <div className="sticky top-0 z-50 border-b"
-        style={{ background: "rgba(253,249,244,0.94)", borderColor: "#e7e5e1", backdropFilter: "blur(16px)" }}>
-        <div className="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/#startup"
-            className="inline-flex items-center gap-2 text-sm font-mono transition-colors duration-200"
-            style={{ color: "#78716c", fontFamily: "var(--font-mono)" }}
-            onMouseEnter={e => (e.currentTarget.style.color = E)}
-            onMouseLeave={e => (e.currentTarget.style.color = "#78716c")}>
-            <ArrowLeft size={14} /> Back
-          </Link>
-          <span className="text-xs font-mono" style={{ color: "#c4bdb7", fontFamily: "var(--font-mono)" }}>
-            nogozo pvt. ltd. · 2020 – 2023
-          </span>
-        </div>
-      </div>
+      <SiteBar variant="paper" backHref="/#startup" meta="nogozo pvt. ltd. · 2020 – 2023" />
 
       {/* ══════ HERO ══════ */}
       <div className="max-w-2xl mx-auto px-6 pt-16 sm:pt-24 pb-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
 
-          <p className="text-[11px] font-mono tracking-widest uppercase mb-7"
+          <p className="text-xs font-mono tracking-widest uppercase mb-7"
             style={{ color: E, fontFamily: "var(--font-mono)" }}>
             A Founding Story &nbsp;·&nbsp; 2020 – 2023
           </p>
@@ -350,7 +336,7 @@ export default function StartupStoryPage() {
         </P>
 
         <Fade>
-          <p className="text-sm text-center italic py-2" style={{ color: "#a8a29e" }}>
+          <p className="text-sm text-center italic py-2" style={{ color: "#6b645f" }}>
             — The shutdown stung. The lessons didn&rsquo;t. —
           </p>
         </Fade>
@@ -446,7 +432,7 @@ export default function StartupStoryPage() {
               className="w-full rounded-xl"
               style={{ border: "1px solid #e7e5e1", boxShadow: "0 4px 24px rgba(0,0,0,0.07)", display: "block" }} />
             <figcaption className="mt-2.5 text-xs sm:text-[13px] text-center italic"
-              style={{ color: "#a8a29e" }}>
+              style={{ color: "#6b645f" }}>
               NOGOZO — wrapped. Summer 2023.
             </figcaption>
           </figure>
@@ -471,8 +457,8 @@ export default function StartupStoryPage() {
         <Fade>
           <div className="py-10 sm:py-14 text-center border-t border-b my-2"
             style={{ borderColor: "#e7e5e1" }}>
-            <p className="text-[11px] font-mono tracking-widest uppercase mb-6"
-              style={{ color: "#c4bdb7", fontFamily: "var(--font-mono)" }}>
+            <p className="text-xs font-mono tracking-widest uppercase mb-6"
+              style={{ color: "#6b645f", fontFamily: "var(--font-mono)" }}>
               In our own words
             </p>
             <p className="text-2xl sm:text-[30px] font-black italic leading-snug"
@@ -481,7 +467,7 @@ export default function StartupStoryPage() {
               Be it Highs or Lows —
               <span style={{ color: E }}> NOGOZO has all my heart.&rdquo;</span>
             </p>
-            <p className="text-sm font-mono mt-6" style={{ color: "#a8a29e", fontFamily: "var(--font-mono)" }}>
+            <p className="text-sm font-mono mt-6" style={{ color: "#6b645f", fontFamily: "var(--font-mono)" }}>
               — Yugal Agarwal, Co-Founder, NOGOZO Pvt. Ltd.
             </p>
           </div>
@@ -490,8 +476,8 @@ export default function StartupStoryPage() {
         {/* ── Lessons ── */}
         <Fade>
           <div className="pt-2">
-            <p className="text-[11px] font-mono tracking-widest uppercase mb-6"
-              style={{ color: "#a8a29e", fontFamily: "var(--font-mono)" }}>
+            <p className="text-xs font-mono tracking-widest uppercase mb-6"
+              style={{ color: "#6b645f", fontFamily: "var(--font-mono)" }}>
               What it actually taught me
             </p>
             <ol className="flex flex-col gap-6">
@@ -511,7 +497,7 @@ export default function StartupStoryPage() {
                   </span>
                   <div>
                     <p className="text-sm font-semibold mb-1" style={{ color: "#1c1917" }}>{title}</p>
-                    <p className="text-sm leading-relaxed" style={{ color: "#78716c" }}>{body}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: "#6b645f" }}>{body}</p>
                   </div>
                 </li>
               ))}

@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, TrendingUp, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { projects } from "@/data/projects";
+import SiteBar from "@/components/nav/SiteBar";
 
 /* ── Per-section accent colours (cycles for sections 2-N) ── */
 const ACCENTS = [
@@ -105,26 +106,18 @@ export default function ProjectPage() {
   return (
     <main className="min-h-screen mesh-bg dot-grid" style={{ background: "#06030f" }}>
 
-      {/* ── Sticky nav ── */}
-      <div className="sticky top-0 z-50 border-b"
-        style={{ background: "rgba(6,3,15,0.85)", borderColor: "rgba(99,91,255,0.1)", backdropFilter: "blur(20px)" }}>
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/#projects"
-            className="inline-flex items-center gap-2 text-sm font-mono transition-colors duration-200"
-            style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#635bff")}
-            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}>
-            <ArrowLeft size={14} /> Back
-          </Link>
-          {project.externalLink && (
-            <a href={project.externalLink} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg transition-all duration-200"
-              style={{ color: "var(--accent-text)", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>
-              Open File <ArrowUpRight size={11} />
-            </a>
-          )}
-        </div>
-      </div>
+      <SiteBar
+        variant="dark"
+        backHref="/#projects"
+        widthClass="max-w-5xl"
+        trailing={project.externalLink ? (
+          <a href={project.externalLink} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-mono px-3 min-h-[36px] rounded-lg transition-all duration-200"
+            style={{ color: "var(--accent-text)", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>
+            Open File <ArrowUpRight size={11} />
+          </a>
+        ) : null}
+      />
 
       {/* ════════════════ HERO ════════════════ */}
       <div className="relative overflow-hidden">

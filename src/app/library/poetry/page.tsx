@@ -3,19 +3,20 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Mic } from "lucide-react";
 import Link from "next/link";
+import SiteBar from "@/components/nav/SiteBar";
 import { useState } from "react";
 
 /* ══ Light notebook palette ════════════════════════════════════════════ */
 const PAGE_BG   = "#f2ece0";   // warm cream desk
 const PAPER     = "#fffdf8";   // notebook paper
 const INK       = "#2b1a0a";   // dark brown ink
-const INK_MED   = "#8b6e52";   // warm medium text
-const INK_FAINT = "#c4aa8e";   // faint warm muted
+const INK_MED   = "#6f553c";   // warm medium text
+const INK_FAINT = "#80654a";   // faint warm muted
 
-const AMB = "#d97706";         // amber  — shayari
-const ROZ = "#db2777";         // rose   — kavitayein
-const SKY = "#2563eb";         // blue   — english
-const SAG = "#16a34a";         // sage   — origin
+const AMB = "#b45309";         // amber  — shayari
+const ROZ = "#be185d";         // rose   — kavitayein
+const SKY = "#1d4ed8";         // blue   — english
+const SAG = "#15803d";         // sage   — origin
 
 const TINT: Record<string, string> = {
   picks:   "#fdf8f0",
@@ -191,13 +192,13 @@ function PickCard({ pick, idx }: { pick: Pick; idx: number }) {
       <div className="px-7 pt-5 pb-6">
         {/* category + note row */}
         <div className="flex items-center gap-2.5 mb-4 flex-wrap">
-          <span className="text-[10px] px-2.5 py-1 rounded-full font-semibold tracking-wide"
+          <span className="text-xs px-2.5 py-1 rounded-full font-semibold tracking-wide"
             style={{ backgroundColor: `${catColor}15`, color: catColor,
                      border: `1px solid ${catColor}30`, fontFamily: "var(--font-mono)" }}>
             {pick.category}
           </span>
           {pick.note && (
-            <span className="text-[11px] italic" style={{ color: INK_FAINT, fontFamily: "Georgia, serif" }}>
+            <span className="text-xs italic" style={{ color: INK_FAINT, fontFamily: "Georgia, serif" }}>
               — {pick.note}
             </span>
           )}
@@ -298,7 +299,7 @@ function PoemCard({ title, content, accent, year, idx }: {
                   {title}
                 </span>
                 {year && (
-                  <span className="text-[9px] px-2 py-0.5 rounded-full font-medium"
+                  <span className="text-xs px-2 py-0.5 rounded-full font-medium"
                     style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>
                     {year}
                   </span>
@@ -315,7 +316,7 @@ function PoemCard({ title, content, accent, year, idx }: {
           </div>
           {hasMore && (
             <button onClick={() => setOpen(o => !o)}
-              className="flex-shrink-0 text-[11px] px-2.5 py-1 rounded-full transition-all duration-200"
+              className="flex-shrink-0 text-xs px-2.5 py-1 rounded-full transition-all duration-200"
               style={{
                 color:      open ? accent : INK_FAINT,
                 border:     `1px solid ${open ? `${accent}50` : "rgba(100,80,50,0.15)"}`,
@@ -397,7 +398,7 @@ function CharCard({ text, idx }: { text: string; idx: number }) {
       </div>
       <div className="mt-3 flex items-center gap-2">
         <div className="h-px flex-1" style={{ background: `linear-gradient(to right, ${ac}40, transparent)` }} />
-        <span className="text-[10px]" style={{ color: `${ac}80`, fontFamily: "var(--font-mono)" }}>
+        <span className="text-xs" style={{ color: `${ac}80`, fontFamily: "var(--font-mono)" }}>
           {String(idx + 1).padStart(2, "0")}
         </span>
       </div>
@@ -500,16 +501,9 @@ export default function PoetryPage() {
   return (
     <main style={{ backgroundColor: PAGE_BG, minHeight: "100vh" }}>
 
-      {/* ── back link ── */}
-      <div className="max-w-2xl mx-auto px-5 pt-4 pb-2">
-        <Link href="/#library"
-          className="inline-flex items-center gap-1.5 text-sm transition-colors"
-          style={{ color: INK_FAINT, fontFamily: "var(--font-mono)" }}
-          onMouseEnter={e => (e.currentTarget.style.color = accent)}
-          onMouseLeave={e => (e.currentTarget.style.color = INK_FAINT)}>
-          <ArrowLeft size={13} /> back
-        </Link>
-      </div>
+      <SiteBar variant="paper" backHref="/#library" />
+
+      <div className="pt-4" />
 
       {/* ══ NOTEBOOK ══ */}
       <div className="max-w-2xl mx-auto px-5 pb-20">
@@ -545,7 +539,7 @@ export default function PoetryPage() {
 
             <div className="pl-8">
               {/* Tiny label */}
-              <p className="text-[10px] tracking-[0.25em] uppercase mb-2"
+              <p className="text-xs tracking-[0.25em] uppercase mb-2"
                 style={{ color: INK_FAINT, fontFamily: "var(--font-mono)" }}>
                 yugal agarwal · personal notebook
               </p>
@@ -620,7 +614,7 @@ export default function PoetryPage() {
                   {/* Section header */}
                   <div className="flex items-center gap-3 px-1">
                     <div>
-                      <p className="text-[10px] tracking-[0.2em] uppercase font-semibold"
+                      <p className="text-xs tracking-[0.2em] uppercase font-semibold"
                         style={{ color: "#b45309", fontFamily: "var(--font-mono)" }}>
                         ⭐ personally curated
                       </p>
@@ -739,7 +733,7 @@ export default function PoetryPage() {
                     <div className="rounded-2xl p-6"
                       style={{ backgroundColor: PAPER, border: `1.5px solid ${SAG}22`,
                                borderLeft: `3px solid ${SAG}`, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                      <p className="text-[10px] tracking-widest uppercase mb-3"
+                      <p className="text-xs tracking-widest uppercase mb-3"
                         style={{ color: SAG, fontFamily: "var(--font-mono)" }}>
                         // how it began
                       </p>
