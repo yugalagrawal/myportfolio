@@ -43,100 +43,52 @@ const startYear = (period: string) => period.match(/\d{4}/)?.[0] ?? "";
 const endLabel  = (period: string) =>
   /present/i.test(period) ? "Now" : (period.match(/(\d{4})\s*$/)?.[1] ?? "");
 
-/* ── Growth timeline: newest first, one rail, one card per role ── */
+/* ── Minimal timeline: one hairline, one accent, one outcome line per role ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
   const sorted = [...items].sort((a, b) => startDate(b.period).getTime() - startDate(a.period).getTime());
   return (
-    <ol className="relative">
-      {sorted.map((item, i) => {
-        const theme = themeFor(item.company);
-        const last = i === sorted.length - 1;
-        return (
-          <motion.li
-            key={item.company}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45, delay: i * 0.05 }}
-            className="relative flex gap-4 md:gap-6"
+    <ol className="relative ml-1.5 border-l border-white/10">
+      {sorted.map((item, i) => (
+        <motion.li
+          key={item.company}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.4, delay: i * 0.04 }}
+          className="relative pl-7 sm:pl-10 pb-12 last:pb-0"
+        >
+          <span aria-hidden="true"
+            className="absolute -left-[5px] top-[9px] w-[9px] h-[9px] rounded-full"
+            style={{
+              background: item.current ? "var(--accent-text)" : "#06030f",
+              border: `1px solid ${item.current ? "var(--accent-text)" : "rgba(255,255,255,0.45)"}`,
+            }} />
+          <button
+            type="button"
+            onClick={() => onOpen(item)}
+            className="group w-full text-left grid gap-1 md:grid-cols-[11rem_1fr] md:gap-8 outline-none"
           >
-            {/* Year (desktop) */}
-            <div className="hidden md:flex w-20 shrink-0 flex-col items-end pt-5">
-              <span className="text-2xl font-black leading-none"
-                style={{ color: theme.color, fontFamily: "var(--font-display)" }}>
-                {startYear(item.period)}
+            <span className="text-sm md:pt-1" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+              {item.period.replace(/\s+–\s+/, " – ")}
+            </span>
+            <span className="block">
+              <span className="block text-xl font-semibold leading-snug" style={{ color: "var(--text-1)" }}>
+                {item.role}
               </span>
-              <span className="text-xs mt-1" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                → {endLabel(item.period)}
+              <span className="block text-sm mt-0.5" style={{ color: "var(--text-2)" }}>
+                {item.company}
               </span>
-            </div>
-
-            {/* Rail */}
-            <div className="flex flex-col items-center shrink-0 w-5" aria-hidden="true">
-              <span className="mt-6 w-3 h-3 rounded-full shrink-0"
-                style={{
-                  border: `2px solid ${theme.color}`,
-                  background: item.current ? theme.color : "#06030f",
-                  boxShadow: item.current ? `0 0 14px ${theme.color}` : "none",
-                }} />
-              {!last && (
-                <span className="flex-1 w-px mt-2"
-                  style={{ background: `linear-gradient(to bottom, ${theme.color}99, rgba(255,255,255,0.08))` }} />
-              )}
-            </div>
-
-            {/* Card */}
-            <div className="flex-1 min-w-0 pb-8 md:pb-10">
-              <button
-                type="button"
-                onClick={() => onOpen(item)}
-                style={{ "--t": theme.color } as React.CSSProperties}
-                className="group w-full text-left rounded-2xl p-5 md:p-6 transition-colors duration-200 border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-[var(--t)] focus-visible:border-[var(--t)] outline-none"
-              >
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
-                  <span className="text-xs tracking-wide" style={{ color: theme.color, fontFamily: "var(--font-mono)" }}>
-                    {item.stage}
-                  </span>
-                  {item.current && (
-                    <span className="text-xs px-2 py-0.5 rounded-full"
-                      style={{ background: `${theme.color}18`, color: theme.color, border: `1px solid ${theme.color}44`, fontFamily: "var(--font-mono)" }}>
-                      Current
-                    </span>
-                  )}
-                  <span className="md:hidden text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                    {item.period}
-                  </span>
-                </div>
-
-                <h3 className="text-lg md:text-xl font-bold leading-snug" style={{ color: "var(--text-1)" }}>
-                  {item.role}
-                </h3>
-                <p className="text-sm mt-0.5 mb-3" style={{ fontFamily: "var(--font-mono)" }}>
-                  <span style={{ color: theme.color }}>{item.company}</span>
-                  <span style={{ color: "var(--text-3)" }}> · {item.location}</span>
-                </p>
-
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-2)" }}>
-                  {item.description}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  {item.highlights.map((h) => (
-                    <span key={h} className="text-xs px-2.5 py-1 rounded-full"
-                      style={{ background: `${theme.color}12`, color: "var(--text-1)", border: `1px solid ${theme.color}33` }}>
-                      {h}
-                    </span>
-                  ))}
-                  <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold transition-transform group-hover:translate-x-0.5"
-                    style={{ color: theme.color }}>
-                    Details <ArrowUpRight size={12} />
-                  </span>
-                </div>
-              </button>
-            </div>
-          </motion.li>
-        );
-      })}
+              <span className="block text-base leading-relaxed mt-3 max-w-2xl" style={{ color: "var(--text-2)" }}>
+                {item.description}
+              </span>
+              <span className="inline-flex items-center gap-1 mt-3 text-sm transition-colors group-hover:text-[var(--accent-text)] group-focus-visible:text-[var(--accent-text)]"
+                style={{ color: "var(--text-3)" }}>
+                Details <ArrowUpRight size={13} />
+              </span>
+            </span>
+          </button>
+        </motion.li>
+      ))}
     </ol>
   );
 }
@@ -151,11 +103,7 @@ export default function Experience() {
         <SectionHeading label="// experience" title="Work Experience"
           subtitle="Spoiler: I did not single-handedly save any of these companies. But I helped." />
 
-        <p className="text-xs mb-2 tracking-widest uppercase"
-          style={{ color: "var(--accent2-text)", fontFamily: "var(--font-mono)" }}>
-          How I&apos;ve grown
-        </p>
-        <p className="text-base mb-8 max-w-2xl" style={{ color: "var(--text-2)" }}>
+        <p className="text-base mb-10 max-w-2xl" style={{ color: "var(--text-2)" }}>
           Founder, then product craft, then scale, then AI. Four steps, one arc.
         </p>
         <Timeline items={experience} onOpen={setActive} />

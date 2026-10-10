@@ -13,10 +13,6 @@ export interface ExperienceItem {
   tags:        string[];
   current?:    boolean;
   url?:        string;
-  /** Where this role sits in the growth arc (shown on the timeline) */
-  stage:       string;
-  /** 2–3 headline outcomes shown as chips on the timeline */
-  highlights:  string[];
 }
 
 export const experience: ExperienceItem[] = [
@@ -26,10 +22,8 @@ export const experience: ExperienceItem[] = [
     period:      "May 2026 – Present",
     location:    "Bengaluru, India",
     type:        "Full-time",
-    stage:       "0→1 + 1→n · AI products",
-    highlights:  ["75%+ adoption in 2 months", "1,000+ partners", "$1M+/mo platform"],
     current:     true,
-    description: "AI-enabled automation, a 0→1 logistics platform and a partner referral engine.",
+    description: "AI-enabled automation, a 0→1 logistics platform and a partner referral engine: 75%+ adoption in 2 months, 1,000+ partners.",
     bullets: [
       "**AI-Powered Risk & Compliance Automation:** Spearheaded the design and rollout of an automated invoicing operations product for **$40M+ annual** intra-B2B operations, standardizing invoice formats and billing structures to reduce billing discrepancies and audit exposure, and overhauling MIS review workflows for compliance visibility — driving **75%+ adoption within 2 months** and a **9/10 NPS**.",
       "**0-to-1 Product Ownership:** Directing end-to-end development of a ground-up Part Truck Load (PTL) logistics platform supporting **$1M+/month** in business volume — leading 2 APMs and 5 developers through Agile sprints in Jira, authoring PRDs, mapping user journeys, and delivering User, Client, and Pricing modules to **99% completion within 2 months** of kickoff, with a roadmap targeting **$3M+/month within 12 months**.",
@@ -45,9 +39,7 @@ export const experience: ExperienceItem[] = [
     period:      "Jun 2023 – May 2026",
     location:    "Bengaluru, India",
     type:        "Full-time",
-    stage:       "1→n · Scale & optimise",
-    highlights:  ["$40K/wk saved", "25% leakage recovered", "20% faster to ship"],
-    description: "Owned the roadmap of an internal bidding and data platform across AdTech.",
+    description: "Owned the roadmap of an internal bidding and data platform, and shipped $40K/week in savings.",
     bullets: [
       "**Product Roadmap Ownership:** Owned the roadmap for Media.net's internal data intelligence platform powering bidding, keyword, and yield analytics across the ad exchange; translated auction-level signals into structured PRDs, cutting roadmap-to-ship cycle time by **20%**.",
       "**Revenue Recovery via RCA:** Drove **25% recovery in revenue leakage** by leading structured RCAs on programmatic bidding and keyword performance, directly translating insights into roadmap decisions.",
@@ -64,9 +56,7 @@ export const experience: ExperienceItem[] = [
     period:      "Jun 2020 – Mar 2023",
     location:    "Agra, Uttar Pradesh",
     type:        "Founder",
-    stage:       "0→1 · Founder",
-    highlights:  ["10K+ users", "₹5L UP Govt grant", "Shark Tank S1"],
-    description: "Founded an eComm + SaaS startup, backed by UP Govt and pitched to the Sharks.",
+    description: "Founded an eComm + SaaS startup to 10K+ users, with a UP Govt grant and a Shark Tank India S1 pre-final.",
     bullets: [
       "**0-to-1 Product Build:** Designed and launched a Buy/Rent/Sell book marketplace for Tier-2/3 city students from scratch — scaled to **10K+ users** and generated **INR 4L+ in commissions** (**INR 3.5Cr+ GMV**), solving a real access gap with zero external marketing spend.",
       "**SaaS Expansion:** Built a parallel Merchant & Delivery App Suite for onboarded sellers; acquired **B2B clients** including Decimal Technologies for corporate book gifting, validating a multi-sided B2C + B2B revenue model.",
@@ -84,9 +74,7 @@ export const experience: ExperienceItem[] = [
     period:      "Oct 2021 – Jun 2022",
     location:    "Remote",
     type:        "Intern",
-    stage:       "Product craft · Data & experiments",
-    highlights:  ["40% churn cut", "Analytics from zero"],
-    description: "Set up analytics from scratch and cut churn through experiments.",
+    description: "Set up analytics from scratch and cut churn by 40% through experiments.",
     bullets: [
       "**Analytics Foundation from 0:** Set up the entire analytics stack from scratch — Google Analytics and Mixpanel across app and web — turning a data-blind product into one with full visibility into funnels, cohorts, segmentation, and user behaviour.",
       "**Churn Reduction:** Pinpointed notification fatigue as the churn culprit via path and funnel analysis; ran A/B tests that brought **churn down by 40%**.",
