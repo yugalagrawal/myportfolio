@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { X, Briefcase, ArrowUpRight, GraduationCap, Download } from "lucide-react";
+import { X, Briefcase, ArrowUpRight, GraduationCap, Download, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import { experience, milestones, ExperienceItem, Milestone } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -145,13 +145,14 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
                   style={{ background: "#06030f", border: "1.5px solid rgba(255,255,255,0.55)" }}
                 />
               </div>
-              <p className="col-start-2 row-start-1 md:col-start-3 md:pl-6 lg:pl-10 flex flex-wrap items-center gap-x-2 text-sm">
-                {m.icon === "education"
-                  ? <GraduationCap size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />
-                  : <Briefcase size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />}
-                <span style={{ color: "var(--text-1)" }}>{m.label}</span>
-                <span className="hidden sm:inline" aria-hidden="true" style={{ color: "var(--text-3)" }}>·</span>
-                <span className="basis-full sm:basis-auto pl-[23px] sm:pl-0 text-xs sm:text-sm" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>{m.detail}</span>
+              <p className="col-start-2 row-start-1 md:col-start-3 md:pl-6 lg:pl-10 flex items-start gap-2 text-sm">
+                <span className="mt-[3px] shrink-0" style={{ color: "var(--accent2-text)" }} aria-hidden="true">
+                  {m.icon === "education" ? <GraduationCap size={15} /> : m.icon === "mentor" ? <Lightbulb size={15} /> : <Briefcase size={15} />}
+                </span>
+                <span className="min-w-0">
+                  <span className="block" style={{ color: "var(--text-1)" }}>{m.label}</span>
+                  <span className="block text-xs mt-0.5" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>{m.detail}</span>
+                </span>
               </p>
             </motion.li>
           );

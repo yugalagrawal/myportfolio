@@ -30,10 +30,11 @@ export interface Milestone {
   label:  string;
   detail: string;
   date:   string;
-  icon:   "education" | "work";
+  icon:   "education" | "work" | "mentor";
 }
 
 export const milestones: Milestone[] = [
+  { label: "Mentor (Data/Product) at My Analytics School", detail: "1 yr 6 months · Freelance", date: "Jun 2026", icon: "mentor" },
   { label: "Graduated from IIT (BHU) '23", detail: "CGPA 8.51",  date: "May 2023", icon: "education" },
   { label: "PM Intern at eSamudaay",       detail: "9 months",   date: "Apr 2023", icon: "work" },
 ];
