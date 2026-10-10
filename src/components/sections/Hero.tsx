@@ -174,11 +174,12 @@ export default function Hero() {
             onClick={() => setShowAbout((v) => !v)}
             aria-pressed={showAbout}
             aria-label={showAbout ? "Back to intro" : "Swap to About me"}
-            className="absolute -top-10 right-0 inline-flex items-center gap-1.5 px-3 min-h-[40px] rounded-full text-xs border border-white/15 bg-white/[0.05] backdrop-blur transition-colors hover:bg-white/10 hover:border-white/30"
-            style={{ color: "var(--text-2)", fontFamily: "var(--font-mono)" }}
+            title={showAbout ? "Back to intro" : "About me"}
+            className="absolute -top-11 right-0 sm:top-[calc(50%-10px)] sm:-translate-y-1/2 sm:-right-14 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 bg-white/[0.05] backdrop-blur transition-colors hover:bg-white/10 hover:border-white/30"
+            style={{ color: "var(--text-2)" }}
           >
-            <ArrowLeftRight size={13} aria-hidden="true" />
-            {showAbout ? "Back" : "About me"}
+            <ArrowLeftRight size={16} aria-hidden="true"
+              className={`transition-transform duration-300 ${showAbout ? "rotate-180" : ""}`} />
           </button>
         <h1
           className="font-black leading-none tracking-tight mb-5"
