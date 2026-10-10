@@ -2,9 +2,9 @@
 
 import { useState, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { X, MapPin, Briefcase, ArrowUpRight } from "lucide-react";
+import { X, MapPin, Briefcase, ArrowUpRight, GraduationCap } from "lucide-react";
 import Link from "next/link";
-import { experience, ExperienceItem } from "@/data/experience";
+import { experience, milestones, ExperienceItem, Milestone } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 const defaultTheme = { color: "var(--accent-text)", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
@@ -61,7 +61,16 @@ function YearStamp({ period, current, size, align = "left" }: { period: string; 
 
 /* ── Journey map: cards on alternating sides of a winding, scroll-drawn road ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
-  const sorted = [...items].sort((a, b) => endDate(b.period) - endDate(a.period) || startDate(b.period).getTime() - startDate(a.period).getTime());
+  type Entry =
+    | { kind: "role"; item: ExperienceItem; key: number }
+    | { kind: "milestone"; m: Milestone; key: number };
+  const sorted: Entry[] = [
+    ...items.map((item): Entry => ({ kind: "role", item, key: endDate(item.period) })),
+    ...milestones.map((m): Entry => ({ kind: "milestone", m, key: startDate(m.date).getTime() })),
+  ].sort((a, b) =>
+    b.key - a.key ||
+    (a.kind === "role" && b.kind === "role" ? startDate(b.item.period).getTime() - startDate(a.item.period).getTime() : 0));
+  let roleIdx = -1;
   const wrapRef  = useRef<HTMLOListElement>(null);
   const nodeRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [road, setRoad] = useState({ d: "", w: 0, h: 0 });
@@ -116,8 +125,37 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
         </svg>
       )}
 
-      {sorted.map((item, i) => {
-        const left = i % 2 === 0; // card on the left of the road (desktop)
+      {sorted.map((entry, i) => {
+        if (entry.kind === "milestone") {
+          const m = entry.m;
+          return (
+            <motion.li
+              key={m.label}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.4 }}
+              className="relative grid grid-cols-[2.5rem_1fr] md:grid-cols-[1fr_6rem_1fr] gap-x-3 md:gap-x-0 pb-8 md:pb-10"
+            >
+              <div className="relative col-start-1 row-start-1 md:col-start-2">
+                <span
+                  ref={(el) => { nodeRefs.current[i] = el; }}
+                  className="absolute top-[5px] left-[15px] md:left-[calc(50%-5px)] w-2.5 h-2.5 rounded-full"
+                  style={{ background: "#06030f", border: "1.5px solid rgba(255,255,255,0.55)" }}
+                />
+              </div>
+              <p className="col-start-2 row-start-1 md:col-start-3 md:pl-6 lg:pl-10 flex flex-wrap items-center gap-x-2 text-sm">
+                <GraduationCap size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />
+                <span style={{ color: "var(--text-1)" }}>{m.label}</span>
+                <span className="hidden sm:inline" aria-hidden="true" style={{ color: "var(--text-3)" }}>·</span>
+                <span className="basis-full sm:basis-auto pl-[23px] sm:pl-0 text-xs sm:text-sm" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>{m.detail}</span>
+              </p>
+            </motion.li>
+          );
+        }
+        const item = entry.item;
+        roleIdx++;
+        const left = roleIdx % 2 === 0; // card on the left of the road (desktop)
         return (
           <motion.li
             key={item.company}

@@ -19,6 +19,17 @@ export interface ExperienceItem {
   url?:        string;
 }
 
+/** Small markers on the timeline (not cards). `date` ("Mon YYYY") only decides where it sits. */
+export interface Milestone {
+  label:  string;
+  detail: string;
+  date:   string;
+}
+
+export const milestones: Milestone[] = [
+  { label: "Graduated from IIT (BHU) '23", detail: "CGPA 8.51", date: "May 2023" },
+];
+
 export const experience: ExperienceItem[] = [
   {
     company:     "LetsTransport",
