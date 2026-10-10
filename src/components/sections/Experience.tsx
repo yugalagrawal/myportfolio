@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { X, MapPin, Briefcase, ArrowUpRight, GraduationCap } from "lucide-react";
+import { X, Briefcase, ArrowUpRight, GraduationCap, Download } from "lucide-react";
 import Link from "next/link";
 import { experience, milestones, ExperienceItem, Milestone } from "@/data/experience";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { profile } from "@/data/profile";
 
 const defaultTheme = { color: "var(--accent-text)", border: "rgba(99,91,255,0.3)", bg: "rgba(99,91,255,0.06)", glow: "rgba(99,91,255,0.15)" };
 
@@ -231,6 +232,13 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
 export default function Experience() {
   const [active, setActive] = useState<ExperienceItem | null>(null);
 
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setActive(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active]);
+
   return (
     <section id="experience" className="relative">
       <div className="section-divider" />
@@ -244,121 +252,72 @@ export default function Experience() {
         <Timeline items={experience} onOpen={setActive} />
       </div>
 
-      {/* Drawer */}
+      {/* Details: a short, resume-inspired brief */}
       <AnimatePresence>
-        {active && (() => {
-          const theme = themeFor(active.company);
-          return (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="fixed inset-0 z-50"
-                style={{ background: "rgba(6,3,15,0.75)", backdropFilter: "blur(4px)" }}
-                onClick={() => setActive(null)}
-              />
-              <motion.div
-                initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
-                transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                className="fixed top-0 right-0 h-full z-50 overflow-y-auto overflow-x-hidden"
-                style={{
-                  width: "min(480px, 100vw)",
-                  maxWidth: "100vw",
-                  background: "rgba(8,5,20,0.98)",
-                  borderLeft: `1px solid ${theme.border}`,
-                  boxShadow: `-20px 0 60px rgba(0,0,0,0.6)`,
-                }}
-              >
-                {/* Top colour bar */}
-                <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${theme.color}, ${theme.color}44)` }} />
+        {active && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50"
+              style={{ background: "rgba(6,3,15,0.7)", backdropFilter: "blur(3px)" }}
+              onClick={() => setActive(null)}
+            />
+            <motion.aside
+              role="dialog" aria-modal="true" aria-label={`${active.role} at ${active.company}`}
+              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 34 }}
+              className="fixed top-0 right-0 h-full z-50 flex flex-col overflow-y-auto"
+              style={{ width: "min(420px, 100vw)", background: "#0a0716", borderLeft: "1px solid rgba(255,255,255,0.08)" }}
+            >
+              <div className="flex items-start justify-between gap-4 px-7 pt-7">
+                <p className="text-xs pt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+                  {active.period} · {active.location}
+                </p>
+                <button type="button" onClick={() => setActive(null)} aria-label="Close details"
+                  className="-mt-1 -mr-2 w-11 h-11 rounded-full flex items-center justify-center transition-colors hover:bg-white/5"
+                  style={{ color: "var(--text-2)" }}>
+                  <X size={18} />
+                </button>
+              </div>
 
-                {/* Header */}
-                <div className="sticky top-0 z-10 flex items-start justify-between px-6 py-5"
-                  style={{ background: "rgba(8,5,20,0.97)", borderBottom: `1px solid ${theme.color}22` }}>
-                  <div>
-                    <p className="text-xs font-mono mb-1" style={{ color: theme.color, fontFamily: "var(--font-mono)" }}>
-                      {active.period} · {active.location}
-                    </p>
-                    <h3 className="font-black text-xl mb-0.5" style={{ color: "rgba(255,255,255,0.95)", fontFamily: "var(--font-display)" }}>
-                      {active.role}
-                    </h3>
-                    <p className="font-bold text-base" style={{ color: theme.color }}>{active.company}</p>
-                  </div>
-                  <button onClick={() => setActive(null)}
-                    className="w-9 h-9 rounded-xl flex items-center justify-center mt-1 flex-shrink-0 transition-colors duration-200"
-                    style={{ background: `${theme.color}18`, color: theme.color, border: `1px solid ${theme.color}33` }}
-                    onMouseEnter={e => (e.currentTarget.style.background = `${theme.color}33`)}
-                    onMouseLeave={e => (e.currentTarget.style.background = `${theme.color}18`)}>
-                    <X size={15} />
-                  </button>
-                </div>
+              <div className="px-7 pb-8 flex-1">
+                <h3 className="text-2xl font-bold leading-snug mt-1" style={{ color: "var(--text-1)" }}>{active.role}</h3>
+                <p className="text-sm mt-1" style={{ color: "var(--accent2-text)" }}>{active.company}</p>
 
-                {/* Body */}
-                <div className="px-6 py-6 flex flex-col gap-6">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-xs px-3 py-1.5 rounded-full"
-                      style={{ background: `${theme.color}15`, color: theme.color, border: `1px solid ${theme.color}33`, fontFamily: "var(--font-mono)" }}>
-                      {active.type}
-                    </span>
-                    {active.company.startsWith("Nogozo") && (
-                      <Link href="/startup-story"
-                        className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-semibold transition-all duration-200"
-                        style={{
-                          background: `${theme.color}18`,
-                          color: theme.color,
-                          border: `1px solid ${theme.color}55`,
-                        }}
-                        onMouseEnter={e => (e.currentTarget.style.background = `${theme.color}30`)}
-                        onMouseLeave={e => (e.currentTarget.style.background = `${theme.color}18`)}>
-                        My Startup Story <ArrowUpRight size={11} />
-                      </Link>
-                    )}
-                  </div>
+                <p className="mt-6 text-base leading-relaxed" style={{ color: "var(--text-2)" }}>{active.description}</p>
 
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-3)" }}>
-                    {active.description}
-                  </p>
+                <ul className="mt-6 pt-6 space-y-4 border-t border-white/10">
+                  {active.bullets.map((b, i) => (
+                    <li key={i} className="flex gap-3 text-[15px] leading-relaxed" style={{ color: "var(--text-2)" }}>
+                      <span aria-hidden="true" className="mt-[10px] w-1 h-1 rounded-full shrink-0" style={{ background: "rgba(255,255,255,0.4)" }} />
+                      <span>{b.split(/(\*\*[^*]+\*\*)/).map((part, j) =>
+                        part.startsWith("**") && part.endsWith("**")
+                          ? <strong key={j} className="font-semibold" style={{ color: "var(--text-1)" }}>{part.slice(2, -2)}</strong>
+                          : part
+                      )}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                  <div className="h-px" style={{ background: `${theme.color}22` }} />
-
-                  <div>
-                    <p className="text-xs font-mono tracking-widest uppercase mb-4"
-                      style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
-                      Highlights
-                    </p>
-                    <ul className="flex flex-col gap-3">
-                      {active.bullets.map((b, i) => (
-                        <motion.li key={i}
-                          initial={{ opacity: 0, x: 16 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 + i * 0.08 }}
-                          className="flex items-start gap-3 text-sm leading-relaxed"
-                          style={{ color: "var(--text-2)", wordBreak: "break-word", overflowWrap: "anywhere" }}>
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: theme.color }} />
-                          <span>{b.split(/(\*\*[^*]+\*\*)/).map((part, j) =>
-                            part.startsWith("**") && part.endsWith("**")
-                              ? <strong key={j} style={{ color: theme.color, fontWeight: 700 }}>{part.slice(2, -2)}</strong>
-                              : part
-                          )}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {active.keywords.map((tag) => (
-                      <span key={tag} className="text-xs px-3 py-1 rounded-full"
-                        style={{ background: `${theme.color}12`, color: theme.color, border: `1px solid ${theme.color}33`, fontFamily: "var(--font-mono)" }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                </div>
-              </motion.div>
-            </>
-          );
-        })()}
+              <div className="px-7 py-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+                <a href={profile.resumeUrl} download={profile.resumeFileName}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 min-h-[36px] rounded-lg border border-white/15 transition-colors hover:border-white/30 hover:text-white"
+                  style={{ color: "var(--text-2)" }}>
+                  <Download size={13} /> Resume for details
+                </a>
+                {active.company.startsWith("Nogozo") && (
+                  <Link href="/startup-story"
+                    className="inline-flex items-center gap-1 text-sm transition-colors hover:text-white"
+                    style={{ color: "var(--accent-text)" }}>
+                    My startup story <ArrowUpRight size={13} />
+                  </Link>
+                )}
+              </div>
+            </motion.aside>
+          </>
+        )}
       </AnimatePresence>
     </section>
   );
