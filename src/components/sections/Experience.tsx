@@ -16,6 +16,13 @@ const startDate = (period: string) => {
   const m = period.match(/([A-Za-z]{3}) (\d{4})/);
   return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
 };
+/** Most recent finish first; a current role ("Present") always leads. */
+const endDate = (period: string) => {
+  if (/present/i.test(period)) return Infinity;
+  const all = [...period.matchAll(/([A-Za-z]{3}) (\d{4})/g)];
+  const last = all[all.length - 1];
+  return last ? new Date(`${last[1]} 1, ${last[2]}`).getTime() : 0;
+};
 
 const MONTHS: Record<string, number> = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
 
@@ -54,7 +61,7 @@ function YearStamp({ period, current, size, align = "left" }: { period: string; 
 
 /* ── Journey map: cards on alternating sides of a winding, scroll-drawn road ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
-  const sorted = [...items].sort((a, b) => startDate(b.period).getTime() - startDate(a.period).getTime());
+  const sorted = [...items].sort((a, b) => endDate(b.period) - endDate(a.period) || startDate(b.period).getTime() - startDate(a.period).getTime());
   const wrapRef  = useRef<HTMLOListElement>(null);
   const nodeRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [road, setRoad] = useState({ d: "", w: 0, h: 0 });
