@@ -93,9 +93,12 @@ function FloatingBubble({ emoji, text, hoverText, style, delay, duration, classN
 export default function Hero() {
   const [showParticles, setShowParticles] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  // Time-of-day text is chosen in the browser only, so server HTML and client HTML always match.
+  const [slot, setSlot] = useState<ReturnType<typeof getTimeSlot> | null>(null);
 
   useEffect(() => {
     setShowParticles(!window.matchMedia("(hover: none)").matches);
+    setSlot(getTimeSlot());
   }, []);
 
   const scrollTo = useCallback((id: string) => {
@@ -145,8 +148,7 @@ export default function Hero() {
       {showParticles && <MeshBackground />}
 
       {/* Floating bubbles */}
-      {!showAbout && (() => {
-        const slot = getTimeSlot();
+      {!showAbout && slot && (() => {
         const g = greetingMap[slot];
         const m = mealMap[slot];
         return (

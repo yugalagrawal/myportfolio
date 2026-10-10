@@ -28,15 +28,14 @@ const endDate = (period: string) => {
 const MONTHS: Record<string, number> = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
 
 /** "Jun 2023 – May 2026" -> { start: "2023", end: "2026", span: "2y 11m" } (current roles end at today) */
-function parseRange(period: string) {
+function parseRange(period: string, now: Date | null) {
   const parts = [...period.matchAll(/([A-Za-z]{3}) (\d{4})/g)].map(m => ({ m: MONTHS[m[1]] ?? 0, y: Number(m[2]) }));
   const first = parts[0], last = parts[1];
-  const now = new Date();
   const current = /present/i.test(period);
-  const end = current ? { m: now.getMonth(), y: now.getFullYear() } : (last ?? first);
+  const end = current && now ? { m: now.getMonth(), y: now.getFullYear() } : (last ?? first);
   const months = Math.max(1, (end.y - first.y) * 12 + (end.m - first.m) + 1);
   const yrs = Math.floor(months / 12), mo = months % 12;
-  const span = months < 12
+  const span = current && !now ? "" : months < 12
     ? `${months} mo`
     : `${yrs} ${yrs === 1 ? "yr" : "yrs"}${mo ? ` ${mo} mo` : ""}`;
   return { start: String(first.y), end: current ? "Now" : String(end.y), span };
@@ -44,16 +43,23 @@ function parseRange(period: string) {
 
 /** Big start year, with the tenure and exact months written small underneath. */
 function YearStamp({ period, current, size, align = "left" }: { period: string; current?: boolean; size: string; align?: "left" | "right" }) {
-  const { start, span } = parseRange(period);
+  // "Today" is read in the browser only, so the prerendered HTML never disagrees with it.
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => { setNow(new Date()); }, []);
+  const { start, span } = parseRange(period, now);
   return (
     <div className={align === "right" ? "text-right" : "text-left"}>
       <span className={`block ${size} font-black leading-none tracking-tight ${current ? "gradient-text" : ""}`}
         style={{ fontFamily: "var(--font-display)", color: current ? undefined : "var(--text-1)" }}>
         {start}
       </span>
-      <span className="block text-xs mt-2 tracking-wide" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }} suppressHydrationWarning>
-        <span style={{ color: "var(--text-2)" }}>{span}</span>
-        <span aria-hidden="true"> · </span>
+      <span className="block text-xs mt-2 tracking-wide" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
+        {span && (
+          <>
+            <span style={{ color: "var(--text-2)" }}>{span}</span>
+            <span aria-hidden="true"> · </span>
+          </>
+        )}
         {period}
       </span>
     </div>
