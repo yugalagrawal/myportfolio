@@ -199,7 +199,7 @@ export default function Experience() {
           subtitle="Spoiler: I did not single-handedly save any of these companies. But I helped." />
 
         <p className="text-base mb-10 max-w-2xl" style={{ color: "var(--text-2)" }}>
-          Founder, then product craft, then scale, then AI. Four steps, one arc.
+          Founder, then scale, then AI. Three steps, one arc.
         </p>
         <Timeline items={experience} onOpen={setActive} />
       </div>

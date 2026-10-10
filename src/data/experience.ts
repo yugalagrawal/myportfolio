@@ -54,19 +54,6 @@ export const experience: ExperienceItem[] = [
     url: "https://www.media.net",
   },
   {
-    company:     "eSamudaay",
-    role:        "Product Management Intern",
-    period:      "Oct 2021 – Jun 2022",
-    location:    "Remote",
-    type:        "Intern",
-    keywords:    ["ONDC", "eCommerce", "Hyperlocal"],
-    description: "Product management intern on ONDC merchant enablement and in-app retention.",
-    bullets: [
-      "**ONDC merchant enablement:** Enabled merchant-side onboarding for eSamudaay's ONDC integration, streamlining workflows and setting up Google Analytics and Mixpanel tracking for funnel and cohort visibility.",
-      "**Churn reduction:** Diagnosed drop-offs across search, cart and checkout, then ran A/B experiments that cut in-app churn by **40%**, by fixing notification fatigue and introducing **Delivery Slot Booking** and **Loyalty Daily Games**.",
-    ],
-  },
-  {
     company:     "Nogozo Private Limited",
     role:        "Founder",
     period:      "Jun 2020 – Mar 2023",
