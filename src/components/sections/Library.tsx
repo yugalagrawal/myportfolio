@@ -45,7 +45,6 @@ export default function Library() {
       <div className="section-divider" />
       <div className="section-container">
         <SectionHeading
-          label="// library"
           title="The Library"
           subtitle="Things I've written, read, and thought worth sharing."
         />

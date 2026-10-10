@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 interface SectionHeadingProps {
-  label: string;
+  label?: string;
   title: string;
   subtitle?: React.ReactNode;
 }
@@ -17,12 +17,14 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="mb-8 md:mb-10"
     >
-      <p
-        className="text-xs font-mono mb-3 tracking-widest uppercase"
-        style={{ color: "var(--accent-text)", fontFamily: "var(--font-mono, monospace)" }}
-      >
-        {label}
-      </p>
+      {label && (
+        <p
+          className="text-xs font-mono mb-3 tracking-widest uppercase"
+          style={{ color: "var(--accent-text)", fontFamily: "var(--font-mono, monospace)" }}
+        >
+          {label}
+        </p>
+      )}
       <h2
         className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight"
         style={{ fontFamily: "var(--font-display, sans-serif)" }}
