@@ -18,7 +18,7 @@ export interface ExperienceItem {
 export const experience: ExperienceItem[] = [
   {
     company:     "LetsTransport",
-    role:        "Product Manager",
+    role:        "AI Product Manager",
     period:      "May 2026 – Present",
     location:    "Bengaluru, India",
     type:        "Full-time",
