@@ -145,7 +145,9 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
                 />
               </div>
               <p className="col-start-2 row-start-1 md:col-start-3 md:pl-6 lg:pl-10 flex flex-wrap items-center gap-x-2 text-sm">
-                <GraduationCap size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />
+                {m.icon === "education"
+                  ? <GraduationCap size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />
+                  : <Briefcase size={15} aria-hidden="true" style={{ color: "var(--accent2-text)" }} />}
                 <span style={{ color: "var(--text-1)" }}>{m.label}</span>
                 <span className="hidden sm:inline" aria-hidden="true" style={{ color: "var(--text-3)" }}>·</span>
                 <span className="basis-full sm:basis-auto pl-[23px] sm:pl-0 text-xs sm:text-sm" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>{m.detail}</span>

@@ -19,15 +19,20 @@ export interface ExperienceItem {
   url?:        string;
 }
 
-/** Small markers on the timeline (not cards). `date` ("Mon YYYY") only decides where it sits. */
+/**
+ * Small one-line markers on the timeline (not cards).
+ * `date` ("Mon YYYY") only decides where the marker sits in the list; it is not displayed.
+ */
 export interface Milestone {
   label:  string;
   detail: string;
   date:   string;
+  icon:   "education" | "work";
 }
 
 export const milestones: Milestone[] = [
-  { label: "Graduated from IIT (BHU) '23", detail: "CGPA 8.51", date: "May 2023" },
+  { label: "Graduated from IIT (BHU) '23", detail: "CGPA 8.51",  date: "May 2023", icon: "education" },
+  { label: "PM Intern at eSamudaay",       detail: "9 months",   date: "Apr 2023", icon: "work" },
 ];
 
 export const experience: ExperienceItem[] = [
