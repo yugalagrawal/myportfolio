@@ -245,9 +245,6 @@ export default function Experience() {
       <div className="section-container">
         <SectionHeading label="// experience" title="Work Experience" />
 
-        <p className="text-base mb-10 max-w-2xl" style={{ color: "var(--text-2)" }}>
-          Founder, then scale, then AI. Three steps, one arc.
-        </p>
         <Timeline items={experience} onOpen={setActive} />
       </div>
 
