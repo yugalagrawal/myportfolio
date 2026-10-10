@@ -257,20 +257,22 @@ export default function Experience() {
         {active && (
           <>
             <motion.div
+              key="details-backdrop"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-50"
-              style={{ background: "rgba(6,3,15,0.7)", backdropFilter: "blur(3px)" }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              style={{ background: "rgba(6,3,15,0.72)", backdropFilter: "blur(4px)" }}
               onClick={() => setActive(null)}
-            />
-            <motion.aside
-              role="dialog" aria-modal="true" aria-label={`${active.role} at ${active.company}`}
-              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 320, damping: 34 }}
-              className="fixed top-0 right-0 h-full z-50 flex flex-col overflow-y-auto"
-              style={{ width: "min(420px, 100vw)", background: "#0a0716", borderLeft: "1px solid rgba(255,255,255,0.08)" }}
             >
-              <div className="flex items-start justify-between gap-4 px-7 pt-7">
+            <motion.div
+              role="dialog" aria-modal="true" aria-label={`${active.role} at ${active.company}`}
+              initial={{ opacity: 0, scale: 0.96, y: 14 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 8 }}
+              transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg max-h-[88vh] flex flex-col overflow-hidden rounded-2xl border border-white/10"
+              style={{ background: "#0a0716", boxShadow: "0 24px 80px rgba(0,0,0,0.6)" }}
+            >
+              <div className="flex items-start justify-between gap-4 px-6 sm:px-7 pt-6 sm:pt-7">
                 <p className="text-xs pt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                   {active.period} · {active.location}
                 </p>
@@ -281,13 +283,13 @@ export default function Experience() {
                 </button>
               </div>
 
-              <div className="px-7 pb-8 flex-1">
-                <h3 className="text-2xl font-bold leading-snug mt-1" style={{ color: "var(--text-1)" }}>{active.role}</h3>
+              <div className="px-6 sm:px-7 pb-6 sm:pb-8 flex-1 overflow-y-auto">
+                <h3 className="text-xl sm:text-2xl font-bold leading-snug mt-1" style={{ color: "var(--text-1)" }}>{active.role}</h3>
                 <p className="text-sm mt-1" style={{ color: "var(--accent2-text)" }}>{active.company}</p>
 
-                <p className="mt-6 text-base leading-relaxed" style={{ color: "var(--text-2)" }}>{active.description}</p>
+                <p className="mt-4 sm:mt-6 text-base leading-relaxed" style={{ color: "var(--text-2)" }}>{active.description}</p>
 
-                <ul className="mt-6 pt-6 space-y-4 border-t border-white/10">
+                <ul className="mt-4 sm:mt-6 pt-4 sm:pt-6 space-y-3 sm:space-y-4 border-t border-white/10">
                   {active.bullets.map((b, i) => (
                     <li key={i} className="flex gap-3 text-[15px] leading-relaxed" style={{ color: "var(--text-2)" }}>
                       <span aria-hidden="true" className="mt-[10px] w-1 h-1 rounded-full shrink-0" style={{ background: "rgba(255,255,255,0.4)" }} />
@@ -301,7 +303,7 @@ export default function Experience() {
                 </ul>
               </div>
 
-              <div className="px-7 py-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+              <div className="px-6 sm:px-7 py-4 sm:py-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
                 <a href={profile.resumeUrl} download={profile.resumeFileName}
                   className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 min-h-[36px] rounded-lg border border-white/15 transition-colors hover:border-white/30 hover:text-white"
                   style={{ color: "var(--text-2)" }}>
@@ -315,7 +317,8 @@ export default function Experience() {
                   </Link>
                 )}
               </div>
-            </motion.aside>
+            </motion.div>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
