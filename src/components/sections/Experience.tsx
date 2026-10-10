@@ -40,7 +40,19 @@ const startDate = (period: string) => {
   return m ? new Date(`${m[1]} 1, ${m[2]}`) : new Date(0);
 };
 
-const startYear = (period: string) => period.match(/\d{4}/)?.[0] ?? "";
+function YearRange({ period, current, className }: { period: string; current?: boolean; className: string }) {
+  const ys = period.match(/\d{4}/g) ?? [];
+  const start = ys[0] ?? "";
+  const end = /present/i.test(period) ? "Now" : (ys[1] ?? start);
+  return (
+    <span className={`${className} font-black leading-none tracking-tight whitespace-nowrap ${current ? "gradient-text" : ""}`}
+      style={{ fontFamily: "var(--font-display)", color: current ? undefined : "var(--text-1)" }}>
+      {start}
+      <span className="mx-[0.18em] font-light" style={{ opacity: 0.45 }}>–</span>
+      {end}
+    </span>
+  );
+}
 
 /* ── Journey map: cards on alternating sides of a winding, scroll-drawn road ── */
 function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: ExperienceItem) => void }) {
@@ -127,10 +139,7 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
 
             {/* Big date on the open side of the road (desktop) */}
             <div className={`hidden md:flex ${left ? "col-start-3" : "col-start-1"} row-start-1 flex-col justify-start pt-3 ${left ? "items-start pl-6 lg:pl-10" : "items-end pr-6 lg:pr-10 text-right"}`}>
-              <span className={`text-5xl lg:text-6xl font-black leading-none tracking-tight ${item.current ? "gradient-text" : ""}`}
-                style={{ fontFamily: "var(--font-display)", color: item.current ? undefined : "var(--text-1)" }}>
-                {startYear(item.period)}
-              </span>
+              <YearRange period={item.period} current={item.current} className="text-5xl lg:text-6xl" />
               <span className="text-sm mt-2" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                 {item.period}
               </span>
@@ -143,10 +152,7 @@ function Timeline({ items, onOpen }: { items: ExperienceItem[]; onOpen: (i: Expe
               className={`group col-start-2 row-start-1 ${left ? "md:col-start-1" : "md:col-start-3"} text-left w-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6 transition duration-200 hover:bg-white/[0.05] hover:border-[#8b85ff99] hover:-translate-y-0.5 focus-visible:border-[#8b85ff99] outline-none`}
             >
               <span className="md:hidden flex items-baseline flex-wrap gap-x-3 gap-y-1 mb-3">
-                <span className={`text-4xl font-black leading-none tracking-tight ${item.current ? "gradient-text" : ""}`}
-                  style={{ fontFamily: "var(--font-display)", color: item.current ? undefined : "var(--text-1)" }}>
-                  {startYear(item.period)}
-                </span>
+                <YearRange period={item.period} current={item.current} className="text-3xl" />
                 <span className="text-xs" style={{ color: "var(--text-3)", fontFamily: "var(--font-mono)" }}>
                   {item.period}
                 </span>
