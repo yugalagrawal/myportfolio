@@ -63,7 +63,7 @@ export default function Navbar() {
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className="font-black text-lg tracking-tight"
+            className="font-black text-lg tracking-tight inline-flex items-center min-h-[44px] min-w-[44px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             <span className="gradient-text-name">YA</span>
@@ -125,7 +125,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg"
+            className="md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg"
             style={{ color: "var(--text-2)" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}

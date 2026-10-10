@@ -245,7 +245,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
         onClick={() => scrollTo("about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 p-3"
         aria-label="Scroll down"
       >
         <motion.div

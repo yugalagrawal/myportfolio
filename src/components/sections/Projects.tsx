@@ -110,7 +110,7 @@ export default function Projects() {
                       href={project.externalLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all duration-200"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 min-h-[44px] rounded-lg flex-shrink-0 transition-all duration-200"
                       style={{
                         background: "rgba(99,91,255,0.1)",
                         color: "var(--accent-text)",
@@ -124,7 +124,7 @@ export default function Projects() {
                   ) : (
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all duration-200"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 min-h-[44px] rounded-lg flex-shrink-0 transition-all duration-200"
                       style={{
                         background: "rgba(99,91,255,0.1)",
                         color: "var(--accent-text)",
