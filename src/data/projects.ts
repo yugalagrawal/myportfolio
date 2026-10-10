@@ -19,11 +19,47 @@ export interface ProjectItem {
   image?:        string;
   embedUrl?:     string;        // Google Drive /preview or YouTube embed
   externalLink?: string;
+  postUrl?:      string;        // LinkedIn post (or similar) about the project, shown on the detail page
   sections?:     ProjectSection[];
   featured?:     boolean;
 }
 
 export const projects: ProjectItem[] = [
+  {
+    slug:        "logistics-radar",
+    title:       "Logistics Radar: My AI Research Bot",
+    company:     "Personal · AI Tool",
+    description: "Research always takes a back seat to meetings and features. So I built a Telegram bot that scans 44+ news sources every morning, scores each story against my context with AI, and sends only what matters. Built in under 30 minutes, at ₹0.",
+    metric:      "44+",
+    metricLabel: "news sources, ₹0 to run",
+    tags:        ["AI", "Telegram Bot", "Automation", "Logistics", "0→1"],
+    type:        "Side Project",
+    image:       "/images/projects/logistics-radar.svg",
+    postUrl:     "https://www.linkedin.com/posts/yugal11_productmanagement-ai-buildinpublic-ugcPost-7511122644608622592-1iK0",
+    featured:    true,
+    sections: [
+      {
+        title:   "Research is critical for a PM, and it never gets done",
+        content: "Research always takes a back seat to meetings, stakeholders and features. Logistics news is scattered across dozens of sources, most of it irrelevant to my space, and reading it all by hand is a job in itself.\n\nWhat I needed was not more news. It was only the stories that matter to my company and my use cases, delivered with no effort.",
+      },
+      {
+        title:   "The Solution",
+        content: "A Telegram bot that does the reading for me.\n\n• Scans: 44+ Indian and global logistics news sources every morning.\n• Scores: AI rates each story against my context: my company, my use cases, and what counts as noise.\n• Filters: only the relevant stories get through, sorted into Innovation, India and Global.\n• Delivers: a daily brief on Telegram at 8 AM.",
+      },
+      {
+        title:   "How It Works",
+        content: "GitHub Actions runs it on a schedule, so there is no server to maintain.\n\n1. Fetch: a daily job pulls 44 RSS and Google News feeds.\n2. Dedupe: stories already seen are dropped, along with same-story duplicates.\n3. Score: a free LLM (Gemini, with Groq as a fallback) scores and explains each story against my profile.\n4. Send: only the stories that clear my importance bar go to Telegram.\n5. Remember: state is saved back to the repo, so nothing is sent twice.",
+      },
+      {
+        title:   "The Insight: Context, Not Code",
+        content: "The value is in the context, not the code. When the brief got noisy, I did not rewrite anything. I edited a few lines of plain-English instructions describing who I am and what counts as noise.\n\nThe whole behaviour lives in one config file, so tuning the bot is a product decision, not an engineering task.",
+      },
+      {
+        title:   "Build & Cost",
+        content: "Built in under 30 minutes, with zero budget, by describing the idea to Claude Code in plain English.\n\n• Built with: Claude Code, Python, and the Telegram Bot API (via BotFather).\n• AI scoring: Gemini and Groq free tiers.\n• Runs on: GitHub Actions, with no server.\n• Cost: ₹0.\n\nBuilt for one user: me. It runs while I'm in meetings.",
+      },
+    ],
+  },
   {
     slug:        "vahansync",
     title:       "VahanSync: An Autonomous Logistics OS",

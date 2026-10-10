@@ -110,7 +110,13 @@ export default function ProjectPage() {
         variant="dark"
         backHref="/#projects"
         widthClass="max-w-5xl"
-        trailing={project.externalLink ? (
+        trailing={project.postUrl ? (
+          <a href={project.postUrl} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-mono px-3 min-h-[36px] rounded-lg transition-all duration-200"
+            style={{ color: "var(--accent-text)", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>
+            <span><span className="hidden sm:inline">LinkedIn </span>Post</span> <ArrowUpRight size={11} />
+          </a>
+        ) : project.externalLink ? (
           <a href={project.externalLink} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-mono px-3 min-h-[36px] rounded-lg transition-all duration-200"
             style={{ color: "var(--accent-text)", border: "1px solid rgba(99,91,255,0.3)", background: "rgba(99,91,255,0.08)" }}>

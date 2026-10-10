@@ -44,6 +44,7 @@ export default function Projects() {
                     src={project.image}
                     alt={project.title}
                     fill
+                    unoptimized={project.image.endsWith(".svg")}
                     sizes="(min-width: 640px) 50vw, 85vw"
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1281 687" width="1281" height="687" role="img" aria-label="Logistics Radar: 44+ news sources, scored by AI, delivered as a Telegram brief at 8 AM">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0820"/>
+      <stop offset="1" stop-color="#1a1140"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b85ff"/>
+      <stop offset="1" stop-color="#4da3ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#635bff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#635bff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1281" height="687" fill="url(#bg)"/>
+  <rect width="1281" height="687" fill="url(#glow)"/>
+
+  <text x="90" y="128" fill="#ffffff" font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="60" font-weight="800" letter-spacing="-1.5">Logistics Radar</text>
+  <text x="90" y="178" fill="#b9b5e8" font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="26">A Telegram bot that reads the news so I don't have to</text>
+
+  <!-- flow cards -->
+  <g font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <rect x="90"  y="250" width="330" height="200" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="126" y="338" fill="url(#accent)" font-size="76" font-weight="800">44+</text>
+    <text x="126" y="384" fill="#ffffff" font-size="26" font-weight="600">news sources</text>
+    <text x="126" y="420" fill="#b9b5e8" font-size="20">RSS + Google News</text>
+
+    <rect x="475" y="250" width="330" height="200" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="511" y="338" fill="url(#accent)" font-size="76" font-weight="800">AI</text>
+    <text x="511" y="384" fill="#ffffff" font-size="26" font-weight="600">scores every story</text>
+    <text x="511" y="420" fill="#b9b5e8" font-size="20">against my context</text>
+
+    <rect x="860" y="250" width="330" height="200" rx="26" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="896" y="338" fill="url(#accent)" font-size="76" font-weight="800">8 AM</text>
+    <text x="896" y="384" fill="#ffffff" font-size="26" font-weight="600">Telegram brief</text>
+    <text x="896" y="420" fill="#b9b5e8" font-size="20">Innovation · India · Global</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#8b85ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M436 350 H458 M450 340 L460 350 L450 360"/>
+    <path d="M821 350 H843 M835 340 L845 350 L835 360"/>
+  </g>
+
+  <!-- footer pills -->
+  <g font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" fill="#d9d6ff">
+    <rect x="90"  y="520" width="170" height="52" rx="26" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="175" y="554" text-anchor="middle">₹0 to run</text>
+    <rect x="280" y="520" width="240" height="52" rx="26" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="400" y="554" text-anchor="middle">GitHub Actions</text>
+    <rect x="540" y="520" width="220" height="52" rx="26" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="650" y="554" text-anchor="middle">Claude Code</text>
+    <rect x="780" y="520" width="240" height="52" rx="26" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="900" y="554" text-anchor="middle">Built in 30 min</text>
+  </g>
+</svg>
